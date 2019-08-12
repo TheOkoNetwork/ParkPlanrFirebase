@@ -12,8 +12,8 @@ console.log("initializing Chessington World Of Adventures Resort object");
 const TPO_ChessingtonWorldOfAdventure = new Themeparks.Parks.ChessingtonWorldOfAdventures();
 
 ActiveTPO=[
-	TPO_AltonTowersResort,
-//	TPO_ThorpePark,
+//	TPO_AltonTowersResort,
+	TPO_ThorpePark,
 //	TPO_ChessingtonWorldOfAdventure
 ];
 
@@ -21,24 +21,41 @@ PreviousQueueTimes={};
 
 
 const admin = require('firebase-admin');
-let serviceAccount = require('serviceAccountKey.json');
+let serviceAccount = require('./serviceAccountKey.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 let db = admin.firestore();
 
+RidesTPJSIDFID={};
+TPJSIDFetched=false;
 
 // Access queuetimes by Promise
 const CheckQueueTimes = () => {
+	if (!TPJSIDFetched) {
+		console.log("TPJS ID's not fetched");
+		setTimeout(CheckQueueTimes, 1000 * 5); // try again in 5 seconds
+		return;
+	};
 	//console.log("Fetching queue times");
+
 	ActiveTPO.forEach(function(TPO) {
 		TPO.GetWaitTimes().then((RideTimes) => {
+
+			var batches=[];
+       		 	var batchPromises=[];
+        		var currentBatch=0;
+		        batches[currentBatch]=db.batch();
+		        var currentBatchCount=0;
+		        var maxBatchCount=500;
+
+
 			RideTimes.forEach((Ride) => {
 				RideStatusData={
-					open: Ride.active
+					Open: Ride.active
 				};
 				if (Ride.active) {
-					//console.log("Ride open, using waitTime");
+					console.log("Ride open, using waitTime");
 					RideStatusData.QueueTime=Ride.waitTime;
 				};
 
@@ -57,11 +74,34 @@ const CheckQueueTimes = () => {
 				};
 				if (updated) {
 					//console.log("Ride data updated");
-					PreviousQueueTimes[Ride.id]=RideStatusData;
 
-					console.log(`${Ride.id} ${Ride.name} ${JSON.stringify(RideStatusData)}`);
+					if (RidesTPJSIDFID[Ride.id]) {
+						PreviousQueueTimes[Ride.id]=RideStatusData;
+						console.log(`${Ride.id} ${Ride.name} ${JSON.stringify(RideStatusData)} updating`);
+						if (currentBatchCount >= maxBatchCount) {
+                        			        console.log("Creating new batch");
+                       		 		        currentBatch++;
+                        			        batches[currentBatch]=db.batch();
+                        		        	currentBatchCount=0;
+                        			};
+						console.log(RideStatusData);
+                			        batches[currentBatch].update(RidesTPJSIDFID[Ride.id],RideStatusData);
+                        			currentBatchCount++;
+					} else {
+						console.log(`*** ${Ride.id} ${Ride.name} ${JSON.stringify(RideStatusData)} TPJS ID not found ***`);
+					};
 				};
 			});
+			batches.forEach((batch) => {
+	                        batchPromises.push(batch.commit());
+	                });
+
+	                return Promise.all(batchPromises).then((data) => {
+	                	batchCount=data.length;
+	                	return console.log(`Comitted ${batchCount} batches`);
+	                }).catch((error) => {
+				return console.log("Error Commiting documents: ", error);
+	               	});
 		}).catch((error) => {
 			console.log("*****     ERROR FETCHING QUEUE TIMES     *****");
 			console.error(error);
@@ -73,4 +113,24 @@ const CheckQueueTimes = () => {
 	});
 
 };
+
 CheckQueueTimes();
+
+db.collectionGroup('Rides').onSnapshot(DocSnapshot => {
+	console.log("TPJS ID's updated/initially fetched");
+
+	TPJSIDFetched=false;
+	RidesTPJSIDFID={};
+
+	DocSnapshot.forEach(function (doc) {
+		console.log(doc.id, ' => ', doc.data());
+		if (doc.data().TPJSID) {
+			RidesTPJSIDFID[doc.data().TPJSID]=doc.ref;
+		};
+	});
+	TPJSIDFetched=true;
+}, error => {
+	console.log("*****     Failed to update TPJSID     *****");
+	console.log(error);
+	console.log("*****     Failed to update TPJSID     *****");
+});

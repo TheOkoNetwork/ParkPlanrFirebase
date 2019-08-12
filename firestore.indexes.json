@@ -1,5 +1,20 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "Rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "QueueTimes",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "QueueTime",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
   "fieldOverrides": [
     {
       "collectionGroup": "Rides",
