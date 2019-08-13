@@ -11,10 +11,14 @@ const TPO_ThorpePark = new Themeparks.Parks.ThorpePark();
 console.log("initializing Chessington World Of Adventures Resort object");
 const TPO_ChessingtonWorldOfAdventure = new Themeparks.Parks.ChessingtonWorldOfAdventures();
 
+console.log("initializing Magic Kingdom - Walt Disney World Florida object");
+const TPO_WaltDisneyWorldMagicKingdom = new Themeparks.Parks.WaltDisneyWorldMagicKingdom();
+
 ActiveTPO=[
 	TPO_AltonTowersResort,
 	TPO_ThorpePark,
-	TPO_ChessingtonWorldOfAdventure
+	TPO_ChessingtonWorldOfAdventure,
+	TPO_WaltDisneyWorldMagicKingdom
 ];
 
 const admin = require('firebase-admin');

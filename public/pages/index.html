@@ -75,21 +75,23 @@
                                         <h4><span class="ParkInfoCardName">{{this.data().Name}}</span></h4>
                                     </a>
 					{{#if this.data().OpenToday}}
+						OT
 						{{#js_if "moment(this.data().OpeningToday.toDate())>moment()"}}
-		                                    <p class="card-text my-2"><span class="ParkInfoCardName">{{this.data().Name}}</span> opens at {{js "moment(this.data().OpeningToday.toDate()).format('HH:mm')"}} and closes at {{js "moment(this.data().ClosingToday.toDate()).format('HH:mm')"}} today</p>
+							<p class="card-text my-2"><span class="ParkInfoCardName">OPNG {{this.data().Name}}</span> {{js "ParkOpeningClosingDisplayDateTime(this.data().OpeningToday,this.data().ClosingToday)"}}</p>
 						{{else}}
 							{{#js_if "moment(this.data().ClosingToday.toDate())>moment()"}}
-			                                	<p class="card-text my-2"><span class="ParkInfoCardName">{{this.data().Name}}</span> is currently open and closes at {{js "moment(this.data().ClosingToday.toDate()).format('HH:mm')"}}</p>
+			                                	<p class="card-text my-2"><span class="ParkInfoCardName">OPN {{this.data().Name}}</span> is currently open and {{js "ParkClosingDisplayDateTime(this.data().ClosingToday)"}}</p>
 								<div class="ParkInfoCardQueueTimes"></div>
 							{{else}}
-			                                    <p class="card-text my-2 text-danger"><span class="ParkInfoCardName">{{this.data().Name}}</span> has closed for the day</p>
+			                                    <p class="card-text my-2 text-danger"><span class="ParkInfoCardName">OPNCLSD{{this.data().Name}}</span> has closed for the day</p>
 							{{/js_if}}
 						{{/js_if}}
 					{{else}}
+						NOT
 						{{#if this.data().ParkClosedMessage}}
 		                                    <p class="card-text my-2 text-danger">{{this.data().ParkClosedMessage}}</p>
 						{{else}}
-		                                    <p class="card-text my-2 text-danger"><span class="ParkInfoCardName">{{this.data().Name}}</span> is closed today</p>
+		                                    <p class="card-text my-2 text-danger"><span class="ParkInfoCardName">{{this.data().Name}}</span> is closed</p>
 						{{/if}}
 					{{/if}}
                                 </div>

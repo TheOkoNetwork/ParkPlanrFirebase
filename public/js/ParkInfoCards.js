@@ -71,3 +71,106 @@ function FetchParkInfoCards() {
 		console.log(error);
 	});
 };
+
+
+
+
+
+
+
+
+
+function ParkClosingDisplayDateTime(ClosingDate) {
+	Difference=moment(ClosingDate.toDate()).startOf('day').diff(moment().startOf('day'),'days');
+	console.log(Difference);
+	switch (Difference) {
+		case 0:
+			console.log("Today");
+			ClosingDay="";
+			ClosingTime=moment(ClosingDate.toDate()).format('HH:mm');
+			break;
+		case 1:
+			console.log("Tomorrow");
+			ClosingDay="Tomorrow";
+			ClosingTime=moment(ClosingDate.toDate()).format('HH:mm');
+			break;
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+			console.log("Upcoming weekday");
+			ClosingDay=moment(ClosingDate.toDate()).format('dddd');
+			ClosingTime=moment(ClosingDate.toDate()).format('HH:mm');
+			break;
+		default:
+			console.log("Not tommrow");
+			ClosingDay=moment(ClosingDate.toDate()).format('dddd Do MMMM YYYY');;
+			ClosingTime=moment(ClosingDate.toDate()).format('HH:mm');
+			break;
+	};
+	console.log(`Closes ${ClosingDay} at ${ClosingTime}`);
+	return(`Closes ${ClosingDay} at ${ClosingTime}`);
+};
+
+function ParkOpeningClosingDisplayDateTime(OpeningDate,ClosingDate) {
+	Difference=moment(OpeningDate.toDate()).startOf('day').diff(moment().startOf('day'),'days');
+	console.log(Difference);
+	switch (Difference) {
+		case 0:
+			console.log("Today");
+			OpeningDay="Today";
+			OpeningTime=moment(OpeningDate.toDate()).format('HH:mm');
+			break;
+		case 1:
+			console.log("Tomorrow");
+			OpeningDay="Tomorrow";
+			OpeningTime=moment(OpeningDate.toDate()).format('HH:mm');
+			break;
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+			console.log("Upcoming weekday");
+			OpeningDay=moment(OpeningDate.toDate()).format('dddd');
+			OpeningTime=moment(OpeningDate.toDate()).format('HH:mm');
+			break;
+		default:
+			console.log("Not tommrow");
+			OpeningDay=moment(OpeningDate.toDate()).format('dddd Do MMMM YYYY');;
+			OpeningTime=moment(OpeningDate.toDate()).format('HH:mm');
+			break;
+	};
+
+	Difference=moment(ClosingDate.toDate()).startOf('day').diff(moment().startOf('day'),'days');
+	console.log(Difference);
+	switch (Difference) {
+		case 0:
+			console.log("Today");
+			ClosingDay="Today";
+			ClosingTime=moment(ClosingDate.toDate()).format('HH:mm');
+			break;
+		case 1:
+			console.log("Tomorrow");
+			ClosingDay="Tomorrow";
+			ClosingTime=moment(ClosingDate.toDate()).format('HH:mm');
+			break;
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+			console.log("Upcoming weekday");
+			ClosingDay=moment(ClosingDate.toDate()).format('dddd');
+			ClosingTime=moment(ClosingDate.toDate()).format('HH:mm');
+			break;
+		default:
+			console.log("Not tommrow");
+			ClosingDay=moment(ClosingDate.toDate()).format('dddd Do MMMM YYYY');;
+			ClosingTime=moment(ClosingDate.toDate()).format('HH:mm');
+			break;
+	};
+	console.log(`Opens ${OpeningDay} ${OpeningTime}, Closes ${ClosingDay} ${ClosingTime}`);
+	return(`Opens ${OpeningDay} ${OpeningTime}, Closes ${ClosingDay} ${ClosingTime}`);
+};
