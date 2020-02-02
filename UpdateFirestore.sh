@@ -1,7 +1,10 @@
 #!/bin/bash
 existingJSONIndexes="$(cat firestore.indexes.json)"
 indexes="$(firebase firestore:indexes)"
-echo $?
+exitCode=$?
+if [ $exitCode -ne 0 ];then
+	exit $exitCode
+fi
 
 if [ "$existingJSONIndexes" == "$indexes" ];then
 	echo "local version of firestore indexes is up to date"
