@@ -2,6 +2,14 @@ const Themeparks = require("themeparks");
 
 Themeparks.Settings.CacheWaitTimesLength=60;
 
+
+//the TPO objects should ideally be stored in firestore with an inital load on the script init
+//and a listener to restart the script if any changes to TPOs are made
+//TPO's will probably be a seperate entity to Parks or Resorts, prehaps a TPJSTPO collection?
+//something like
+//var ActiveTPO=[];
+//ActiveTPO.push(new Themeparks.Parks[TPODoc.data().TPOName]());
+
 console.log("initializing Alton Towers Resort object");
 const TPO_AltonTowersResort = new Themeparks.Parks.AltonTowers();
 
@@ -11,10 +19,14 @@ const TPO_ThorpePark = new Themeparks.Parks.ThorpePark();
 console.log("initializing Chessington World Of Adventures Resort object");
 const TPO_ChessingtonWorldOfAdventure = new Themeparks.Parks.ChessingtonWorldOfAdventures();
 
+console.log("initializing Magic Kingdom - Walt Disney World Florida object");
+const TPO_WaltDisneyWorldMagicKingdom = new Themeparks.Parks.WaltDisneyWorldMagicKingdom();
+
 ActiveTPO=[
-//	TPO_AltonTowersResort,
-	TPO_ThorpePark,
-//	TPO_ChessingtonWorldOfAdventure
+        TPO_AltonTowersResort,
+//        TPO_ThorpePark,
+  //      TPO_ChessingtonWorldOfAdventure,
+  //      TPO_WaltDisneyWorldMagicKingdom
 ];
 
 PreviousQueueTimes={};
@@ -57,6 +69,10 @@ const CheckQueueTimes = () => {
 				if (Ride.active) {
 					console.log("Ride open, using waitTime");
 					RideStatusData.QueueTime=Ride.waitTime;
+				} else {
+					console.log("Ride closed");
+					RideStatusData.ClosedReason=Ride.status;
+					RideStatusData.QueueTime=0;
 				};
 
 				if (PreviousQueueTimes[Ride.id]) {
@@ -123,7 +139,7 @@ db.collectionGroup('Rides').onSnapshot(DocSnapshot => {
 	RidesTPJSIDFID={};
 
 	DocSnapshot.forEach(function (doc) {
-		console.log(doc.id, ' => ', doc.data());
+		console.log(doc.id, ' => ', doc.data().Name);
 		if (doc.data().TPJSID) {
 			RidesTPJSIDFID[doc.data().TPJSID]=doc.ref;
 		};

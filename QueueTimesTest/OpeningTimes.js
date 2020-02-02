@@ -55,7 +55,9 @@ const CheckOpeningTimes = () => {
 //			});
 
 			OpeningTime=OpeningTimes[0];
-			ParkStatusData={};
+			ParkStatusData={
+				OpeningTodayLastUpdated: admin.firestore.FieldValue.serverTimestamp()
+			};
 			if (OpeningTime.type=="Operating") {
 				console.log("Park open");
 				ParkStatusData.OpenToday=true;
@@ -65,7 +67,6 @@ const CheckOpeningTimes = () => {
 				console.log("Park closed");
 				ParkStatusData.OpenToday=false;
 			};
-			ParkStatusData.OpeningTodayLastUpdated=admin.firestore.FieldValue.serverTimestamp();
 
 			console.log(OpeningTime);
 			//console.log(ParkStatusData);

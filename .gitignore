@@ -66,3 +66,17 @@ node_modules/
 
 #Service account credentials
 serviceAccountKey.json
+
+#ThemeParks JS cache file
+themeparks.db
+
+#copyrighted images
+signinpressphotos
+public/img/pressphotos
+
+#WIP
+DefendTheTowers/
+
+
+#Clone of former ridetimes.co.uk
+public/projectrt

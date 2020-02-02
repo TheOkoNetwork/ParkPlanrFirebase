@@ -1,0 +1,147 @@
+<!-- PAGE CONTENT-TAG_ID -->
+
+    <!-- Hero -->
+        <section class="section section-lg bg-secondary text-white overflow-hidden z-2" id="HeroSection">
+            <div class="container z-2">
+                <div class="row justify-content-center text-center pt-6 pt-md-5 pb-0 mb-2">
+                    <div class="col-lg-8 col-xl-8">
+                        <h1 class="display-1 font-weight-light mb-3">Submit a park</span></h1>
+                        <p class="lead px-xl-5">Thanks for contributing</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-sm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt-5 mb-5 mt-md-0">
+                            <h4>What is this park called?</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" placeholder="Park name" aria-label="Park name" id="SubmitParkName">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" onclick="SubmitParkNextName();">Next</button>
+				</div>
+			</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-sm" id="SubmitParkSectionWebsite" style="display:none;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt-5 mb-5 mt-md-0">
+                            <h4>Does this park have a website?</h4>
+                            <h6>If they don't have a a website just click next</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" placeholder="Park website address" aria-label="Park website address" id="SubmitParkWebsite">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" onclick="SubmitParkNextWebsite();">Next</button>
+				</div>
+			</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-sm" id="SubmitParkSectionUserEmail" style="display:none;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt-5 mb-5 mt-md-0">
+                            <h4>What's your email address so we can contact you if we need further information</h4>
+                            <h6>Don't want to provide your email address? Not a problem just click next</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+			<div class="input-group mb-3">
+				<input type="email" class="form-control" placeholder="Your email address" aria-label="Your email address" id="SubmitParkUserEmail">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" onclick="SubmitParkNextUserEmail();">Next</button>
+				</div>
+			</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-sm" id="SubmitParkSectionAdditionalInformation" style="display:none;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt-5 mb-5 mt-md-0">
+                            <h4>Any additional information that will help us add this park?</h4>
+                            <h6>If there isn't then just click submit park</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+			<div class="input-group mb-3">
+				<input type="email" class="form-control" placeholder="Any additional information" aria-label="Any additional information" id="SubmitParkAdditionalInformation">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" onclick="SubmitParkNextAdditionalInformation();">Submit Park</button>
+				</div>
+			</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="SubmitParkNameRequiredError">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Park name required</h5>
+<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+-->
+      </div>
+      <div class="modal-body">
+        <p>We need the name of the park to be able to add it</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="SubmitParkSubmissionError">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sorry, something went wrong</h5>
+<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+-->
+      </div>
+      <div class="modal-body">
+        <p>Something went wrong submitting this park, please report this error to a member of the team</p>
+	<p>When reporting this error please quote the following</p>
+	<p>Error code: #PPERPKSUCA<p>
+	<p>Correllation ID: <span id="SubmitParkSubmissionErrorCorrellationId">(Reporting error-Just a sec)</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

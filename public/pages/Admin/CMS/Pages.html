@@ -1,0 +1,82 @@
+<!-- PAGE CONTENT-TAG_ID -->
+
+    <!-- Hero -->
+        <section class="section section-lg bg-secondary text-white overflow-hidden z-2" id="HeroSection">
+            <div class="container z-2">
+                <div class="row justify-content-center text-center pt-6 pt-md-5 pb-0 mb-2">
+                    <div class="col-lg-8 col-xl-8">
+                        <h1 class="display-1 font-weight-light mb-3">CMS Pages</span></h1>
+                        <p class="lead px-xl-5"><span class="font-weight-bold">Admin</span>istration</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-sm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt-5 mb-5 mt-md-0">
+				<button class="btn btn-success" onclick="switchPage('/Admin/CMS/Pages/New');"><span class="fas fa-plus"></span> New page</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt-5 mb-5 mt-md-0">
+				<table id="AdminCMSPagesTable" class="display">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>SLUG</th>
+							<th>Public</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+<script id="TemplateAdminCMSPageSLUG" type="text/template7">
+        <a href="/{{SLUG}}" onclick="loadPageTag(this);return false;">{{SLUG}}</a>
+</script>
+
+<script id="TemplateAdminCMSPageEditButton" type="text/template7">
+	<button class="btn btn-primary" onclick="switchPage('/Admin/CMS/Pages/{{id}}')"><span class="fas fa-edit"></span> Edit</button>
+</script>
+<script id="TemplateAdminCMSPageDeleteButton" type="text/template7">
+	<button class="btn btn-danger" onclick="AdminCMSPagesDelete('{{id}}');"><span class="fas fa-trash"></span> Delete</button>
+</script>
+
+
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="AdminCMSPagesDeleteModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Are you sure you want to delete this page?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	<p>Page title: <span id="AdminCMSPagesDeleteModalPageTitle"></span></p>
+	<p>Page sub title: <span id="AdminCMSPagesDeleteModalPageSubTitle"></span></p>
+	<p>Page SLUG: <span id="AdminCMSPagesDeleteModalPageSLUG"></span></p>
+        <p>This CANNOT be undone</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" onclick="AdminCMSPagesDelete('',true);"><span class="fas fa-trash"></span> DELETE</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,101 @@
+<!-- PAGE CONTENT-TAG_ID -->
+
+    <!-- Hero -->
+        <section class="section section-lg bg-secondary text-white overflow-hidden z-2" id="HeroSection">
+            <div class="container z-2">
+                <div class="row justify-content-center text-center pt-6 pt-md-5 pb-0 mb-2">
+                    <div class="col-lg-8 col-xl-8">
+                        <h1 class="display-1 font-weight-light mb-3" id="CMSPageTitle">This is a CMS page</h1>
+                        <p class="lead px-xl-5" id="CMSPageSubTitle">This is a sub title</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-sm">
+            <div class="container" id="CMSPageDiv">Rendered html here</div>
+        </section>
+
+
+
+
+<script id="TemplateCMSPage" type="text/template7">
+	{{#if @global.User}}
+		{{#if @global.User.Admin}}
+			<p>Page Doc ID: {{id}} <button class="btn btn-primary" onclick="switchPage('/Admin/CMS/Pages/{{id}}')"><span class="fas fa-pencil"></span> Edit</button></p>
+		{{/if}}
+	{{/if}}
+	{{#unless Public}}
+		<p>This page is NOT public, users without administration permissions cannot access this page.</p>
+	{{/unless}}
+
+	{{#each Content.blocks}}
+		{{#switch type}}
+		        {{#case 'header'}}<h{{data.level}}>{{data.text}}</h{{data.level}}>{{/case}}
+		        {{#case 'paragraph'}}
+				<p>{{data.text}}</p>
+			{{/case}}
+
+		        {{#case 'table'}}
+				<table class="tc-table">
+					{{#each data.content}}
+						<tr>
+						{{#each this}}
+							<td>{{this}}</td>
+						{{/each}}
+						</tr>
+					{{/each}}
+				</table>
+			{{/case}}
+
+		        {{#case 'raw'}}
+				{{data.html}}
+			{{/case}}
+		        {{#case 'image'}}
+				<img src="{{data.file.url}}" title="{{data.caption}}" />
+			{{/case}}
+
+		        {{#case 'checklist'}}
+				<ul>
+				{{#each data.items}}
+					<li style="{{#if checked}}background: #888; color: #fff; text-decoration: line-through;{{/if}}">{{text}}</li>
+				{{/each}}
+				</ul>
+			{{/case}}
+
+		        {{#case 'list'}}
+				{{#js_if "this.data.style == 'ordered'"}}<ol>{{/js_if}}
+				{{#js_if "this.data.style == 'unordered'"}}<ul>{{/js_if}}
+
+				{{#each data.items}}
+					<li>{{this}}</li>
+				{{/each}}
+
+				{{#js_if "this.data.style == 'ordered'"}}</ol>{{/js_if}}
+				{{#js_if "this.data.style == 'unordered'"}}</ul>{{/js_if}}
+			{{/case}}
+
+		        {{#case 'embed'}}
+				<iframe style="height:{{data.height}}px;width:{{data.width}}px;" src="{{data.embed}}"></iframe>
+			{{/case}}
+
+		        {{#case 'quote'}}
+				<blockquote class="blockquote">
+					<p class="mb-0">{{data.text}}</p>
+					<footer class="blockquote-footer">{{data.caption}}</footer>
+				</blockquote>
+			{{/case}}
+
+		        {{#case 'linkTool'}}
+				<a class="link-tool__content link-tool__content--rendered" target="_blank" rel="nofollow noindex noreferrer" href="{{data.link}}">
+					<div class="link-tool__image" style="background-image: url(&quot;{{data.meta.image.url}}&quot;);"></div>
+					<div class="link-tool__title">{{data.meta.title}}</div>
+					<span class="link-tool__anchor">{{data.meta.caption}}</span>
+				</a>
+			{{/case}}
+	
+		        {{#default}}
+				<p>*Unknown block type:{{type}}</p>
+			{{/default}}
+		{{/switch}}
+	{{/each}}
+</script>
