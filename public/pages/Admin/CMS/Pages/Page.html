@@ -1,0 +1,72 @@
+<!-- PAGE CONTENT-TAG_ID -->
+
+    <!-- Hero -->
+        <section class="section section-lg bg-secondary text-white overflow-hidden z-2" id="HeroSection">
+            <div class="container z-2">
+                <div class="row justify-content-center text-center pt-6 pt-md-5 pb-0 mb-2">
+                    <div class="col-lg-8 col-xl-8">
+                        <h1 class="display-1 font-weight-light mb-3" id="AdminCMSPagesPageH1">New page</span></h1>
+                        <p class="lead px-xl-5">CMS page <span class="font-weight-bold">Admin</span>istration</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-sm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt-5 mb-5 mt-md-0">
+				<fieldset>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="AdminCMSPagesTitle">Title</label>  
+						<div class="col-md-4">
+							<input id="AdminCMSPagesTitle" name="AdminCMSPagesTitle" type="text" placeholder="" class="form-control input-md" required="">
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="AdminCMSPagesSubTitle">Sub title</label>  
+						<div class="col-md-4">
+							<input id="AdminCMSPagesSubTitle" name="AdminCMSPagesSubTitle" type="text" placeholder="" class="form-control input-md" required="">
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="AdminCMSPagesSLUG">SLUG</label>  
+						<div class="col-md-4">
+							<input id="AdminCMSPagesSLUG" name="AdminCMSPagesSLUG" type="text" placeholder="" class="form-control input-md" required="">
+						</div>
+					</div>
+
+<!-- Multiple Checkboxes (inline) -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="AdminCMSPagesPublic"></label>
+  <div class="col-md-4">
+    <label class="checkbox-inline" for="AdminCMSPagesPublic-0">
+      <input type="checkbox" name="AdminCMSPagesPublic" id="AdminCMSPagesPublic-0" value="true">
+      Public
+    </label>
+  </div>
+</div>
+
+					<!-- Button -->
+					<div class="form-group">
+<!--						<label class="col-md-4 control-label" for="AdminCMSPagesSaveButton">Single Button</label> -->
+						<div class="col-md-12">
+							<button id="AdminCMSPagesAddButton" name="AdminCMSPagesAddButton" class="btn btn-success" onclick="AdminCMSPagesPageSave();" style="width:100%;display:none;"><span class="fas fa-plus"></span> Add page</button>
+							<button id="AdminCMSPagesSaveButton" name="AdminCMSPagesSaveButton" class="btn btn-success" onclick="AdminCMSPagesPageSave();" style="width:100%;display:none;"><span class="fas fa-save"></span> Save</button>
+						</div>
+					</div>
+				</fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+			<div id="AdminCMSPagesEditorDiv"></div>
+                    </div>
+                </div>
+            </div>
+        </section>

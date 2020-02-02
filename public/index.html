@@ -1,5 +1,5 @@
-	<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" id="html">
 
 <head>
     <meta charset="utf-8">
@@ -8,55 +8,127 @@
     <meta name="author" content="The Oko Network">
     <title>ParkPlanr</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <!-- Pixel CSS -->
-    <link type="text/css" href="./css/pixel.css?022904" rel="stylesheet">
+    <link type="text/css" href="/css/pixel.css?022904" rel="stylesheet">
 
 
 	<!-- fix emoji colours in chrome -->
-	<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+	<link href="/css/emoji.css" rel="stylesheet">
 
-	<script src="./vendor/jquery/jquery.min.js"></script>
-	<script src="js/Config.js"></script>
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/js/Config.js"></script>
+
+
+	<script src="//d2wy8f7a9ursnm.cloudfront.net/v6/bugsnag.min.js"></script>
+	<script>window.bugsnagClient = bugsnag('a42d64afe55971b8279520e82df3b97b')</script>
 
 	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-	<script src="/__/firebase/6.3.5/firebase-app.js"></script>
+	<script src="/__/firebase/7.5.0/firebase-app.js"></script>
 
 	<!-- Add Firebase products that you want to use -->
-	<script src="/__/firebase/6.3.5/firebase-auth.js"></script>
-	<script src="/__/firebase/6.3.5/firebase-firestore.js"></script>
+	<script src="/__/firebase/7.5.0/firebase-auth.js"></script>
+	<script src="/__/firebase/7.5.0/firebase-firestore.js"></script>
+	<script src="/__/firebase/7.5.0/firebase-storage.js"></script>
+	<script src="/__/firebase/7.5.0/firebase-remote-config.js"></script>
 
 	<!-- Initialize Firebase -->
 	<script src="/__/firebase/init.js"></script>
 	<script>var db = firebase.firestore();</script>
 
-	<script src="js/lib/template7.min.js"></script>
-	<script src="js/lib/moment-with-locales.min.js"></script>
 
-	<script src="js/App.js"></script>
-	<script src="js/Authentication.js"></script>
-	<script src="js/ParkInfoCards.js"></script>
+	<script>
+		if (firebase.app().options_.projectId==config.firebaseDevEnviromentProject) {
+			console.log("Project running in DEV enviroment");
+			config.FirebaseFunctionsUrl=config.DevEnviromentFirebaseFunctionsUrl;
+		} else {
+			console.log("Project running in L I V E enviroment");
+			config.FirebaseFunctionsUrl=config.LiveEnviromentFirebaseFunctionsUrl;
+		};
+	</script>
+
+
+	<script src="/js/lib/template7.min.js"></script>
+	<script src="/js/lib/moment-with-locales.min.js"></script>
+
+
+	<script src="/js/lib/editorjs/editor.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/raw@latest"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/table@latest"></script>
+
+	<link type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+	<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+	<script src="/js/App.js"></script>
+	<script src="/js/Authentication.js"></script>
+	<script src="/js/ParkInfoCards.js"></script>
+	<script src="/js/HeaderParks.js"></script>
+	<script src="/js/Ridecount.js"></script>
+	<script src="/js/SubmitPark.js"></script>
+	<script src="/js/AdminParks.js"></script>
+	<script src="/js/AdminCMS.js"></script>
+	<script src="/js/CMS.js"></script>
+
+
+	<link type="text/css" href="/css/sweetalert.css" rel="stylesheet">
+	<script src="/js/lib/sweetalert.min.js"></script>
+
+	<link type="text/css" href="/css/countrySelect.min.css" rel="stylesheet">
+	<script src="/js/lib/countrySelect.min.js"></script>
+
+	<script src="/js/lib/komain.js"></script>
+	<script src="/js/komain.js"></script>
 </head>
-	<body>
-        <script id="header_Holder">LoadFragment('header');</script>
+	<body id="body">
+		<script id="header_Holder">LoadFragment("header");</script>
+		<main id="main"></main>
+		<script id="footer_Holder">LoadFragment("footer");</script>
 
-    <main id="main"></main>
-    <script id="footer_Holder">LoadFragment('footer');</script>
+    		<!-- Core -->
+    		<script src="/vendor/popper/popper.min.js"></script>
+    		<script src="/vendor/bootstrap/bootstrap.min.js"></script>
+    		<script src="/vendor/headroom/headroom.min.js"></script>
 
-    <!-- Core -->
-    <script src="./vendor/popper/popper.min.js"></script>
-    <script src="./vendor/bootstrap/bootstrap.min.js"></script>
-    <script src="./vendor/headroom/headroom.min.js"></script>
+    		<!-- Vendor JS -->
+    		<script src="/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+    		<script src="/vendor/waypoints/jquery.waypoints.min.js"></script>
+    		<script src="/vendor/smooth-scroll/smooth-scroll.polyfills.min.js"></script>
 
-    <!-- Vendor JS -->
-    <script src="./vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-    <script src="./vendor/waypoints/jquery.waypoints.min.js"></script>
-    <script src="./vendor/smooth-scroll/smooth-scroll.polyfills.min.js"></script>
-    <!-- pixel JS -->
-    <script src="./js/lib/pixel.js"></script>
+    		<!-- pixel JS -->
+    		<script src="/js/lib/pixel.js"></script>
+
+<div class="modal" tabindex="-1" role="dialog" id="GenericError">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sorry, something went wrong</h5>
+<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+-->
+      </div>
+      <div class="modal-body">
+        <p>Something went wrong, please report this error to a member of the team</p>
+        <p>When reporting this error please quote the following</p>
+        <p>Error code: #<span id="GenericErrorErrorCode"></span><p>
+        <p>Correllation ID: <span id="GenericErrorCorrellationId">(Reporting error-Just a sec)</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 </html>

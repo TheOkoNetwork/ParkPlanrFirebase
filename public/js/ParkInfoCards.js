@@ -1,5 +1,9 @@
 function FetchParkInfoCards() {
 	TemplateParkInfoCard=$('#TemplateParkInfoCard').html();
+	if (!TemplateParkInfoCard) {
+		clearTimeout(window.ParkInfoCardsOnSnapshotLastUpdatedTimeout);
+		return;
+	};
 	CompiledTemplateParkInfoCard=Template7.compile(TemplateParkInfoCard);
 
 	TemplateParkInfoCardQueueTime=$('#TemplateParkInfoCardQueueTime').html();
@@ -49,9 +53,14 @@ function FetchParkInfoCards() {
 							console.log(RideDoc);
 							$(`#ParkInfoCard_${ParkDocId}`).find('.ParkInfoCardQueueTimes').append(CompiledTemplateParkInfoCardQueueTime(RideDoc));
 						});
-					}, error => {
-						//TODO add bugsnag
-						console.log(error);
+					}, ErrorObject => {
+						console.log(ErrorObject);
+						CorrellationId=uuidv4();
+				                ErrorCode="PPERPKINFCDQU";
+                				bugsnagClient.notify(ErrorObject, {
+                				        metaData: { CorrellationId: CorrellationId, ErrorCode: ErrorCode},
+                        				severity: 'error'
+				                });
 					}));
 					break;
 				case "modified":
@@ -66,9 +75,14 @@ function FetchParkInfoCards() {
 					break;
 			};
 		});
-	}, err => {
-		//TODO add bugsnag
-		console.log(error);
+	}, ErrorObject => {
+		console.log(ErrorObject);
+		CorrellationId=uuidv4();
+		ErrorCode="PPERPKINFCDQU";
+		bugsnagClient.notify(ErrorObject, {
+			metaData: { CorrellationId: CorrellationId, ErrorCode: ErrorCode},
+				severity: 'error'
+                });
 	});
 };
 
