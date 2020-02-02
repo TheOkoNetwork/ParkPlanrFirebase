@@ -15,7 +15,22 @@ function InitAdminParksPage() {
 			metaData: { CorrellationId: CorrellationId, ErrorCode: ErrorCode},
 			severity: 'error'
 		});
+	});
 
+	db.collection("Parks").orderBy("Name","asc").get().then(function(ParkDocs) {
+		TemplateAdminParksPark=$('#TemplateAdminParksPark').html();
+		CompiledTemplateAdminParksPark=Template7.compile(TemplateAdminParksPark);
+
+		$('#AdminParksDiv').empty();
+		ParkDocs.forEach(function(ParkDoc) {
+			console.log(ParkDoc);
+			Park=ParkDoc.data();
+			Park.ID=ParkDoc.id;
+
+			$('#AdminParksDiv').append(CompiledTemplateAdminParksPark(Park));
+		});
+	}).catch(function(ErrorObject) {
+		ShowFatalErrorPage(ErrorObject,"PPADMPKDFCA");
 	});
 };
 
@@ -83,6 +98,56 @@ function InitAdminParksNewPage() {
 
 
 function AdminParkNewSubmit() {
+	Park={
+		Name: $('#AdminParkNewName').val(),
+		ParkCode: $('#AdminParkNewParkCode').val(),
+		Website: $('#AdminParkNewWebsiteURL').val(),
+		Logo: $('#AdminParkNewLogoURL').val(),
+		Country: $('#AdminParkNewCountry_code').val().toUpperCase(),
+		Active: false,
+		Queuetimes: false,
+		Ridecount: false,
+		OpeningTodayLastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+		Created: firebase.firestore.FieldValue.serverTimestamp()
+	};
+
+	MapURL=$('#AdminParkNewMapURL').val();
+	if (MapURL) {
+		console.log("Map URL provided, flagging as Maps true");
+		Park.Map=MapURL;
+		Park.Maps=true;
+	};
+
+	if (!Park.Name) {
+		console.log("Park name must be provided");
+		return;
+	};
+	if (!Park.ParkCode) {
+		console.log("A park code must be provided");
+		return;
+	};
+	if (!Park.Logo) {
+		console.log("A park logo URL must be provided");
+		return;
+	};
+
+	db.collection("Parks").where("ParkCode","==",Park.ParkCode).get().then(function(ParkDocs) {
+		if (ParkDocs.empty) {
+			console.log("No existing park with that park code found");
+			DocRef=db.collection("Parks").doc();
+			DocRef.set(Park).then(function() {
+				console.log(`Park created: ${DocRef.id}`);
+				switchPage(`/Admin/Parks/${DocRef.id}`);
+			}).catch(function(ErrorObject) {
+				GenericError(ErrorObject,"PPERADMPKADF");
+			});
+		} else {
+			ExistingParkCodeDoc=ParkDocs.docs[0];
+			console.log(`Duplicate park code, ${Park.ParkCode} is in use by ${ExistingParkCodeDoc.data().Name} (ID: ${ExistingParkCodeDoc.id})`);
+		};
+	}).catch(function(ErrorObject) {
+		GenericError(ErrorObject,"PPERADMPKPKCHKF");
+	});
 
 
 };

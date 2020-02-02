@@ -172,6 +172,10 @@ function pushstate(state,url,eventonly,title=config.SiteDefaultTitle) {
                         console.log("Loading About page");
                         loadPage('about');
                         break;
+		case "CIMonitoring":
+                        console.log("Loading CI Monitoring page");
+                        loadPage('CIMonitoring');
+                        break;
 		case "Admin":
 			console.log("Admin page");
 			if (firebase.auth().currentUser) {
@@ -204,7 +208,6 @@ function pushstate(state,url,eventonly,title=config.SiteDefaultTitle) {
 												break;
 											default:
 												console.log(`Unknown second fragment: ${stateurl[2]}`);
-						                        			loadPage('Admin/Parks/Park');
 												LoadCMS();
 										};
 									} else {
@@ -306,6 +309,20 @@ function pushstate(state,url,eventonly,title=config.SiteDefaultTitle) {
 			} else {
 	                        console.log("Loading submit park page");
        		                loadPage('submitPark');
+			};
+                        break;
+		case "parks":
+                        if (stateurl[1]) {
+	                        if (stateurl[2]) {
+					console.log("Specific park sub page");
+					LoadCMS();
+				} else {
+					console.log("Loading park information page");
+        	                	loadPage('parks/park');
+				};
+			} else {
+				console.log("Loading park list page");
+                        	loadPage('parks');
 			};
                         break;
 		default:
