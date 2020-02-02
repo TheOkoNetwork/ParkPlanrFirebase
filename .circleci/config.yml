@@ -20,6 +20,11 @@ jobs:
             ./scripts/IsFirestoreUpdates.sh
 
       - run:
+          name: Update version in Config.js
+          command: |
+            sed -i 's/{{APP_VERSION_HERE}}/VERSION/g' public/js/Config.js
+
+      - run:
           name: Deploy to dev
           command: |
             firebase use ${FIREBASE_PROJECT_ID} --token ${FIREBASE_TOOLS_TOKEN}
