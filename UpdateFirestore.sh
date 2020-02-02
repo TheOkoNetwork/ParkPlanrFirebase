@@ -1,6 +1,6 @@
 #!/bin/bash
 existingJSONIndexes="$(cat firestore.indexes.json)"
-indexes="$(firebase firestore:indexes)"
+indexes="$(firebase firestore:indexes --token ${FIREBASE_TOOLS_TOKEN})"
 exitCode=$?
 if [ $exitCode -ne 0 ];then
 	exit $exitCode
