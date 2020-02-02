@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Check for Firestore updates
           command: |
-            ./IsFirestoreUpdates.sh
+            ./scripts/IsFirestoreUpdates.sh
 
       - run:
           name: Deploy to dev
