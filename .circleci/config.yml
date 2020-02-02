@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Update version in Config.js
           command: |
-            sed -i 's/{{APP_VERSION_HERE}}/${CIRCLE_SHA1}/g' public/js/Config.js
+            sed -i 's/{{APP_VERSION_HERE}}/\$\{CIRCLE_SHA1\}/g' public/js/Config.js
 
       - run:
           name: Deploy to dev
