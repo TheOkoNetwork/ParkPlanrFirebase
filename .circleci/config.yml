@@ -23,7 +23,7 @@ jobs:
           name: Deploy to dev
           command: |
             firebase use ${FIREBASE_PROJECT_ID} --token ${FIREBASE_TOOLS_TOKEN}
-            firebase deploy -m "Deploying ${CIRCLE_SHA1} commit by ${CIRCLE_USERNAME} ${CIRCLE_BUILD_URL}" --token ${FIREBASE_TOOLS_TOKEN}
+            firebase deploy -f -m "(CircleCI) ${CIRCLE_SHA1} commit by ${CIRCLE_USERNAME} ${CIRCLE_BUILD_URL}" --token ${FIREBASE_TOOLS_TOKEN}
 
 workflows:
   version: 2
