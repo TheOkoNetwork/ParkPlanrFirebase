@@ -1,1 +1,156 @@
-
+{
+  "indexes": [
+    {
+      "collectionGroup": "Parks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Maps",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Parks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Parks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Queuetimes",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Parks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "RideCount",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "QueueTimes",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "QueueTimes",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "QueueTime",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "QueueTimes",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "QueueTime",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "Rides",
+      "fieldPath": "QueueTimes",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "DESCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "arrayConfig": "CONTAINS",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Rides",
+      "fieldPath": "TPJSID",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "DESCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "arrayConfig": "CONTAINS",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    }
+  ]
+}
