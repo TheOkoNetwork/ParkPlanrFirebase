@@ -12,6 +12,7 @@ jobs:
           command: |
             sudo npm i -g firebase-tools --ignore-scripts --unsafe-perm --no-progress;
             npm i --no-progress;
+            cd functions && npm i --no-progress && cd ../;
 
       - run:
           name: Check for Firestore updates
