@@ -27,7 +27,9 @@ service cloud.firestore {
 			allow read;
 		}
 		match /Parks/{ParkId} {
-			allow read;
+			allow read: if resource.data.Active == true
+                        allow read: if request.auth.token.Admin == true
+                        allow write: if request.auth.token.Admin == true
 		}
 		match /Parks/{ParkId}/Rides/{RideId} {
 			allow read;

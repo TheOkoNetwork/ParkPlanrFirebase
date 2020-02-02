@@ -1,5 +1,5 @@
 function FetchHeaderParks() {
-	db.collection("Parks").where("Active","==",true).get().then(function(ParkDocs) {
+	db.collection("Parks").where("Active","==",true).orderBy("Name","asc").get().then(function(ParkDocs) {
 		$('#HeaderParksDropdown').empty();
 		TemplateHeaderParksDropdown=$('#TemplateHeaderParksDropdown').html();
 		if (!TemplateHeaderParksDropdown) {

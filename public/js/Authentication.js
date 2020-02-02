@@ -97,6 +97,7 @@ function Signout() {
 	console.log("Signing out");
 	firebase.auth().signOut().then(function() {
 		console.log("Signed out");
+		switchPage('/');
 	}).catch(function(ErrorObject) {
 		console.log("Error signing out");
 		console.log(Errorobject);

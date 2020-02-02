@@ -68,14 +68,16 @@
                     <div class="col-md-6 col-lg-4" id="ParkInfoCard_{{this.id}}">
                         <div class="blog-card">
                             <div class="card shadow-soft border-light">
-                                <img src="{{this.data().Logo}}" class="card-img-top" alt="image">
-                                <div class="card-header">
+                                    <a href="/parks/{{this.data().ParkCode}}" onclick="loadPageTag(this);return false;">
+	                                <img src="{{this.data().Logo}}" class="card-img-top" alt="image">
+				    </a>
+	                         <div class="card-header">
                                     <div class="post-meta d-block">
                                         <span class="small text-gray"><i class="far fa-clock mr-2"></i>Last updated {{js "moment(this.data().OpeningTodayLastUpdated.toDate()).fromNow()"}}</span>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0">
-                                    <a href="/queuetimes/{{this.data().ParkCode}}">
+                                    <a href="/parks/{{this.data().ParkCode}}" onclick="loadPageTag(this);return false;">
                                         <h4><span class="ParkInfoCardName">{{this.data().Name}}</span></h4>
                                     </a>
 					{{#if this.data().OpenToday}}
@@ -98,7 +100,7 @@
 					{{/if}}
                                 </div>
                                 <div class="card-footer mx-4 px-0 pt-0">
-                                    <a class="btn btn-sm btn-secondary" href="/queuetimes/{{this.data().ParkCode}}">
+                                    <a class="btn btn-sm btn-secondary" href="/parks/{{this.data().ParkCode}}" onclick="loadPageTag(this);return false;">
                                     	See more
                                     </a>
                                 </div>
