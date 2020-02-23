@@ -20,10 +20,14 @@ jobs:
             ./scripts/IsFirestoreUpdates.sh
 
       - run:
-          name: Update version in Config.js
+          name: Update version in Config.js for public site
           command: |
-            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' public/js/Config.js
+            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/site/js/Config.js
 
+      - run:
+          name: Update version in Config.js for admin site
+          command: |
+            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/admin/js/Config.js
       - run:
           name: Deploy to dev
           command: |
