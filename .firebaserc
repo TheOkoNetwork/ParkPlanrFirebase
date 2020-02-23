@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "parkplanr-dev"
+  },
+  "targets": {
+    "parkplanr-dev": {
+      "hosting": {
+        "site": [
+          "parkplanr-dev"
+        ],
+        "admin": [
+          "parkplanradmindev"
+        ]
+      }
+    }
   }
 }

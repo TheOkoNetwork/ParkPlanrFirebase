@@ -8,8 +8,10 @@
       "npm --prefix \"$RESOURCE_DIR\" run lint"
     ]
   },
-  "hosting": {
-    "public": "public",
+  "hosting": [
+{
+    "target": "site",
+    "public": "hosting/site",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -22,6 +24,23 @@
       }
     ]
   },
+
+{
+    "target": "admin",
+    "public": "hosting/admin",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+],
   "storage": {
     "rules": "storage.rules"
   }
