@@ -81,9 +81,25 @@ const OnMessageReceived = functions.firestore.document('FacebookMessengerMessage
 
     await db.collection('FacebookMessengerMessages').doc(context.params.DocId).delete()
   } else {
+    conversationDoc = existingOpenConversation.docs[0]
+
+    conversationMessageDoc = db.collection('inbox').doc(conversationDoc.id).collection('messages').doc()
+    await conversationMessageDoc.set({
+      platform: {
+        messageID: message.message.mid,
+        rawBody: message
+      },
+      type: 'TEXT',
+      text: message.message.text,
+      received: admin.firestore.FieldValue.serverTimestamp(),
+      userFID: userFID
+    })
+
     console.log(`Existing conversation found for PSID: ${PSID}, marking read`)
     messageSendResult = await messenger.sendAction({ id: PSID, action: 'mark_seen' })
     console.log(messageSendResult)
+
+    await db.collection('FacebookMessengerMessages').doc(context.params.DocId).delete()
   }
 })
 exports = module.exports = OnMessageReceived
