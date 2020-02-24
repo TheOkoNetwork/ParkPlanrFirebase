@@ -5,50 +5,50 @@ service cloud.firestore {
 			allow read, write: if false;
 		}
 
-		match /Users/{UserId}/RideCount/{TripId} {
-                        allow read: if request.auth.uid == UserId
-                        allow write: if request.auth.uid == UserId
-                }
-		match /Users/{UserId} {
-                        allow read: if resource.data.Public == true
-                        allow write: if request.auth.uid == UserId
-                }
-		match /{path=**}/RideCount/{TripId} {
-                        allow read;
-                }
+		match /users/{userId}/rideCount/{TripId} {
+      allow read: if request.auth.uid == userId
+      allow write: if request.auth.uid == userId
+    }
+		match /users/{userId} {
+      allow read: if resource.data.public == true
+      allow write: if request.auth.uid == userId
+    }
+		match /{path=**}/rideCount/{tripId} {
+      allow read;
+    }
 
 
-		match /Users/{UserId}/RideCount/{TripId}/Rides/{RideCountId} {
-                        allow read: if request.auth.uid == UserId
-                        allow write: if request.auth.uid == UserId
-                }
+		match /users/{userId}/rideCount/{tripId}/rides/{rideCountId} {
+      allow read: if request.auth.uid == userId
+      allow write: if request.auth.uid == userId
+  }
 
-		match /Pages/{PageId} {
+		match /pages/{pageId} {
 			allow read;
 		}
-		match /Parks/{ParkId} {
-			allow read: if resource.data.Active == true
-                        allow read: if request.auth.token.Admin == true
-                        allow write: if request.auth.token.Admin == true
+		match /parks/{parkId} {
+			allow read: if resource.data.active == true
+      allow read: if request.auth.token.admin == true
+      allow write: if request.auth.token.admin == true
 		}
-		match /Parks/{ParkId}/Rides/{RideId} {
+		match /parks/{parkId}/rides/{rideId} {
+      allow read;
+      allow write: if request.auth.token.admin == true
+		}
+
+		match /{path=**}/rides/{rideId} {
 			allow read;
-                        allow write: if request.auth.token.Admin == true
 		}
 
-		match /{path=**}/Rides/{RideId} {
-			allow read;
+		match /parkSubmissions/{submissionId} {
+      allow read: if request.auth.token.admin == true
+			allow write: if request.auth.uid == request.resource.data.submitter.uid;
+			allow write: if !('submitter.uid' in request.resource.data);
 		}
 
-		match /ParkSubmissions/{SubmissionId} {
-                        allow read: if request.auth.token.Admin == true
-			allow write: if request.auth.uid == request.resource.data.Submitter.uid;
-			allow write: if !('Submitter.uid' in request.resource.data);
-		}
-
-		match /CMSPages/{PageID} {
-                        allow read: if request.auth.token.Admin == true
-                        allow write: if request.auth.token.Admin == true
+		match /cmsPages/{pageId} {
+      allow read: if request.auth.token.admin == true
+      allow write: if request.auth.token.admin == true
 			allow read: if resource.data.Public == true
 		}
 	}
