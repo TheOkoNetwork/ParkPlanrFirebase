@@ -1,19 +1,17 @@
-function RenderCMSPage() {
-	CMSPage=CMSPageDoc.data();
-	CMSPage.id=CMSPageDoc.id;
-	CMSPage.Content=CMSPageDoc.data().Content;
+function renderCMSPage () { // eslint-disable-line no-unused-vars
+  var cmsPage = cmsPageDoc.data()
+  cmsPage.id = cmsPageDoc.id
+  cmsPage.Content = cmsPageDoc.data().Content
 
-	if (typeof(CMSPage.Content)=="string") {
-        	CMSPage.Content=JSON.parse(CMSPage.Content);
-        };
+  if (typeof (cmsPage.Content) === 'string') {
+    cmsPage.Content = JSON.parse(cmsPage.Content)
+  };
 
+  console.log('Rendering CMS page')
 
-	console.log("Rendering CMS page");
+  var CompiledTemplateCMSPage = Template7.compile($('#TemplateCMSPage').html())
+  $('#CMSPageDiv').html(CompiledTemplateCMSPage(cmsPage))
 
-	TemplateCMSPage=$('#TemplateCMSPage').html();
-	CompiledTemplateCMSPage=Template7.compile(TemplateCMSPage);
-	$('#CMSPageDiv').html(CompiledTemplateCMSPage(CMSPage));
-
-	$('#CMSPageTitle').html(CMSPage.Title);
-	$('#CMSPageSubTitle').html(CMSPage.SubTitle);
+  $('#CMSPageTitle').html(cmsPage.Title)
+  $('#CMSPageSubTitle').html(cmsPage.SubTitle)
 };
