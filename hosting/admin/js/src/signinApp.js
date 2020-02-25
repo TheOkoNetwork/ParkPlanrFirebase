@@ -5,6 +5,9 @@ require('firebase/auth')
 
 const init = async () => {
   console.log(`I am running on version: ${config('version')}`)
+
+  console.table(config())
+
   const response = await window.fetch('/__/firebase/init.json')
   const firebaseConfig = await response.json()
   console.table(firebaseConfig)

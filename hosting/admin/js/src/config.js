@@ -5,6 +5,10 @@ export function config (key) {
   configStore.DevEnviromentFirebaseFunctionsUrl = 'https://us-central1-parkplanr-dev.cloudfunctions.net'
   configStore.version = '{{APP_VERSION_HERE}}'
 
+  if (!key) {
+    return configStore;
+  };
+
   if (configStore[key]) {
     return configStore[key]
   } else {
