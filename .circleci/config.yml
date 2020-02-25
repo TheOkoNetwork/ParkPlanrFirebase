@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Update version in Config.js for admin site
           command: |
-            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/admin/js/config.js
+            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/admin/js/src/config.js
 
       - run:
           name: style check admin site
