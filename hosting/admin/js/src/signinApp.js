@@ -18,6 +18,15 @@ const init = async () => {
   $('#signinWithEmailPasswordButton').on('click', function () {
     signinEmail()
   })
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      console.log('Authenticated, redirecting to home')
+      window.location.href = '/'
+    } else {
+      console.log('Unauthenticated')
+    }
+  })
 }
 
 function signinEmail () {
@@ -34,6 +43,11 @@ function signinEmail () {
   };
 
   console.log('Attempting to sign in with email address and password')
+
+  firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+    console.log('Error signing in with email address and password')
+    console.table(error)
+  })
 };
 
 init()
