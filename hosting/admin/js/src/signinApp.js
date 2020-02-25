@@ -19,6 +19,10 @@ const init = async () => {
     signinEmail()
   })
 
+  $('#signinWithFacebookButton').on('click', function () {
+    signinFacebook()
+  })
+
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log('Authenticated, redirecting to home')
@@ -50,4 +54,8 @@ function signinEmail () {
   })
 };
 
+function signinFacebook() {
+  var provider = new firebase.auth.FacebookAuthProvider();
+  firebase.auth().signInWithRedirect(provider);
+}
 init()
