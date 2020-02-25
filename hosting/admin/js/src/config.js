@@ -6,7 +6,7 @@ export function config (key) {
   configStore.version = '{{APP_VERSION_HERE}}'
 
   if (!key) {
-    return configStore;
+    return configStore
   };
 
   if (configStore[key]) {
