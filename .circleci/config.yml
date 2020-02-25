@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Install npm modules
           command: |
-            sudo npm i -g firebase-tools --ignore-scripts --unsafe-perm --no-progress;
+            sudo npm i -g standard firebase-tools --ignore-scripts --unsafe-perm --no-progress;
             npm i --no-progress;
             cd functions && npm i --no-progress && cd ../;
 
