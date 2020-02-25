@@ -46,6 +46,7 @@ build/Release
 # Dependency directories
 node_modules/
 
+
 # Optional npm cache directory
 .npm
 
@@ -69,6 +70,10 @@ serviceAccountKey.json
 
 #ThemeParks JS cache file
 themeparks.db
+
+
+#webpack build output
+/hosting/admin/js/dist
 
 #copyrighted images
 signinpressphotos
