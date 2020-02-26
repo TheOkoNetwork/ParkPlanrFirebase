@@ -10,9 +10,10 @@ const MakeAdmin = functions.https.onRequest((request, response) => {
   var uid
 
   uid = 'aCQ1HTs57yflWgfgh8RHE3lyM7w2' // Gregory
+  uid = 'G5urWzoptvOiy5OdRLDUCwOlPt23' // Gregory FB
   uid = 'igijrjp6IpZLf7FuzedzzZacTSC3' // Steve
 
-  return response.send(admin.auth().setCustomUserClaims(uid, { Admin: true }).then(() => {
+  return response.send(admin.auth().setCustomUserClaims(uid, { admin: true }).then(() => {
     return response.send('Made admin')
   }))
 })
