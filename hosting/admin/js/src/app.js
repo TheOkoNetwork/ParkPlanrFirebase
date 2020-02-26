@@ -8,20 +8,19 @@ const init = async () => {
 
   console.table(config())
 
-  var today = new Date();
-  $('.currentYear').text(today.getFullYear());
-  $('.currentVersion').text(config('version'));
+  var today = new Date()
+  $('.currentYear').text(today.getFullYear())
+  $('.currentVersion').text(config('version'))
 
-
-  //fetch firebase configuration json
+  // fetch firebase configuration json
   const response = await window.fetch('/__/firebase/init.json')
   const firebaseConfig = await response.json()
   console.table(firebaseConfig)
 
-  //initialize firebase
+  // initialize firebase
   firebase.initializeApp(firebaseConfig)
 
-  //when a user signs in, out or is first seen this session in either state
+  // when a user signs in, out or is first seen this session in either state
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       $('.currentUsername').text(firebase.auth().currentUser.displayName)
