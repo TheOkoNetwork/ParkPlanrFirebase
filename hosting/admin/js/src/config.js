@@ -4,7 +4,7 @@ export function config (key) {
   configStore.SiteDefaultTitle = 'ParkPlanr'
   configStore.DevEnviromentFirebaseFunctionsUrl = 'https://us-central1-parkplanr-dev.cloudfunctions.net'
   configStore.version = '{{APP_VERSION_HERE}}'
-  configStore.publicUrl = `parkplanr.app`
+  configStore.publicUrl = 'parkplanr.app'
 
   if (!key) {
     return configStore
