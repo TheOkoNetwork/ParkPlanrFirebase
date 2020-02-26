@@ -14,36 +14,26 @@ const init = async () => {
 
   firebase.initializeApp(firebaseConfig)
 
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      $('.currentUsername').text(firebase.auth().currentUser.displayName)
+      $('.userProfileImage').prop('src', firebase.auth().currentUser.photoURL)
+    } else {
+      console.log('User is unauthenticated')
+      window.location = '/signin'
+    }
+  })
 
-
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    $('.currentUsername').text(firebase.auth().currentUser.displayName);
-    $('.userProfileImage').prop('src',firebase.auth().currentUser.photoURL);
-  } else {
-    console.log("User is unauthenticated");
-    window.location="/signin";
-  }
-});
-
-
-
-
-//  firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
-//     if (!parkplanr.appfirebase.auth().currentUser.getIdTokenResult() .then((idTokenResult) => { // Confirm the user is an Admin. if (!!idTokenResult.claims.admin) { console.log("I am an admin"); } else { console.log("I am not an admin, i should not be here"); window.location.href="https://parkplanr.app" } }) .catch((error) => { console.log(error); });f!idTokenResult.claims.admin) {
-//       console.log("I am an admin");
-//     } else {
-//       console.log("I am not an admin, i should not be here");
-//        window.location.href="https://parkplanr.app"
-//     }
-//  }).catch((error) => {
-//    console.log(error);
-//  });
-
-
-
-
-
+  //  firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+  //     if (!parkplanr.appfirebase.auth().currentUser.getIdTokenResult() .then((idTokenResult) => { // Confirm the user is an Admin. if (!!idTokenResult.claims.admin) { console.log("I am an admin"); } else { console.log("I am not an admin, i should not be here"); window.location.href="https://parkplanr.app" } }) .catch((error) => { console.log(error); });f!idTokenResult.claims.admin) {
+  //       console.log("I am an admin");
+  //     } else {
+  //       console.log("I am not an admin, i should not be here");
+  //        window.location.href="https://parkplanr.app"
+  //     }
+  //  }).catch((error) => {
+  //    console.log(error);
+  //  });
 }
 
 init()
