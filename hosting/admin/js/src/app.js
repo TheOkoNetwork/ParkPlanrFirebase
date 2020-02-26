@@ -20,19 +20,16 @@ const init = async () => {
   // initialize firebase
   firebase.initializeApp(firebaseConfig)
 
-
   $('#signoutButton').on('click', function () {
     signout()
   })
-
-
 
   // when a user signs in, out or is first seen this session in either state
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       $('.currentUsername').text(firebase.auth().currentUser.displayName)
       $('.userProfileImage').prop('src', firebase.auth().currentUser.photoURL)
-      userAuthenticated(user);
+      userAuthenticated(user)
     } else {
       console.log('User is unauthenticated')
       window.location = '/signin'
@@ -40,9 +37,8 @@ const init = async () => {
   })
 }
 
-
-function userAuthenticated(user) {
-  console.log(user);
+function userAuthenticated (user) {
+  console.log(user)
 
   firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
     // Confirm the user is an Admin.
@@ -50,18 +46,18 @@ function userAuthenticated(user) {
       console.log('I am an admin')
     } else {
       console.log('I am not an admin, i should not be here')
-      window.location.href = 'https:parkplanr.app'
+      window.location.href = 'https://parkplanr.app'
     }
   }).catch((error) => {
     console.log(error)
   })
 }
 
-function signout() {
-  firebase.auth().signOut().then(function() {
-    console.log("Signed out");
-  }).catch(function(error) {
-    console.log("Error signing out",error);
-  });
+function signout () {
+  firebase.auth().signOut().then(function () {
+    console.log('Signed out')
+  }).catch(function (error) {
+    console.log('Error signing out', error)
+  })
 }
 init()
