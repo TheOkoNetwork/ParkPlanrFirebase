@@ -46,7 +46,7 @@ function userAuthenticated (user) {
       console.log('I am an admin')
     } else {
       console.log('I am not an admin, i should not be here')
-      window.location.href = 'https://parkplanr.app'
+      window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
     }
   }).catch((error) => {
     console.log(error)

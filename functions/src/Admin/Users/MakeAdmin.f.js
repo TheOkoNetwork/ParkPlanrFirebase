@@ -6,16 +6,27 @@ try {
   // yes this is meant to be empty
 }
 
-const MakeAdmin = functions.https.onRequest((request, response) => {
-  var uid
+const MakeAdmin = functions.https.onRequest(async (request, response) => {
+  var uids
+  var uidSetClaimPromises
+  var uidListString
 
-  uid = 'aCQ1HTs57yflWgfgh8RHE3lyM7w2' // Gregory
-  uid = 'G5urWzoptvOiy5OdRLDUCwOlPt23' // Gregory FB
-  uid = 'igijrjp6IpZLf7FuzedzzZacTSC3' // Steve
+  uids = [
+    'aCQ1HTs57yflWgfgh8RHE3lyM7w2', // Gregory
+    'G5urWzoptvOiy5OdRLDUCwOlPt23', // Gregory FB
+    'igijrjp6IpZLf7FuzedzzZacTSC3' // Steve
+  ]
 
-  return response.send(admin.auth().setCustomUserClaims(uid, { admin: true }).then(() => {
-    return response.send('Made admin')
-  }))
+  uidSetClaimPromises = []
+  uidListString = ''
+
+  uids.forEach((uid) => {
+    uidSetClaimPromises.push(admin.auth().setCustomUserClaims(uid, { admin: true }))
+    uidListString += ` ${uid}`
+  })
+
+  await Promise.all(uidSetClaimPromises)
+  response.send(`Made ${uidListString} admin`)
 })
 
 exports = module.exports = MakeAdmin
