@@ -11,7 +11,7 @@ const FBMessengerPageToken = functions.config().facebookmessengerwebhook.pagetok
 const FBMessenger = require('fb-messenger')
 const messenger = new FBMessenger({ token: FBMessengerPageToken })
 
-const OnMessageReceived = functions.firestore.document('FacebookMessengerMessages/{DocId}').onCreate(async (snapshot, context) => {
+const OnMessageReceived = functions.firestore.document('facebookMessengerMessages/{docId}').onCreate(async (snapshot, context) => {
   var message = snapshot.data()
   var PSID = message.sender.id
   var firstName = ''
@@ -58,6 +58,7 @@ const OnMessageReceived = functions.firestore.document('FacebookMessengerMessage
       },
       created: admin.firestore.FieldValue.serverTimestamp(),
       open: true,
+      read: false,
       userFID: userFID,
       firstName: firstName,
       lastName: lastName,
@@ -79,7 +80,7 @@ const OnMessageReceived = functions.firestore.document('FacebookMessengerMessage
     messageSendResult = await messenger.sendTextMessage({ id: PSID, text: AutoReplyMessageText })
     console.log(messageSendResult)
 
-    await db.collection('FacebookMessengerMessages').doc(context.params.DocId).delete()
+    await db.collection('facebookMessengerMessages').doc(context.params.docId).delete()
   } else {
     conversationDoc = existingOpenConversation.docs[0]
 
@@ -99,7 +100,7 @@ const OnMessageReceived = functions.firestore.document('FacebookMessengerMessage
     messageSendResult = await messenger.sendAction({ id: PSID, action: 'mark_seen' })
     console.log(messageSendResult)
 
-    await db.collection('FacebookMessengerMessages').doc(context.params.DocId).delete()
+    await db.collection('facebookMessengerMessages').doc(context.params.docId).delete()
   }
 })
 exports = module.exports = OnMessageReceived

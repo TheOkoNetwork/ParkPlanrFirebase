@@ -58,7 +58,7 @@ app.post('/webhook/', (req, res) => {
       console.log(body)
       const webhookEvent = entry.messaging[0]
       console.log(webhookEvent)
-      batch.set(db.collection('FacebookMessengerMessages').doc(), webhookEvent)
+      batch.set(db.collection('facebookMessengerMessages').doc(), webhookEvent)
     })
     return batch.commit().then(() => {
       return res.status(200).send('EVENT_RECEIVED')
