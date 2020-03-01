@@ -62,7 +62,11 @@ const OnMessageReceived = functions.firestore.document('facebookMessengerMessage
       userFID: userFID,
       firstName: firstName,
       lastName: lastName,
-      profileImage: profileImage
+      profileImage: profileImage,
+      lastMessageText: message.message.text,
+      lastMessageReceived: admin.firestore.FieldValue.serverTimestamp(),
+      subject: message.message.text,
+      folder: 'INBOX'
     })
 
     conversationMessageDoc = db.collection('inbox').doc(conversationDoc.id).collection('messages').doc()
@@ -83,6 +87,12 @@ const OnMessageReceived = functions.firestore.document('facebookMessengerMessage
     await db.collection('facebookMessengerMessages').doc(context.params.docId).delete()
   } else {
     conversationDoc = existingOpenConversation.docs[0]
+
+    await conversationDoc.ref.set({
+      read: false,
+      lastMessageText: message.message.text,
+      lastMessageReceived: admin.firestore.FieldValue.serverTimestamp()
+    }, { merge: true })
 
     conversationMessageDoc = db.collection('inbox').doc(conversationDoc.id).collection('messages').doc()
     await conversationMessageDoc.set({
