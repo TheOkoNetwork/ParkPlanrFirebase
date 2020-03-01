@@ -1,4 +1,5 @@
 import { config } from './config.js'
+import { stateUrl } from './stateUrl.js'
 
 var firebase = require('firebase/app')
 require('firebase/auth')
@@ -7,10 +8,6 @@ const init = async () => {
   console.log(`I am running on version: ${config('version')}`)
 
   console.table(config())
-
-  var today = new Date()
-  $('.currentYear').text(today.getFullYear())
-  $('.currentVersion').text(config('version'))
 
   // fetch firebase configuration json
   const response = await window.fetch('/__/firebase/init.json')
@@ -60,4 +57,45 @@ function signout () {
     console.log('Error signing out', error)
   })
 }
+
+window.loadFragment = function (fragment) {
+  console.log(`Loading fragment: ${fragment}`)
+  $.get(`/fragments/${fragment}.html`, function (data) {
+    try {
+      var isFragment = data.startsWith('<!-- FRAGMENT CONTENT-TAG_ID -->')
+
+      if (!isFragment) {
+        console.log('Fragment HTML file not found')
+        // Load404();
+        return
+      };
+
+      $(`.fragmentHolder[data-fragmentid="${fragment}"]`).each(function () {
+        $(this).replaceWith(data)
+      })
+
+      var today = new Date()
+      $('.currentYear').text(today.getFullYear())
+      $('.currentVersion').text(config('version'))
+    } catch (error) {
+      console.log(error)
+      // bugsnagClient.notify(error);
+      // showFatalErrorPage(error);
+    };
+  }).fail(function (error) {
+    console.log('Failed loading fragment')
+    // bugsnagClient.notify(error);
+    console.log(error)
+  })
+}
+
+$(document).ready(function () {
+  $('.defaultFragmentHolder').each(function () {
+    var fragment = $(this).data('fragmentid')
+    window.loadFragment(fragment)
+  })
+
+  console.log(stateUrl())
+})
+
 init()
