@@ -1,6 +1,6 @@
 import { config } from './config.js'
 import { stateUrl } from './stateUrl.js'
-import { inboxMessageHeader, inboxMessageCount } from './inbox.js'
+import { inboxMessagePage, inboxMessageHeader, inboxMessageCount } from './inbox.js'
 
 var firebase = require('firebase/app')
 var Navigo = require('navigo')
@@ -140,6 +140,12 @@ function loadPage (page) {
       $('.CurrentYear').text(new Date().getFullYear())
       // scrolls back to the top of the window
       window.scrollTo(0, 0)
+
+      switch (page) {
+        case 'inbox':
+          inboxMessagePage()
+          break
+      };
     } catch (error) {
       console.log(error)
       // showFatalErrorPage(error, 'PPERPGCA')

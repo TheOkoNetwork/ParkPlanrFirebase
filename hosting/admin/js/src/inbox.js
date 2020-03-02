@@ -1,6 +1,38 @@
 var Template7 = require('template7').default
 var moment = require('moment')
 
+var inboxMessagePage = async function () {
+  if (!window.db) {
+    console.log('DB not ready yet, unable to load inbox messages')
+    $('body').on('dbLoaded', function () {
+      console.log('DB Loaded, loading message header')
+      inboxMessagePage()
+    })
+    return
+  };
+
+  $('#inboxRefreshButton').on('click', function () {
+    console.log('Refreshing messages')
+    inboxMessagePage()
+  })
+
+  console.log('Loading inbox messages')
+  var inboxMessages = await window.db.collection('inbox').where('open', '==', true).where('folder', '==', 'INBOX').get()
+
+  var templateInboxMessage = Template7.compile($('#templateInboxMessage').html())
+
+  $('#templateInboxMessage').empty()
+  inboxMessages.forEach(function (inboxMessage) {
+    console.log(inboxMessage)
+
+    var data = inboxMessage.data()
+    data.id = inboxMessage.id
+    data.lastMessageReceivedAgo = moment(data.lastMessageReceived.toDate()).fromNow()
+
+    $('#inboxMessagesTbody').append(templateInboxMessage(data))
+  })
+}
+
 var inboxMessageHeader = function () {
   if (!window.db) {
     console.log('DB not ready yet, unable to load inbox messages header')
@@ -65,5 +97,6 @@ var inboxMessageCount = function () {
 
 export {
   inboxMessageCount,
-  inboxMessageHeader
+  inboxMessageHeader,
+  inboxMessagePage
 }

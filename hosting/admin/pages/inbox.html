@@ -21,7 +21,7 @@
     <section class="content">
       <div class="row">
         <div class="col-md-3">
-          <a href="compose.html" class="btn btn-primary btn-block mb-3">Compose</a>
+          <a href="/inbox/new" class="btn btn-primary btn-block mb-3" data-navigo>Compose</a>
 
           <div class="card">
             <div class="card-header">
@@ -49,17 +49,6 @@
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="far fa-file-alt"></i> Drafts
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fas fa-filter"></i> Junk
-                    <span class="badge bg-warning float-right">65</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-trash-alt"></i> Trash
                   </a>
                 </li>
               </ul>
@@ -127,11 +116,9 @@
                 </button>
                 <div class="btn-group">
                   <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
                 </div>
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+                <button type="button" class="btn btn-default btn-sm" id="inboxRefreshButton"><i class="fas fa-sync-alt"></i></button>
                 <div class="float-right">
                   1-50/200
                   <div class="btn-group">
@@ -144,22 +131,7 @@
               </div>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
-                  <tbody>
-                  <tr>
-                    <td>
-                      <div class="icheck-primary">
-                        <input type="checkbox" value="" id="check1">
-                        <label for="check1"></label>
-                      </div>
-                    </td>
-                    <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                    <td class="mailbox-name"><a href="/inbox/conversation/CONVERSATIONID?user" data-navigo>USERNAME HERE</a></td>
-                    <td class="mailbox-subject">SUBJECT HERE
-                    </td>
-                    <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
-                    <td class="mailbox-date">?? mins ago</td>
-                  </tr>
-                  </tbody>
+                  <tbody id="inboxMessagesTbody"></tbody>
                 </table>
                 <!-- /.table -->
               </div>
@@ -173,8 +145,6 @@
                 </button>
                 <div class="btn-group">
                   <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
                 </div>
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
@@ -196,3 +166,21 @@
       </div>
       <!-- /.row -->
     </section>
+
+
+
+<script id="templateInboxMessage" type="text/template7">
+  <tr>
+    <td>
+      <div class="icheck-primary">
+        <input type="checkbox" value="" id="check1">
+        <label for="check1"></label>
+      </div>
+    </td>
+    <td class="mailbox-star"><a href="#"><i class="far fa-circle text-warning"></i></a></td>
+    <td class="mailbox-name"><a href="/inbox/conversation/{{this.id}}" data-navigo>{{this.name}}</a></td>
+    <td class="mailbox-subject">{{this.subject}}</td>
+    <td class="mailbox-attachment">{{#if this.hasAttachments}}<i class="fas fa-paperclip"></i>{{/if}}</td>
+    <td class="mailbox-date">{{this.lastMessageReceivedAgo}}</td>
+  </tr>
+</script>
