@@ -1,6 +1,20 @@
 {
   "indexes": [
     {
+      "collectionGroup": "inbox",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "open",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lastMessageReceived",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "Parks",
       "queryScope": "COLLECTION",
       "fields": [
