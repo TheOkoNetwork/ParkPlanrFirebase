@@ -112,7 +112,7 @@ window.loadFragment = function (fragment) {
   })
 }
 
-function loadPage (page) {
+function loadPage (page, params) {
   $.get(`/pages/${page}.html`, function (data) {
     try {
       var isPage = data.startsWith('<!-- PAGE CONTENT-TAG_ID -->')
@@ -165,9 +165,10 @@ var router = new Navigo(root, useHash, hash)
 window.router = router
 
 router.on({
-  'inbox/:id': function () {
+  'inbox/conversation/:id': function (params) {
     console.log('I am on a inbox conversation')
-    loadPage('inbox/conversation')
+    console.log(params)
+    loadPage('inbox/conversation', params)
   },
   inbox: function () {
     console.log('I am on the inbox main page')

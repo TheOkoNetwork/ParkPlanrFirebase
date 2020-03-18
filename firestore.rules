@@ -3,9 +3,12 @@ service cloud.firestore {
 	match /databases/{database}/documents {
 		match /{document=**} {
 			allow read, write: if false;
+
+      allow read: if request.auth.token.admin == true
+      allow write: if request.auth.token.admin == true
 		}
 
-		match /users/{userId}/rideCount/{TripId} {
+		match /users/{userId}/ridecount/{TripId} {
       allow read: if request.auth.uid == userId
       allow write: if request.auth.uid == userId
     }
@@ -13,12 +16,12 @@ service cloud.firestore {
       allow read: if resource.data.public == true
       allow write: if request.auth.uid == userId
     }
-		match /{path=**}/rideCount/{tripId} {
+		match /{path=**}/ridecount/{tripId} {
       allow read;
     }
 
 
-		match /users/{userId}/rideCount/{tripId}/rides/{rideCountId} {
+		match /users/{userId}/ridecount/{tripId}/rides/{rideCountId} {
       allow read: if request.auth.uid == userId
       allow write: if request.auth.uid == userId
   }
