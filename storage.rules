@@ -1,7 +1,11 @@
 service firebase.storage {
 	match /b/{bucket}/o {
 		match /CMSImages/{ImageFilename} {
-                        allow write: if request.auth.token.Admin == true
+      allow write: if request.auth.token.admin == true
+			allow read;
+		}
+		match /rides/{ImageFilename} {
+      allow write: if request.auth.token.admin == true
 			allow read;
 		}
 	}

@@ -11,9 +11,20 @@ var inboxMessagePage = async function () {
     return
   };
 
-  $('#inboxRefreshButton').on('click', function () {
-    console.log('Refreshing messages')
-    inboxMessagePage()
+  $('.inboxRefreshButton').each(function () {
+    $(this).off('click')
+    $(this).on('click', function () {
+      console.log('Refreshing messages')
+      inboxMessagePage()
+    })
+  })
+
+  $('.inboxTrashButton').each(function () {
+    $(this).off('click')
+    $(this).on('click', function () {
+      console.log('Loading trash confirmation prompt')
+      //    inboxMessagePage()
+    })
   })
 
   console.log('Loading inbox messages')
@@ -31,6 +42,7 @@ var inboxMessagePage = async function () {
 
     $('#inboxMessagesTbody').append(templateInboxMessage(data))
   })
+  window.router.updatePageLinks()
 }
 
 var inboxMessageHeader = function () {
