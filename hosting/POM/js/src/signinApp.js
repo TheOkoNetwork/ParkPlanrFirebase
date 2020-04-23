@@ -27,6 +27,10 @@ const init = async () => {
     signinGoogle()
   })
 
+  $('#signinWithAppleButton').on('click', function () {
+    signinApple()
+  })
+
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log('Authenticated, redirecting to home')
@@ -64,6 +68,11 @@ function signinFacebook () {
 }
 function signinGoogle () {
   var provider = new firebase.auth.GoogleAuthProvider()
+  firebase.auth().signInWithRedirect(provider)
+}
+
+function signinApple () {
+  var provider = new firebase.auth.OAuthProvider('apple.com')
   firebase.auth().signInWithRedirect(provider)
 }
 
