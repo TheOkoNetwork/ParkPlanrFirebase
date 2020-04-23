@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "fb-messenger": "^2.3.1",
     "firebase-admin": "^8.0.0",
-    "firebase-functions": "^3.1.0",
+    "firebase-functions": "^3.6.0",
     "glob": "^7.1.6",
     "gravatar": "^1.8.0",
     "moment": "^2.24.0",
