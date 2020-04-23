@@ -31,8 +31,8 @@
   },
 
 {
-    "target": "admin",
-    "public": "hosting/admin",
+    "target": "POM",
+    "public": "hosting/POM",
     "ignore": [
       "firebase.json",
       "**/.*",
