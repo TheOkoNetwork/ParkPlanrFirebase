@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./scripts/standardStyleAdminSite.sh
+./scripts/standardStylePOM.sh

@@ -8,7 +8,7 @@
         "site": [
           "parkplanr-dev"
         ],
-        "admin": [
+        "POM": [
           "parkplanradmindev"
         ]
       }
