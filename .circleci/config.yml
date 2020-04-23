@@ -25,19 +25,19 @@ jobs:
             sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/site/js/Config.js
 
       - run:
-          name: Update version in Config.js for admin site
+          name: Update version in Config.js for POM
           command: |
-            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/admin/js/src/config.js
+            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/POM/js/src/config.js
 
       - run:
-          name: style check admin site
+          name: style check POM
           command: |
-            ./scripts/standardStyleAdminSite.sh
+            ./scripts/standardStylePOM.sh
 
       - run:
-          name: build admin site js modules
+          name: build POM js modules
           command: |
-            ./scripts/buildAdminSite.sh
+            ./scripts/buildPOM.sh
 
       - run:
           name: Deploy to dev
