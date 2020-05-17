@@ -20,8 +20,8 @@
     ],
     "rewrites": [
       {
-        "source": "/FacebookMessenger/**",
-        "function": "FacebookMessengerApi"
+        "source": "/ChatbotApi/**",
+        "function": "ChatbotApi"
       },
       {
         "source": "**",
