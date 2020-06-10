@@ -3,6 +3,8 @@ import { config } from './config.js'
 var firebase = require('firebase/app')
 require('firebase/auth')
 
+window.firebase = firebase
+
 const init = async () => {
   console.log(`I am running on version: ${config('version')}`)
 
@@ -32,14 +34,27 @@ const init = async () => {
   })
 
   firebase.auth().onAuthStateChanged(function (user) {
+    console.log('Auth state changed')
+    console.log(user)
     if (user) {
       console.log('Authenticated, redirecting to home')
       window.location.href = '/'
     } else {
       console.log('Unauthenticated')
+      getFirebaseRedirectResult()
     }
   })
 }
+function getFirebaseRedirectResult () {
+  firebase.auth().getRedirectResult().then(function (result) {
+    console.log('Got redirect result')
+    console.log(result)
+  }).catch(function (error) {
+    console.log('Got redirect error')
+    console.log(error)
+    window.alert(error.message)
+  })
+};
 
 function signinEmail () {
   var email = $('#email').val()
