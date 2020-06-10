@@ -6,6 +6,8 @@ export function config (key) {
   configStore.version = '{{APP_VERSION_HERE}}'
   configStore.publicUrl = 'parkplanr.app'
 
+  configStore.firebaseFunctionsUrl = 'https://us-central1-parkplanr-dev.cloudfunctions.net'
+
   if (!key) {
     return configStore
   };

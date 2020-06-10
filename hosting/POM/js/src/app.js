@@ -1,11 +1,14 @@
 import { config } from './config.js'
 import { stateUrl } from './stateUrl.js'
 import { inboxMessagePage, inboxMessageHeader, inboxMessageCount } from './inbox.js'
+import { cmsPagesLoad, cmsPageLoadEdit } from './cms.js'
 
 var firebase = require('firebase/app')
+window.firebase = firebase
 var Navigo = require('navigo')
 require('firebase/auth')
 require('firebase/firestore')
+require('firebase/storage')
 
 window.stateData = {}
 
@@ -24,13 +27,16 @@ const init = async () => {
   window.db = firebase.firestore()
   $('body').trigger('dbLoaded')
 
+  window.storage = firebase.storage()
+  $('body').trigger('storageLoaded')
+
   inboxMessageCount()
 
   $('#signoutButton').on('click', function () {
     signout()
   })
 
-  // when a user signs in, out or is first seen this session in either state
+  // when a user signs in, out or is ficmsPagesLoadrst seen this session in either state
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       $('.currentUsername').text(firebase.auth().currentUser.displayName)
@@ -145,6 +151,12 @@ function loadPage (page, params) {
         case 'inbox':
           inboxMessagePage()
           break
+        case 'cms':
+          cmsPagesLoad()
+          break
+        case 'cms/edit':
+          cmsPageLoadEdit(params)
+          break
       };
     } catch (error) {
       console.log(error)
@@ -173,6 +185,30 @@ router.on({
   inbox: function () {
     console.log('I am on the inbox main page')
     loadPage('inbox')
+  },
+  cms: {
+    as: 'cmsPage.list',
+    uses: function (params) {
+      console.log('I am on a cms list page')
+      console.log(params)
+      loadPage('cms', params)
+    }
+  },
+  'cms/new': {
+    as: 'cmsPage.new',
+    uses: function (params) {
+      console.log('I am on a cms new page')
+      console.log(params)
+      loadPage('cms/edit', params)
+    }
+  },
+  'cms/:pageId': {
+    as: 'cmsPage.edit',
+    uses: function (params) {
+      console.log('I am on a cms edit page')
+      console.log(params)
+      loadPage('cms/edit', params)
+    }
   },
   '/': function () {
     console.log('I am on the home page')
