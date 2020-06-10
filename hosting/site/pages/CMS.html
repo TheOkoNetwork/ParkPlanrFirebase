@@ -24,11 +24,11 @@
 			<p>Page Doc ID: {{id}} <button class="btn btn-primary" onclick="switchPage('/Admin/CMS/Pages/{{id}}')"><span class="fas fa-pencil"></span> Edit</button></p>
 		{{/if}}
 	{{/if}}
-	{{#unless Public}}
+	{{#unless public}}
 		<p>This page is NOT public, users without administration permissions cannot access this page.</p>
 	{{/unless}}
 
-	{{#each Content.blocks}}
+	{{#each content.blocks}}
 		{{#switch type}}
 		        {{#case 'header'}}<h{{data.level}}>{{data.text}}</h{{data.level}}>{{/case}}
 		        {{#case 'paragraph'}}

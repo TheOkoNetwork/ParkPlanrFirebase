@@ -399,7 +399,7 @@ function genericError (errorObject, code) { // eslint-disable-line no-unused-var
 
 function loadCMS (ShowHiddenPages) { // eslint-disable-line no-unused-vars
   var pageSLUG = window.stateurl.join('/')
-  db.collection('CMSPages').where('SLUG', '==', pageSLUG).where('Public', '==', true).get().then(function (CMSPages) {
+  db.collection('cmsPages').where('slug', '==', pageSLUG).where('public', '==', true).get().then(function (CMSPages) {
     if (CMSPages.empty) {
       console.log(`No CMS page for SLUG: ${pageSLUG} found`)
       if (firebase.auth().currentUser) {

@@ -11,6 +11,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')({ origin: true })
 const app = express()
 const slashes = require('connect-slashes')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(functions.config().sendgrid.key)
 
 app.use(cors)
 app.use(bodyParser.json())
@@ -54,7 +56,23 @@ app.post('/passwordReset/', async (req, res) => {
       console.log(userAccount)
       var passwordResetLink = await admin.auth().generatePasswordResetLink(userEmail)
       console.log(`Got password reset link: ${passwordResetLink}`)
-      //send the link in an email to the email address on file
+
+      var emailData = {
+        to: userEmail,
+        from: 'support@parkplanr.app',
+        templateId: 'd-2815cea91a5241b585f8a5e5695cd5fe',
+        dynamic_template_data: {
+          passwordResetUrl: passwordResetLink
+        }
+      }
+      console.log('Sending email')
+      console.log(emailData)
+      var emailResult = await sgMail.send(emailData)
+      console.log(emailResult)
+      actionsData.actions.push({ say: `Please check your email account (${userEmail}), and follow the instructions in the email we just sent you to reset your password` })
+      actionsData.actions.push({ say: 'Is there anything else we can do for you?' })
+      res.status(200).json(actionsData)
+      return
     } catch (error) {
       console.log('Error looking up user by email')
       console.log(error)
@@ -77,6 +95,7 @@ app.post('/passwordReset/', async (req, res) => {
       }
     }
   })
+  actionsData.actions.push({ say: 'Just a second whilst we find your account' })
   res.status(200).json(actionsData)
 })
 exports = module.exports = functions.https.onRequest(app)
