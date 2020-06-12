@@ -30,6 +30,10 @@ async function cmsPageLoadEdit (params = {}) {
     return
   };
 
+  $('#cmsPageDeleteButton').on('click', async function () {
+    console.log('CMS delete button clicked')
+  })
+
   $('#cmsPageSaveButton').on('click', async function () {
     console.log('CMS save button clicked')
     console.log(adminCMSPagesEditor)
