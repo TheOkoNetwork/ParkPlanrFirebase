@@ -59,11 +59,93 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "queuetimes",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "name.name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "parks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "active",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "ridecount",
           "order": "ASCENDING"
         },
         {
           "fieldPath": "name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "parks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "ridecount",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "name.name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "name.name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "queuetimes",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "name.name",
           "order": "ASCENDING"
         }
       ]
@@ -107,30 +189,8 @@
       ]
     },
     {
-      "collectionGroup": "Rides",
-      "fieldPath": "QueueTimes",
-      "indexes": [
-        {
-          "order": "ASCENDING",
-          "queryScope": "COLLECTION"
-        },
-        {
-          "order": "DESCENDING",
-          "queryScope": "COLLECTION"
-        },
-        {
-          "arrayConfig": "CONTAINS",
-          "queryScope": "COLLECTION"
-        },
-        {
-          "order": "ASCENDING",
-          "queryScope": "COLLECTION_GROUP"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "Rides",
-      "fieldPath": "TPJSID",
+      "collectionGroup": "rides",
+      "fieldPath": "queueScraper.tpjs.enabled",
       "indexes": [
         {
           "order": "ASCENDING",
