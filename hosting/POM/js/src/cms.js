@@ -30,6 +30,11 @@ async function cmsPageLoadEdit (params = {}) {
     return
   };
 
+  $('#cmsPageSaveButton').on('click', function () {
+    console.log('CMS save button clicked')
+    console.log(adminCMSPagesEditor)
+  })
+
   var cmsPageData
   if (params.pageId) {
     console.log('Loading page to edit')
