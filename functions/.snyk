@@ -5,12 +5,12 @@ ignore: {}
 patch:
   SNYK-JS-LODASH-567746:
     - firebase-functions > lodash:
-        patched: '2020-06-12T17:02:12.853Z'
+        patched: '2020-06-12T16:57:21.647Z'
     - twilio > lodash:
-        patched: '2020-06-12T17:02:12.853Z'
+        patched: '2020-06-12T16:57:21.647Z'
     - open-graph-scraper > cheerio > lodash:
-        patched: '2020-06-12T17:02:12.853Z'
+        patched: '2020-06-12T16:57:21.647Z'
     - request-promise > request-promise-core > lodash:
-        patched: '2020-06-12T17:02:12.853Z'
+        patched: '2020-06-12T16:57:21.647Z'
     - open-graph-scraper > lodash:
-        patched: '2020-06-12T17:02:12.853Z'
+        patched: '2020-06-12T16:57:21.647Z'
