@@ -75,7 +75,9 @@ async function cmsPageLoadEdit (params = {}) {
       lastEditedByUser: window.auth.currentUser.uid
     }, { merge: true })
     console.log('Saved')
-    window.router.navigate(window.router.generate('cmsPage.edit', { pageId: cmsPageDoc.id, saved: true }))
+    window.router.navigate(window.router.generate('cmsPage.edit', { pageId: cmsPageDoc.id }))
+    // TODO: This bit nicer
+    window.alert('Saved!')
   })
 
   var cmsPageData
