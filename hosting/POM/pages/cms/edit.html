@@ -12,7 +12,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/" data-navigo>Home</a></li>
-              <li class="breadcrumb-item">CMS</li>
+              <li class="breadcrumb-item"><a href="/cms" data-navigo>CMS</a></li>
               <li class="breadcrumb-item active showIfCmsEdit" style="display:none;">Edit</li>
               <li class="breadcrumb-item active showIfCmsAdd" style="display:none;">New page</li>
             </ol>
@@ -59,6 +59,9 @@
           <a class="btn btn-success" id="cmsPageSaveButton">
             <span class="showIfCmsAdd"><span class="fas fa-plus"></span> Add</span>
             <span class="showIfCmsEdit"><span class="fas fa-save"></span> Save</span>
+          </a>
+          <a class="btn btn-danger" id="cmsPageDeleteButton">
+            <span class="showIfCmsEdit" style="display:none;"><span class="fas fa-trash"></span> Delete</span>
           </a>
           <div id="cmsPagesEditor"></div>
         </div>
