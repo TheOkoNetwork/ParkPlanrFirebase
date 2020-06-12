@@ -81,7 +81,7 @@ async function cmsPageLoadEdit (params = {}) {
   })
 
   var cmsPageData
-  if (params.pageId) {
+  if (params && params.pageId) {
     console.log('Loading page to edit')
     $('.showIfCmsEdit').show()
     $('.showIfCmsAdd').hide()
