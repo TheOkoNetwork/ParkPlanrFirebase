@@ -1,7 +1,7 @@
 {
-  "name": "parkplanrfirebaseadminjs",
+  "name": "POM",
   "version": "1.0.0",
-  "description": "",
+  "description": "JS for the ParkPlanr Operations Manager (POM)",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

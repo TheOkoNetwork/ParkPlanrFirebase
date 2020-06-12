@@ -30,9 +30,52 @@ async function cmsPageLoadEdit (params = {}) {
     return
   };
 
-  $('#cmsPageSaveButton').on('click', function () {
+  $('#cmsPageSaveButton').on('click', async function () {
     console.log('CMS save button clicked')
     console.log(adminCMSPagesEditor)
+
+    var title = $('#pageCmsEditTitle').val()
+    var subTitle = $('#pageCmsEditTitle').val()
+    var slug = $('#pageCmsEditSlug').val()
+
+    // TODO: Implement the public checkbox
+    var publicPage = true
+    // var publicPage = $('#AdminCMSPagesPublic-0').is(':checked')
+
+    if (!title) {
+      console.log('Title missing')
+      return
+    };
+    if (!slug) {
+      console.log('SLUG missing')
+      return
+    };
+
+    console.log('Fetching page content from editor')
+    var pageContent = await adminCMSPagesEditor.save()
+    console.log(pageContent)
+
+    var pageId = window.router._lastRouteResolved.params.pageId
+    var cmsPageDoc
+    if (pageId) {
+      console.log('Saving')
+      cmsPageDoc = window.db.collection('cmsPages').doc(pageId)
+    } else {
+      console.log('Adding')
+      cmsPageDoc = window.db.collection('cmsPages').doc()
+    };
+
+    console.log('Writing document')
+    await cmsPageDoc.set({
+      public: publicPage,
+      content: JSON.stringify(pageContent),
+      title: title,
+      subTitle: subTitle,
+      slug: slug,
+      lastEditedByUser: window.auth.currentUser.uid
+    }, { merge: true })
+    console.log('Saved')
+    window.router.navigate(window.router.generate('cmsPage.edit', { pageId: cmsPageDoc.id, saved: true }))
   })
 
   var cmsPageData

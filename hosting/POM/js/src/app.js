@@ -30,17 +30,20 @@ const init = async () => {
   window.storage = firebase.storage()
   $('body').trigger('storageLoaded')
 
+  window.auth = firebase.auth()
+  $('body').trigger('authLoaded')
+
   inboxMessageCount()
 
   $('#signoutButton').on('click', function () {
     signout()
   })
 
-  // when a user signs in, out or is ficmsPagesLoadrst seen this session in either state
-  firebase.auth().onAuthStateChanged(function (user) {
+  // when a user signs in, out or is first seen this session in either state
+  window.auth.onAuthStateChanged(function (user) {
     if (user) {
-      $('.currentUsername').text(firebase.auth().currentUser.displayName)
-      $('.userProfileImage').prop('src', firebase.auth().currentUser.photoURL)
+      $('.currentUsername').text(window.auth.currentUser.displayName)
+      $('.userProfileImage').prop('src', window.auth.currentUser.photoURL)
       userAuthenticated(user)
     } else {
       console.log('User is unauthenticated')
@@ -52,7 +55,7 @@ const init = async () => {
 function userAuthenticated (user) {
   console.log(user)
 
-  firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+  window.auth.currentUser.getIdTokenResult().then((idTokenResult) => {
     // Confirm the user is an Admin.
     if (idTokenResult.claims.admin) {
       console.log('I am an admin')
@@ -66,7 +69,7 @@ function userAuthenticated (user) {
 }
 
 function signout () {
-  firebase.auth().signOut().then(function () {
+  window.auth.signOut().then(function () {
     console.log('Signed out')
   }).catch(function (error) {
     console.log('Error signing out', error)
