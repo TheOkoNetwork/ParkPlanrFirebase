@@ -19,6 +19,8 @@ async function parksLoad () {
     // name.name is the default name, planning on eventually having
     // name.EN name.DE etc...
     park.nameDefault = park.name.name
+
+    park.country = park.location.address.country
     parks.push(park)
   })
 
@@ -51,6 +53,7 @@ async function parksLoad () {
     fields: [
       { title: 'ID', name: 'id', type: 'text', width: 150 },
       { title: 'Name', name: 'nameDefault', type: 'text', width: 150 },
+      { title: 'Country', name: 'country', type: 'text', width: 25 },
       {
         title: 'Active',
         name: 'active',
@@ -101,6 +104,13 @@ async function parksLoad () {
             keys: ['nameDefault']
           })
           filteredItems = nameFilterFuse.search(filter.nameDefault)
+        }
+
+        if (filter.country) {
+          var countryFilterFuse = new Fuse(filteredItems, {
+            keys: ['country']
+          })
+          filteredItems = countryFilterFuse.search(filter.country)
         }
 
         return filteredItems
