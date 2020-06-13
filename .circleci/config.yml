@@ -17,12 +17,12 @@ jobs:
       - run:
           name: Functions standard JS
           command: |
-            cd functions && npm run standard && cd ../;
+            cd functions && npm run standardfix && cd ../;
 
       - run:
           name: Functions lint
           command: |
-            cd functions && npm run lint && cd ../;
+            cd functions && npm run lintfix && cd ../;
 
       - run:
           name: Check for Firestore updates
