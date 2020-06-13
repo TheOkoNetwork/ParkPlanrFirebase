@@ -35,6 +35,7 @@ async function getData() {
     .orderBy('name.name', 'asc')
     .get()
   console.log(`Got ${parkDocs.docs.length} parks`);
+  console.log(parkDocs.docs[0].data());
 }
 
 getData(1);

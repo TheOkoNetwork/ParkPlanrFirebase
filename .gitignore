@@ -67,6 +67,7 @@ node_modules/
 
 #Service account credentials
 serviceAccountKey.json
+serviceAccountKey_Dev.json
 
 #ThemeParks JS cache file
 themeparks.db
