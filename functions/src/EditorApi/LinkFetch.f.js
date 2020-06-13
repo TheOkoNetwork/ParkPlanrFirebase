@@ -15,6 +15,7 @@ const LinkFetch = functions.https.onRequest((request, response) => {
   var SiteHostname
   var CorrellationID
   var result
+  var linkUrl
 
   cors(request, response, () => {
     var options = { url: request.query.url }
@@ -32,7 +33,12 @@ const LinkFetch = functions.https.onRequest((request, response) => {
           OGRaw: result.data
         }
       }
-      SiteHostname = result.data.ogUrl.split('/')[2]
+      if (result.data.ogUrl) {
+        linkUrl = result.data.ogUrl
+      } else {
+        linkUrl = result.requestUrl
+      };
+      SiteHostname = linkUrl.split('/')[2]
       switch (SiteHostname) {
         case 'twitter.com':
           console.log('Twitter')
