@@ -46,15 +46,19 @@ const init = async () => {
   })
 }
 function getFirebaseRedirectResult () {
-  firebase.auth().getRedirectResult().then(function (result) {
-    console.log('Got redirect result')
-    console.log(result)
-  }).catch(function (error) {
-    console.log('Got redirect error')
-    console.log(error)
-    window.alert(error.message)
-  })
-};
+  firebase
+    .auth()
+    .getRedirectResult()
+    .then(function (result) {
+      console.log('Got redirect result')
+      console.log(result)
+    })
+    .catch(function (error) {
+      console.log('Got redirect error')
+      console.log(error)
+      window.alert(error.message)
+    })
+}
 
 function signinEmail () {
   var email = $('#email').val()
@@ -63,19 +67,22 @@ function signinEmail () {
   if (!email) {
     console.log('No email address provided')
     return
-  };
+  }
   if (!password) {
     console.log('No password provided')
     return
-  };
+  }
 
   console.log('Attempting to sign in with email address and password')
 
-  firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-    console.log('Error signing in with email address and password')
-    console.table(error)
-  })
-};
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch(function (error) {
+      console.log('Error signing in with email address and password')
+      console.table(error)
+    })
+}
 
 function signinFacebook () {
   var provider = new firebase.auth.FacebookAuthProvider()

@@ -8,4 +8,4 @@ export function stateUrl () {
   url.splice(0, 2)
   console.log(url)
   return url
-};
+}
