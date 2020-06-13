@@ -32,6 +32,22 @@ async function cmsPageLoadEdit (params = {}) {
 
   $('#cmsPageDeleteButton').on('click', async function () {
     console.log('CMS delete button clicked')
+    // TODO: This but prettier
+    var deleteConfirm = window.confirm(
+      'Are you sure you want to delete this page?'
+    )
+    if (deleteConfirm) {
+      console.log('Deleting')
+
+      var pageId = window.router._lastRouteResolved.params.pageId
+      var cmsPageDoc = window.db.collection('cmsPages').doc(pageId)
+      await cmsPageDoc.delete()
+      console.log('Deleted')
+      window.router.navigate(window.router.generate('cmsPage.list'))
+      window.alert('Page deleted')
+    } else {
+      console.log('Aborting delete')
+    }
   })
 
   $('#cmsPageSaveButton').on('click', async function () {
