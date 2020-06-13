@@ -16,7 +16,9 @@ async function parksLoad () {
   parkDocs.forEach(function (parkDoc) {
     var park = parkDoc.data()
     park.id = parkDoc.id
-    park.nameDefault = parkDoc.name.name
+    // name.name is the default name, planning on eventually having
+    // name.EN name.DE etc...
+    park.nameDefault = park.name.name
     parks.push(park)
   })
 
