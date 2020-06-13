@@ -1,6 +1,10 @@
 import { config } from './config.js'
 import { stateUrl } from './stateUrl.js'
-import { inboxMessagePage, inboxMessageHeader, inboxMessageCount } from './inbox.js'
+import {
+  inboxMessagePage,
+  inboxMessageHeader,
+  inboxMessageCount
+} from './inbox.js'
 import { cmsPagesLoad, cmsPageLoadEdit } from './cms.js'
 
 var firebase = require('firebase/app')
@@ -36,7 +40,7 @@ const init = async () => {
   inboxMessageCount()
 
   $('#signoutButton').on('click', function () {
-    signout()
+    window.auth.signOut()
   })
 
   // when a user signs in, out or is first seen this session in either state
@@ -55,31 +59,26 @@ const init = async () => {
 function userAuthenticated (user) {
   console.log(user)
 
-  window.auth.currentUser.getIdTokenResult().then((idTokenResult) => {
-    // Confirm the user is an Admin.
-    if (idTokenResult.claims.admin) {
-      console.log('I am an admin')
-    } else {
-      console.log('I am not an admin, i should not be here')
-      window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
-    }
-  }).catch((error) => {
-    console.log(error)
-  })
-}
-
-function signout () {
-  window.auth.signOut().then(function () {
-    console.log('Signed out')
-  }).catch(function (error) {
-    console.log('Error signing out', error)
-  })
+  window.auth.currentUser
+    .getIdTokenResult()
+    .then((idTokenResult) => {
+      // Confirm the user is an Admin.
+      if (idTokenResult.claims.admin) {
+        console.log('I am an admin')
+      } else {
+        console.log('I am not an admin, i should not be here')
+        window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 function load404 () {
   // TODO: This but better
   $('#contentDiv').html('4 oh 4')
-};
+}
 
 window.loadFragment = function (fragment) {
   console.log(`Loading fragment: ${fragment}`)
@@ -91,7 +90,7 @@ window.loadFragment = function (fragment) {
         console.log('Fragment HTML file not found')
         // load404();
         return
-      };
+      }
 
       $(`.fragmentHolder[data-fragmentid="${fragment}"]`).each(function () {
         $(this).replaceWith(data)
@@ -108,12 +107,12 @@ window.loadFragment = function (fragment) {
         case 'headerNav':
           inboxMessageHeader()
           break
-      };
+      }
     } catch (error) {
       console.log(error)
       // bugsnagClient.notify(error);
       // showFatalErrorPage(error);
-    };
+    }
   }).fail(function (error) {
     console.log('Failed loading fragment')
     // bugsnagClient.notify(error);
@@ -125,12 +124,14 @@ function loadPage (page, params) {
   $.get(`/pages/${page}.html`, function (data) {
     try {
       var isPage = data.startsWith('<!-- PAGE CONTENT-TAG_ID -->')
-      var isStandalonePage = data.startsWith('<!-- STANDALONE PAGE CONTENT-TAG_ID -->')
+      var isStandalonePage = data.startsWith(
+        '<!-- STANDALONE PAGE CONTENT-TAG_ID -->'
+      )
       if (!isPage && !isStandalonePage) {
         console.log('Page HTML file not found')
         load404()
         return
-      };
+      }
 
       // loads the page content into the dom
       if (isPage) {
@@ -141,7 +142,7 @@ function loadPage (page, params) {
         $('#contentDiv').html(data)
       } else {
         $('body').html(data)
-      };
+      }
       router.updatePageLinks()
       inboxMessageCount()
 
@@ -160,11 +161,11 @@ function loadPage (page, params) {
         case 'cms/edit':
           cmsPageLoadEdit(params)
           break
-      };
+      }
     } catch (error) {
       console.log(error)
       // showFatalErrorPage(error, 'PPERPGCA')
-    };
+    }
   }).fail(function (error) {
     console.log(error)
     // showFatalErrorPage(error, 'PPERPGLD')
