@@ -59,10 +59,11 @@ async function cmsPageLoadEdit (params = {}) {
     var pageContent = await adminCMSPagesEditor.save()
     console.log(pageContent)
 
-    var pageId = window.router._lastRouteResolved.params.pageId
+    var pageId
     var cmsPageDoc
-    if (pageId) {
+    if (window.router._lastRouteResolved.params && pageId) {
       console.log('Saving')
+      pageId = window.router._lastRouteResolved.params.pageId
       cmsPageDoc = window.db.collection('cmsPages').doc(pageId)
     } else {
       console.log('Adding')
