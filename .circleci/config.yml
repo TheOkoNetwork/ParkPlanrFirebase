@@ -15,6 +15,16 @@ jobs:
             cd functions && npm i --no-progress && cd ../;
 
       - run:
+          name: Functions standard JS
+          command: |
+            cd functions && npm run standard && cd ../;
+
+      - run:
+          name: Functions lint
+          command: |
+            cd functions && npm run lint && cd ../;
+
+      - run:
           name: Check for Firestore updates
           command: |
             ./scripts/IsFirestoreUpdates.sh
