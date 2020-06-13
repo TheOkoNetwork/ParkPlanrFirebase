@@ -214,6 +214,14 @@ router.on({
       loadPage('cms/edit', params)
     }
   },
+  'parks': {
+    as: 'parks.list',
+    uses: function (params) {
+      console.log('I am on a parks list page')
+      console.log(params)
+      loadPage('parks', params)
+    }
+  },
   '/': function () {
     console.log('I am on the home page')
     loadPage('index')
