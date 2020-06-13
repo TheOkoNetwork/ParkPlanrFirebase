@@ -1,3 +1,5 @@
+var Fuse = require('fuse.js')
+
 async function parksLoad () {
   if (!window.db) {
     console.log('DB not ready yet, unable to load parks')
@@ -9,7 +11,7 @@ async function parksLoad () {
   }
 
   console.log('Loading parks')
-  var parkDocsDocs = await window.db.collection('parks').get()
+  var parkDocs = await window.db.collection('parks').get()
   var parks = []
   parkDocs.forEach(function (parkDoc) {
     var park = parkDoc.data()
