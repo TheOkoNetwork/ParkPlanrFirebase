@@ -51,9 +51,9 @@ async function parksLoad () {
       // loadItemImages()
     },
     fields: [
-      { title: 'ID', name: 'id', type: 'text', width: 150 },
+      { title: 'ID', name: 'id', type: 'text', width: 100 },
       { title: 'Name', name: 'nameDefault', type: 'text', width: 150 },
-      { title: 'Country', name: 'country', type: 'text', width: 25 },
+      { title: 'Country', name: 'country', type: 'text', width: 50 },
       {
         title: 'Active',
         name: 'active',
