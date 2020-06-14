@@ -17,7 +17,7 @@ async function cmsPageLoadEdit (params = {}) {
     console.log('DB not ready yet, unable to load edit page')
     $('body').on('dbLoaded', function () {
       console.log('DB Loaded, loading cms edit page')
-      cmsPageLoadEdit(params);
+      cmsPageLoadEdit(params)
     })
     return
   }
@@ -25,7 +25,7 @@ async function cmsPageLoadEdit (params = {}) {
     console.log('Storage not ready yet, unable to load edit page')
     $('body').on('storageLoaded', function () {
       console.log('Storage Loaded, loading cms edit page')
-      cmsPageLoadEdit(params);
+      cmsPageLoadEdit(params)
     })
     return
   }
@@ -391,35 +391,53 @@ async function cmsPagesLoad () {
           var idFilterFuse = new Fuse(filteredItems, {
             keys: ['id']
           })
-          filteredItems = idFilterFuse.search(filter.id).map(function (item) { return item.item })
+          filteredItems = idFilterFuse.search(filter.id).map(function (item) {
+            return item.item
+          })
         }
 
         if (filter.name) {
           var nameFilterFuse = new Fuse(filteredItems, {
             keys: ['name']
           })
-          filteredItems = nameFilterFuse.search(filter.name).map(function (item) { return item.item })
+          filteredItems = nameFilterFuse
+            .search(filter.name)
+            .map(function (item) {
+              return item.item
+            })
         }
 
         if (filter.slug) {
           var slugFilterFuse = new Fuse(filteredItems, {
             keys: ['slug']
           })
-          filteredItems = slugFilterFuse.search(filter.slug).map(function (item) { return item.item })
+          filteredItems = slugFilterFuse
+            .search(filter.slug)
+            .map(function (item) {
+              return item.item
+            })
         }
 
         if (filter.title) {
           var titleFilterFuse = new Fuse(filteredItems, {
             keys: ['title']
           })
-          filteredItems = titleFilterFuse.search(filter.title).map(function (item) { return item.item })
+          filteredItems = titleFilterFuse
+            .search(filter.title)
+            .map(function (item) {
+              return item.item
+            })
         }
 
         if (filter.subTitle) {
           var subTitleFilterFuse = new Fuse(filteredItems, {
             keys: ['subTitle']
           })
-          filteredItems = subTitleFilterFuse.search(filter.subTitle).map(function (item) { return item.item })
+          filteredItems = subTitleFilterFuse
+            .search(filter.subTitle)
+            .map(function (item) {
+              return item.item
+            })
         }
 
         return filteredItems
