@@ -1,4 +1,4 @@
-var Fuse = require('fuse.js')
+var Fuse = require('fuse.js').default
 
 async function parksLoad () {
   if (!window.db) {

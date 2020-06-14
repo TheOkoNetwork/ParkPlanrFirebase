@@ -2,7 +2,7 @@ import EditorJS from '@editorjs/editorjs'
 import ImageTool from '@editorjs/image'
 import List from '@editorjs/list'
 import { config } from './config.js'
-var Fuse = require('fuse.js')
+var Fuse = require('fuse.js').default
 const Table = require('@editorjs/table')
 const Header = require('@editorjs/header')
 const LinkTool = require('@editorjs/link')
