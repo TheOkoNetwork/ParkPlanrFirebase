@@ -1,7 +1,7 @@
 version: 2
 jobs:
   deploy:
-    working_directory: ~/NativescriptAppBuild
+    working_directory: ~/ciDeployment
     docker:
       - image: circleci/node:13.0
     steps:

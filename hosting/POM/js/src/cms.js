@@ -14,18 +14,18 @@ const Quote = require('@editorjs/quote')
 var adminCMSPagesEditor
 async function cmsPageLoadEdit (params = {}) {
   if (!window.db) {
-    console.log('DB not ready yet, unable to load pages')
+    console.log('DB not ready yet, unable to load edit page')
     $('body').on('dbLoaded', function () {
-      console.log('DB Loaded, loading cms pages')
-      cmsPagesLoad()
+      console.log('DB Loaded, loading cms edit page')
+      cmsPageLoadEdit(params);
     })
     return
   }
   if (!window.storage) {
-    console.log('Storage not ready yet, unable to load pages')
+    console.log('Storage not ready yet, unable to load edit page')
     $('body').on('storageLoaded', function () {
-      console.log('Storage Loaded, loading cms pages')
-      cmsPagesLoad()
+      console.log('Storage Loaded, loading cms edit page')
+      cmsPageLoadEdit(params);
     })
     return
   }
