@@ -53,7 +53,17 @@ async function parksLoad () {
     fields: [
       { title: 'ID', name: 'id', type: 'text', width: 100 },
       { title: 'Name', name: 'nameDefault', type: 'text', width: 150 },
-      { title: 'Country', name: 'country', type: 'text', width: 50 },
+      {
+        title: 'Country',
+        type: 'text',
+        width: 50,
+        itemTemplate: function (value, item) {
+          if (item.country) {
+            return `<img src="/svg/flags/${item.country}.svg" class="card-img-top" alt="image" style="width:50px;">`
+          }
+          return ''
+        }
+      },
       {
         title: 'Active',
         name: 'active',
