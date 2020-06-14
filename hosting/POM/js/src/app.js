@@ -218,7 +218,7 @@ router.on({
       loadPage('cms/edit', params)
     }
   },
-  'parks': {
+  parks: {
     as: 'parks.list',
     uses: function (params) {
       console.log('I am on a parks list page')

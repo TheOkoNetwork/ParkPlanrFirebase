@@ -53,8 +53,9 @@ async function parksLoad () {
     fields: [
       { title: 'ID', name: 'id', type: 'text', width: 100 },
       { title: 'Name', name: 'nameDefault', type: 'text', width: 150 },
+      { title: 'Country', name: 'country', type: 'text', width: 50 },
       {
-        title: 'Country',
+        title: '',
         type: 'text',
         width: 50,
         itemTemplate: function (value, item) {
@@ -82,7 +83,7 @@ async function parksLoad () {
     controller: {
       data: parks,
       loadData: function (filter) {
-        console.log(Fuse);
+        console.log(Fuse)
         console.log('Loading data')
         console.log(filter)
         var filteredItems = $.grep(parks, function (park) {
@@ -93,8 +94,8 @@ async function parksLoad () {
           }
           return true
         })
-        console.log("Filtered by active");
-        console.log(filteredItems);
+        console.log('Filtered by active')
+        console.log(filteredItems)
 
         filteredItems = $.grep(filteredItems, function (park) {
           if (typeof filter.ridecount === 'boolean') {
@@ -104,36 +105,45 @@ async function parksLoad () {
           }
           return true
         })
-        console.log("Filtered by ride count");
-        console.log(filteredItems);
+        console.log('Filtered by ride count')
+        console.log(filteredItems)
 
         if (filter.id) {
           var idFilterFuse = new Fuse(filteredItems, {
             keys: ['id']
           })
-          filteredItems = idFilterFuse.search(filter.id).map(function (item) { return item.item });
-
+          filteredItems = idFilterFuse.search(filter.id).map(function (item) {
+            return item.item
+          })
         }
-        console.log("Filtered by ID");
-        console.log(filteredItems);
+        console.log('Filtered by ID')
+        console.log(filteredItems)
 
         if (filter.nameDefault) {
           var nameFilterFuse = new Fuse(filteredItems, {
             keys: ['nameDefault']
           })
-          filteredItems = nameFilterFuse.search(filter.nameDefault).map(function (item) { return item.item })
+          filteredItems = nameFilterFuse
+            .search(filter.nameDefault)
+            .map(function (item) {
+              return item.item
+            })
         }
-        console.log("Filtered by name");
-        console.log(filteredItems);
+        console.log('Filtered by name')
+        console.log(filteredItems)
 
         if (filter.country) {
           var countryFilterFuse = new Fuse(filteredItems, {
             keys: ['country']
           })
-          filteredItems = countryFilterFuse.search(filter.country).map(function (item) { return item.item })
+          filteredItems = countryFilterFuse
+            .search(filter.country)
+            .map(function (item) {
+              return item.item
+            })
         }
-        console.log("Filtered by country");
-        console.log(filteredItems);
+        console.log('Filtered by country')
+        console.log(filteredItems)
 
         return filteredItems
       }
