@@ -391,35 +391,35 @@ async function cmsPagesLoad () {
           var idFilterFuse = new Fuse(filteredItems, {
             keys: ['id']
           })
-          filteredItems = idFilterFuse.search(filter.id)
+          filteredItems = idFilterFuse.search(filter.id).map(function (item) { return item.item })
         }
 
         if (filter.name) {
           var nameFilterFuse = new Fuse(filteredItems, {
             keys: ['name']
           })
-          filteredItems = nameFilterFuse.search(filter.name)
+          filteredItems = nameFilterFuse.search(filter.name).map(function (item) { return item.item })
         }
 
         if (filter.slug) {
           var slugFilterFuse = new Fuse(filteredItems, {
             keys: ['slug']
           })
-          filteredItems = slugFilterFuse.search(filter.slug)
+          filteredItems = slugFilterFuse.search(filter.slug).map(function (item) { return item.item })
         }
 
         if (filter.title) {
           var titleFilterFuse = new Fuse(filteredItems, {
             keys: ['title']
           })
-          filteredItems = titleFilterFuse.search(filter.title)
+          filteredItems = titleFilterFuse.search(filter.title).map(function (item) { return item.item })
         }
 
         if (filter.subTitle) {
           var subTitleFilterFuse = new Fuse(filteredItems, {
             keys: ['subTitle']
           })
-          filteredItems = subTitleFilterFuse.search(filter.subTitle)
+          filteredItems = subTitleFilterFuse.search(filter.subTitle).map(function (item) { return item.item })
         }
 
         return filteredItems

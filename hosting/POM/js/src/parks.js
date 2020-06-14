@@ -101,7 +101,8 @@ async function parksLoad () {
           var idFilterFuse = new Fuse(filteredItems, {
             keys: ['id']
           })
-          filteredItems = idFilterFuse.search(filter.id)
+          filteredItems = idFilterFuse.search(filter.id).map(function (item) { return item.item });
+
         }
         console.log("Filtered by ID");
         console.log(filteredItems);
@@ -110,7 +111,7 @@ async function parksLoad () {
           var nameFilterFuse = new Fuse(filteredItems, {
             keys: ['nameDefault']
           })
-          filteredItems = nameFilterFuse.search(filter.nameDefault)
+          filteredItems = nameFilterFuse.search(filter.nameDefault).map(function (item) { return item.item })
         }
         console.log("Filtered by name");
         console.log(filteredItems);
@@ -119,7 +120,7 @@ async function parksLoad () {
           var countryFilterFuse = new Fuse(filteredItems, {
             keys: ['country']
           })
-          filteredItems = countryFilterFuse.search(filter.country)
+          filteredItems = countryFilterFuse.search(filter.country).map(function (item) { return item.item })
         }
         console.log("Filtered by country");
         console.log(filteredItems);
