@@ -226,6 +226,22 @@ router.on({
       loadPage('parks', params)
     }
   },
+  'parks/new': {
+    as: 'parks.new',
+    uses: function (params) {
+      console.log('I am on a park new page')
+      console.log(params)
+      loadPage('parks/edit', params)
+    }
+  },
+  'parks/:parkId': {
+    as: 'parks.edit',
+    uses: function (params) {
+      console.log('I am on a park edit page')
+      console.log(params)
+      loadPage('parks/edit', params)
+    }
+  },
   '/': function () {
     console.log('I am on the home page')
     loadPage('index')
