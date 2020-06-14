@@ -72,6 +72,7 @@ async function parksLoad () {
     controller: {
       data: parks,
       loadData: function (filter) {
+        console.log(Fuse);
         console.log('Loading data')
         console.log(filter)
         var filteredItems = $.grep(parks, function (park) {
@@ -82,8 +83,10 @@ async function parksLoad () {
           }
           return true
         })
+        console.log("Filtered by active");
+        console.log(filteredItems);
 
-        parks = $.grep(parks, function (park) {
+        filteredItems = $.grep(filteredItems, function (park) {
           if (typeof filter.ridecount === 'boolean') {
             if (filter.ridecount !== park.ridecount) {
               return false
@@ -91,6 +94,8 @@ async function parksLoad () {
           }
           return true
         })
+        console.log("Filtered by ride count");
+        console.log(filteredItems);
 
         if (filter.id) {
           var idFilterFuse = new Fuse(filteredItems, {
@@ -98,6 +103,8 @@ async function parksLoad () {
           })
           filteredItems = idFilterFuse.search(filter.id)
         }
+        console.log("Filtered by ID");
+        console.log(filteredItems);
 
         if (filter.nameDefault) {
           var nameFilterFuse = new Fuse(filteredItems, {
@@ -105,6 +112,8 @@ async function parksLoad () {
           })
           filteredItems = nameFilterFuse.search(filter.nameDefault)
         }
+        console.log("Filtered by name");
+        console.log(filteredItems);
 
         if (filter.country) {
           var countryFilterFuse = new Fuse(filteredItems, {
@@ -112,6 +121,8 @@ async function parksLoad () {
           })
           filteredItems = countryFilterFuse.search(filter.country)
         }
+        console.log("Filtered by country");
+        console.log(filteredItems);
 
         return filteredItems
       }
