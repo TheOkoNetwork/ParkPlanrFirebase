@@ -39,7 +39,7 @@ async function parksLoad () {
       console.log('jsGrid row click')
       console.log(args)
       window.router.navigate(
-        window.router.generate('park.edit', { pageId: args.item.id })
+        window.router.generate('park.edit', { parkId: args.item.id })
       )
     },
     onPageChanged: function (args) {
