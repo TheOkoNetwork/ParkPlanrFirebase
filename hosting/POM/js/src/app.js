@@ -219,7 +219,7 @@ router.on({
     }
   },
   parks: {
-    as: 'parks.list',
+    as: 'park.list',
     uses: function (params) {
       console.log('I am on a parks list page')
       console.log(params)
@@ -227,7 +227,7 @@ router.on({
     }
   },
   'parks/new': {
-    as: 'parks.new',
+    as: 'park.new',
     uses: function (params) {
       console.log('I am on a park new page')
       console.log(params)
@@ -235,7 +235,7 @@ router.on({
     }
   },
   'parks/:parkId': {
-    as: 'parks.edit',
+    as: 'park.edit',
     uses: function (params) {
       console.log('I am on a park edit page')
       console.log(params)
