@@ -1,5 +1,40 @@
 var Fuse = require('fuse.js').default
 
+async function parksLoadEdit (params) {
+  if (!window.db) {
+    console.log('DB not ready yet, unable to load parks')
+    $('body').on('dbLoaded', function () {
+      console.log('DB Loaded, loading parks edit')
+      parksLoadEdit(params)
+    })
+    return
+  }
+  if (!window.storage) {
+    console.log('Storage not ready yet, unable to load park edit page')
+    $('body').on('storageLoaded', function () {
+      console.log('Storage Loaded, loading parks edit page')
+      parksLoadEdit(params)
+    })
+    return
+  }
+
+  if (params && params.parkId) {
+    console.log('Loading park to edit')
+    $('.showIfParkEdit').show()
+    $('.showIfParkAdd').hide()
+
+    var parkDoc = await window.db.collection('parks').doc(params.parkId).get()
+    console.log(parkDoc.id)
+    console.log(parkDoc.data())
+    $('.parkEditName').val(parkDoc.data().name.name)
+  } else {
+    console.log('New park page, no park to load')
+
+    $('.showIfParkEdit').hide()
+    $('.showIfParkAdd').show()
+  }
+}
+
 async function parksLoad () {
   if (!window.db) {
     console.log('DB not ready yet, unable to load parks')
@@ -170,4 +205,4 @@ async function parksLoad () {
   $('#parksJSGrid').jsGrid('search')
 }
 
-export { parksLoad }
+export { parksLoad, parksLoadEdit }
