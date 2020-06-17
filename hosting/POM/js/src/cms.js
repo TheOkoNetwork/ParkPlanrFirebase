@@ -77,7 +77,10 @@ async function cmsPageLoadEdit (params = {}) {
 
     var pageId
     var cmsPageDoc
-    if (window.router._lastRouteResolved.params && pageId) {
+    if (
+      window.router._lastRouteResolved.params &&
+      window.router._lastRouteResolved.params.pageId
+    ) {
       console.log('Saving')
       pageId = window.router._lastRouteResolved.params.pageId
       cmsPageDoc = window.db.collection('cmsPages').doc(pageId)
