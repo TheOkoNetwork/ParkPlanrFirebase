@@ -165,7 +165,7 @@ function loadPage (page, params) {
         case 'parks':
           parksLoad()
           break
-        case 'park/edit':
+        case 'parks/edit':
           parksLoadEdit(params)
           break
       }
