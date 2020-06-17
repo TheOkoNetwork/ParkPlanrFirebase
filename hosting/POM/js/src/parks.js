@@ -73,6 +73,13 @@ async function parksLoad () {
         filtercss: 'itemsjsGridActiveCheckbox'
       },
       {
+        title: 'Queue times',
+        name: 'queuetimes',
+        type: 'checkbox',
+        width: 50,
+        filtercss: 'itemsjsGridActiveCheckbox'
+      },
+      {
         title: 'Ridecount',
         name: 'ridecount',
         type: 'checkbox',
@@ -106,6 +113,17 @@ async function parksLoad () {
           return true
         })
         console.log('Filtered by ride count')
+        console.log(filteredItems)
+
+        filteredItems = $.grep(filteredItems, function (park) {
+          if (typeof filter.queuetimes === 'boolean') {
+            if (filter.queuetimes !== park.queuetimes) {
+              return false
+            }
+          }
+          return true
+        })
+        console.log('Filtered by queuetimes')
         console.log(filteredItems)
 
         if (filter.id) {
