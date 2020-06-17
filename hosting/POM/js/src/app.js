@@ -6,7 +6,7 @@ import {
   inboxMessageCount
 } from './inbox.js'
 import { cmsPagesLoad, cmsPageLoadEdit } from './cms.js'
-import { parksLoad } from './parks.js'
+import { parksLoad, parksLoadEdit } from './parks.js'
 
 var firebase = require('firebase/app')
 window.firebase = firebase
@@ -164,6 +164,9 @@ function loadPage (page, params) {
           break
         case 'parks':
           parksLoad()
+          break
+        case 'park/edit':
+          parksLoadEdit(params)
           break
       }
     } catch (error) {

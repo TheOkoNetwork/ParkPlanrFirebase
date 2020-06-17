@@ -13,8 +13,8 @@
               <li class="breadcrumb-item"><a href="/" data-navigo>Home</a></li>
               <li class="breadcrumb-item"><a href="/parks" data-navigo>Parks & Attractions</a></li>
               <li class="breadcrumb-item active">
-                <span><span class="fas fa-plus"></span> Add</span>
-                <span><span class="fas fa-edit"></span> Edit</span>
+                <span class="showIfParkAdd" style="display:none;"><span class="fas fa-plus"></span> Add</span>
+                <span class="showIfParkEdit" style="display:none;"><span class="fas fa-edit"></span> Editing <span class="parkEditName"></span></span>
               </li>
             </ol>
           </div>
@@ -26,8 +26,8 @@
     <section class="content">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">New park</h3>
-          <h3 class="card-title">Editing {{park.name.name}}</h3>
+          <h3 class="card-title showIfParkAdd" style="display:none;">New park</h3>
+          <h3 class="card-title showIfParkEdit" style="display:none;">Editing <span class="parkEditName"></span></h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
