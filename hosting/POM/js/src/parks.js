@@ -26,7 +26,7 @@ async function parksLoadEdit (params) {
     var parkDoc = await window.db.collection('parks').doc(params.parkId).get()
     console.log(parkDoc.id)
     console.log(parkDoc.data())
-    $('.parkEditName').val(parkDoc.data().name.name)
+    $('.parkEditName').text(parkDoc.data().name.name)
   } else {
     console.log('New park page, no park to load')
 
