@@ -33,7 +33,7 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "gravatar": "^1.8.0",
-    "moment": "^2.24.0",
+    "moment": "^2.26.0",
     "node-fetch": "^2.6.0",
     "open-graph-scraper": "^3.6.2",
     "querystring": "^0.2.0",
