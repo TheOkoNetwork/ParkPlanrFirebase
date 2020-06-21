@@ -49,6 +49,8 @@ async function parksLoadEdit (params) {
 
     $('#parkEditFieldMiscLogo').val(parkDoc.data().logo);
     $('#parkEditFieldMiscLogoImg').attr('src',parkDoc.data().logo);
+
+    $('#parkEditFieldOpen').attr('checked',parkDoc.data().open);
   } else {
     console.log('New park page, no park to load')
 
