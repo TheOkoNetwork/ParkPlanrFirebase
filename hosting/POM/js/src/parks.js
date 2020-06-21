@@ -22,6 +22,15 @@ async function parksLoadEdit (params) {
     console.log(event);
     $('#parkEditFieldMiscLogoImg').attr('src',$('#parkEditFieldMiscLogo').val());
   });
+  $('#parkEditFormGroupClosedMessage').change(function(event) {
+    if ( $('#parkEditFormGroupClosedMessage').attr('checked') ) {
+      $('#parkEditFormGroupClosedMessage').hide();
+      $('#parkEditFieldClosedMessage').val('');
+    } else {
+      $('#parkEditFormGroupClosedMessage').show();
+      $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage);
+    };
+  });
 
   if (params && params.parkId) {
     console.log('Loading park to edit')
@@ -51,6 +60,13 @@ async function parksLoadEdit (params) {
     $('#parkEditFieldMiscLogoImg').attr('src',parkDoc.data().logo);
 
     $('#parkEditFieldOpen').attr('checked',parkDoc.data().open);
+    if (parkDoc.data().open) {
+      $('#parkEditFormGroupClosedMessage').hide();
+      $('#parkEditFieldClosedMessage').val('');
+    } else {
+      $('#parkEditFormGroupClosedMessage').show();
+      $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage);
+    };
   } else {
     console.log('New park page, no park to load')
 
