@@ -41,6 +41,9 @@ async function parksLoadEdit (params) {
 
     $('#parkEditFieldLocationLat').val(parkDoc.data().location.coordinates.latitude)
     $('#parkEditFieldLocationLon').val(parkDoc.data().location.coordinates.longitude)
+
+    $('#parkEditFieldMiscLogo').val(parkDoc.data().logo);
+    $('#parkEditFieldMiscLogoImg').attr('src',parkDoc.data().logo);
   } else {
     console.log('New park page, no park to load')
 
