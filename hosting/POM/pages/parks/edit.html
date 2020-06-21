@@ -32,21 +32,36 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="parkEditFieldName">Name</label>
-            <div class="col-md-4">
-              <input id="parkEditFieldName" name="parkEditFieldName" type="text" placeholder="" class="form-control input-md" required>
+
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Basic info
+                  </button>
+                </h5>
+              </div>
+
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="parkEditFieldName">Name</label>
+                      <div class="col-md-4">
+                        <input id="parkEditFieldName" name="parkEditFieldName" type="text" placeholder="" class="form-control input-md" required>
+                      </div>
+                   </div>
+
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="parkEditFieldWebsite">Website</label>
+                    <div class="col-md-4">
+                      <input id="parkEditFieldWebsite" name="parkEditFieldWebsite" type="text" placeholder="" class="form-control input-md" required>
+                    </div>
+                  </div>
+              </div>
             </div>
           </div>
 
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="parkEditFieldWebsite">Website</label>
-            <div class="col-md-4">
-              <input id="parkEditFieldWebsite" name="parkEditFieldWebsite" type="text" placeholder="" class="form-control input-md" required>
-            </div>
-          </div>
 
 
         </div>
