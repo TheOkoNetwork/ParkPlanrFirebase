@@ -1,72 +1,122 @@
 <!-- PAGE CONTENT-TAG_ID -->
-
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Parks & Attractions</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/" data-navigo>Home</a></li>
-              <li class="breadcrumb-item"><a href="/parks" data-navigo>Parks & Attractions</a></li>
-              <li class="breadcrumb-item active">
-                <span class="showIfParkAdd" style="display:none;"><span class="fas fa-plus"></span> Add</span>
-                <span class="showIfParkEdit" style="display:none;"><span class="fas fa-edit"></span> Editing <span class="parkEditName"></span></span>
-              </li>
-            </ol>
-          </div>
+<!-- Content Header (Page header) -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.2.0">
+  <title></title>
+</head>
+<body>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Parks & Attractions</h1>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title showIfParkAdd" style="display:none;">New park</h3>
-          <h3 class="card-title showIfParkEdit" style="display:none;">Editing <span class="parkEditName"></span></h3>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a href="/" data-navigo="">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="/parks" data-navigo="">Parks & Attractions</a>
+            </li>
+            <li class="breadcrumb-item active"><span class="showIfParkAdd" style="display:none;">Add</span> <span class="showIfParkEdit" style="display:none;">
+            Editing </span></li>
+          </ol>
         </div>
-        <!-- /.card-header -->
-        <div class="card-body">
+      </div>
+    </div><!-- /.container-fluid -->
+  </section><!-- Main content -->
+  <section class="content">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title showIfParkAdd" style="display:none;">New park</h3>
+        <h3 class="card-title showIfParkEdit" style="display:none;">Editing</h3>
+      </div><!-- /.card-header -->
+      <div class="card-body">
 
 
-          <div id="accordion">
-            <div class="card">
-              <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Basic info
-                  </button>
-                </h5>
-              </div>
-
-              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label class="col-md-4 control-label" for="parkEditFieldName">Name</label>
-                      <div class="col-md-4">
-                        <input id="parkEditFieldName" name="parkEditFieldName" type="text" placeholder="" class="form-control input-md" required>
-                      </div>
-                   </div>
-
-                  <div class="form-group">
-                    <label class="col-md-4 control-label" for="parkEditFieldWebsite">Website</label>
-                    <div class="col-md-4">
-                      <input id="parkEditFieldWebsite" name="parkEditFieldWebsite" type="text" placeholder="" class="form-control input-md" required>
-                    </div>
+        <div id="parkEditAccordion">
+          <div class="card">
+            <div class="card-header" id="parkEditHeadingBasic">
+              <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#parkEditCollapseBasic" aria-expanded="false" aria-controls=
+              "parkEditCollapseBasic">Basic info</button></h5>
+            </div>
+            <div id="parkEditCollapseBasic" class="collapse" aria-labelledby="parkEditHeadingBasic" data-parent="#parkEditAccordion">
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="parkEditFieldName">Name</label>
+                  <div class="col-md-4">
+                    <input id="parkEditFieldName" name="parkEditFieldName" type="text" placeholder="" class="form-control input-md" required="">
                   </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="parkEditFieldWebsite">Website</label>
+                  <div class="col-md-4">
+                    <input id="parkEditFieldWebsite" name="parkEditFieldWebsite" type="text" placeholder="" class="form-control input-md" required="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header" id="parkEditHeadingLocation">
+              <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#parkEditCollapseLocation" aria-expanded="false" aria-controls=
+              "parkEditCollapseLocation">Location</button></h5>
+            </div>
+            <div id="parkEditCollapseLocation" class="collapse" aria-labelledby="parkEditHeadingLocation" data-parent="#parkEditAccordion">
+              <div class="card-body">
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="parkEditFieldLocationAddr1">Address 1</label>
+                  <div class="col-md-4">
+                    <input id="parkEditFieldLocationAddr1" name="parkEditFieldLocationAddr1" type="text" placeholder="" class="form-control input-md" required=
+                    "">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="parkEditFieldLocationAddr2">Address 2</label>
+                  <div class="col-md-4">
+                    <input id="parkEditFieldLocationAddr2" name="parkEditFieldLocationAddr2" type="text" placeholder="" class="form-control input-md" required=
+                    "">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="parkEditFieldLocationCity">City</label>
+                  <div class="col-md-4">
+                    <input id="parkEditFieldLocationCity" name="parkEditFieldLocationCity" type="text" placeholder="" class="form-control input-md" required=
+                    "">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="parkEditFieldLocationPostalCode">Postal code</label>
+                  <div class="col-md-4">
+                    <input id="parkEditFieldLocationPostalCode" name="parkEditFieldLocationPostalCode" type="text" placeholder="" class="form-control input-md" required=
+                    "">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="parkEditFieldLocationState">State</label>
+                  <div class="col-md-4">
+                    <input id="parkEditFieldLocationState" name="parkEditFieldLocationState" type="text" placeholder="" class="form-control input-md" required=
+                    "">
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
 
 
-
         </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-    </section>
-    <!-- /.content -->
+      </div><!-- /.card-body -->
+    </div><!-- /.card -->
+  </section><!-- /.content -->
+</body>
+</html>
