@@ -30,6 +30,8 @@ async function parksLoadEdit (params) {
 
     $('.parkEditName').text(parkName)
     $('#parkEditFieldName').val(parkName)
+
+    $('#parkEditFieldWebsite').val(parkDoc.data().website)
   } else {
     console.log('New park page, no park to load')
 
