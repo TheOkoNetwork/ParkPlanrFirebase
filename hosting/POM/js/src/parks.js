@@ -18,6 +18,11 @@ async function parksLoadEdit (params) {
     return
   }
 
+  $('#parkEditFieldMiscLogo').change(function(event) {
+    console.log(event);
+    $('#parkEditFieldMiscLogoImg').attr('src',$('#parkEditFieldMiscLogo').val());
+  });
+
   if (params && params.parkId) {
     console.log('Loading park to edit')
     $('.showIfParkEdit').show()
