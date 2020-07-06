@@ -18,6 +18,20 @@ async function parksLoadEdit (params) {
     return
   }
 
+  $('#parkEditFieldMiscLogo').change(function(event) {
+    console.log(event);
+    $('#parkEditFieldMiscLogoImg').attr('src',$('#parkEditFieldMiscLogo').val());
+  });
+  $('#parkEditFormGroupClosedMessage').change(function(event) {
+    if ( $('#parkEditFormGroupClosedMessage').attr('checked') ) {
+      $('#parkEditFormGroupClosedMessage').hide();
+      $('#parkEditFieldClosedMessage').val('');
+    } else {
+      $('#parkEditFormGroupClosedMessage').show();
+      $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage);
+    };
+  });
+
   if (params && params.parkId) {
     console.log('Loading park to edit')
     $('.showIfParkEdit').show()
@@ -30,6 +44,29 @@ async function parksLoadEdit (params) {
 
     $('.parkEditName').text(parkName)
     $('#parkEditFieldName').val(parkName)
+
+    $('#parkEditFieldWebsite').val(parkDoc.data().website)
+
+    $('#parkEditFieldAddressAddr1').val(parkDoc.data().location.address.addr1)
+    $('#parkEditFieldAddressAddr2').val(parkDoc.data().location.address.addr2)
+    $('#parkEditFieldAddressCity').val(parkDoc.data().location.address.city)
+    $('#parkEditFieldAddressPostalCode').val(parkDoc.data().location.address.postalCode)
+    $('#parkEditFieldAddressState').val(parkDoc.data().location.address.state)
+
+    $('#parkEditFieldLocationLat').val(parkDoc.data().location.coordinates.latitude)
+    $('#parkEditFieldLocationLon').val(parkDoc.data().location.coordinates.longitude)
+
+    $('#parkEditFieldMiscLogo').val(parkDoc.data().logo);
+    $('#parkEditFieldMiscLogoImg').attr('src',parkDoc.data().logo);
+
+    $('#parkEditFieldOpen').attr('checked',parkDoc.data().open);
+    if (parkDoc.data().open) {
+      $('#parkEditFormGroupClosedMessage').hide();
+      $('#parkEditFieldClosedMessage').val('');
+    } else {
+      $('#parkEditFormGroupClosedMessage').show();
+      $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage);
+    };
   } else {
     console.log('New park page, no park to load')
 
