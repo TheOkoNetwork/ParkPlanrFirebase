@@ -30,7 +30,7 @@
     "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.7.0",
     "glob": "^7.1.6",
-    "graphql": "^15.0.0",
+    "graphql": "^15.1.0",
     "graphql-tag": "^2.10.3",
     "gravatar": "^1.8.0",
     "moment": "^2.26.0",
