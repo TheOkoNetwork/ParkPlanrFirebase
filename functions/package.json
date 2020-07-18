@@ -16,7 +16,7 @@
     "prepare": "npm run snyk-protect"
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.1.1",
