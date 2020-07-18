@@ -25,6 +25,8 @@ var affiliateAdminEdit = async function (params) {
 var affiliateAdminEditSave = async function () {
   console.log('Affiliate admin, new/edit affiliate save')
   var params=window.router._lastRouteResolved.params;
+
+  
   if (params) {
     console.log("Edit existing affiliate");
   } else {
