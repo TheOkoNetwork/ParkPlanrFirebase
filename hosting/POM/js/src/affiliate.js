@@ -27,6 +27,9 @@ var affiliateAdminEditSave = async function () {
     console.log("New affiliate");
   };
 }
-$('#affiliateAdminEditSaveBtn').on('click',affiliateAdminEditSave);
+$('#affiliateAdminEditSaveBtn').on('click', function () {
+  affiliateAdminEditSave();
+})
+
 
 export { affiliateHome, affiliateAdmin, affiliateAdminEdit }
