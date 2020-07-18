@@ -7,6 +7,11 @@ import {
 } from './inbox.js'
 import { cmsPagesLoad, cmsPageLoadEdit } from './cms.js'
 import { parksLoad, parksLoadEdit } from './parks.js'
+import {
+  affiliateHome,
+  affiliateAdmin,
+  affiliateAdminEdit
+} from './affiliate.js'
 
 var firebase = require('firebase/app')
 window.firebase = firebase
@@ -63,9 +68,9 @@ function userAuthenticated (user) {
   window.auth.currentUser
     .getIdTokenResult()
     .then((idTokenResult) => {
-      // Confirm the user is an Admin.
-      if (idTokenResult.claims.admin) {
-        console.log('I am an admin')
+      // Confirm the user is an Admin or an affiliate
+      if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
+        console.log('I am an admin or an affiliate')
       } else {
         console.log('I am not an admin, i should not be here')
         window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
@@ -168,6 +173,15 @@ function loadPage (page, params) {
         case 'parks/edit':
           parksLoadEdit(params)
           break
+        case 'affiliate':
+          affiliateHome(params)
+          break
+        case 'affiliate/admin':
+          affiliateAdmin(params)
+          break
+        case 'affiliate/admin/new':
+          affiliateAdminEdit(params)
+          break
       }
     } catch (error) {
       console.log(error)
@@ -243,6 +257,30 @@ router.on({
       console.log('I am on a park edit page')
       console.log(params)
       loadPage('parks/edit', params)
+    }
+  },
+  affiliate: {
+    as: 'affiliate.home',
+    uses: function (params) {
+      console.log('I am on the affiliate home page')
+      console.log(params)
+      loadPage('affiliate', params)
+    }
+  },
+  'affiliate/admin': {
+    as: 'affiliate.admin',
+    uses: function (params) {
+      console.log('I am on the affiliate admin page')
+      console.log(params)
+      loadPage('affiliate/admin', params)
+    }
+  },
+  'affiliate/admin/new': {
+    as: 'affiliate.admin.new',
+    uses: function (params) {
+      console.log('I am on the affiliate admin, new affiliate page')
+      console.log(params)
+      loadPage('affiliate/admin/edit', params)
     }
   },
   '/': function () {
