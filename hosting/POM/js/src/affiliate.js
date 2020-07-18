@@ -6,6 +6,15 @@ var affiliateAdmin = async function (params) {
 }
 var affiliateAdminNew = async function (params) {
   console.log('Loading affiliate admin, new affiliate page')
+  if (params) {
+    console.log("Edit existing affiliate");
+    $('showIfAffiliateAdd').hide();
+    $('showIfAffiliateEdit').show();
+  } else {
+    console.log("New affiliate");
+    $('showIfAffiliateAdd').show();
+    $('showIfAffiliateEdit').hide();
+  };
 }
 
 export { affiliateHome, affiliateAdmin, affiliateAdminNew }
