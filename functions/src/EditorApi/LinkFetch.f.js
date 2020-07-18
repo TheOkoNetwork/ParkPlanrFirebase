@@ -37,7 +37,7 @@ const LinkFetch = functions.https.onRequest((request, response) => {
         linkUrl = result.data.ogUrl
       } else {
         linkUrl = result.requestUrl
-      };
+      }
       SiteHostname = linkUrl.split('/')[2]
       switch (SiteHostname) {
         case 'twitter.com':
