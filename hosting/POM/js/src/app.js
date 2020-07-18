@@ -179,7 +179,7 @@ function loadPage (page, params) {
         case 'affiliate/admin':
           affiliateAdmin(params)
           break
-        case 'affiliate/admin/new':
+        case 'affiliate/admin/edit':
           affiliateAdminEdit(params)
           break
       }
