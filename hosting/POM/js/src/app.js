@@ -71,7 +71,6 @@ function userAuthenticated (user) {
       // Confirm the user is an Admin or an affiliate
       if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
         console.log('I am an admin or an affiliate')
-        initAppRouter()
       } else {
         console.log('I am not an admin, i should not be here')
         window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
@@ -196,12 +195,10 @@ function loadPage (page, params) {
 
 console.log(stateUrl())
 
-var router
-var initAppRouter = function () {
   var root = `https://${window.location.href.split('/')[2]}/`
   var useHash = false
   var hash = '#!' // Defaults to: '#'
-  router = new Navigo(root, useHash, hash)
+  var router = new Navigo(root, useHash, hash)
   window.router = router
 
   router.on({
@@ -305,6 +302,5 @@ var initAppRouter = function () {
 
     router.resolve()
   })
-}
 
 init()
