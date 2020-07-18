@@ -4,7 +4,7 @@ var affiliateHome = async function (params) {
 var affiliateAdmin = async function (params) {
   console.log('Loading affiliate admin page')
 }
-var affiliateAdminNew = async function (params) {
+var affiliateAdminEdit = async function (params) {
   console.log('Loading affiliate admin, new affiliate page')
   if (params) {
     console.log("Edit existing affiliate");
@@ -17,4 +17,4 @@ var affiliateAdminNew = async function (params) {
   };
 }
 
-export { affiliateHome, affiliateAdmin, affiliateAdminNew }
+export { affiliateHome, affiliateAdmin, affiliateAdminEdit }
