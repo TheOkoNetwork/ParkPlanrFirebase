@@ -18,7 +18,7 @@ var affiliateAdminEdit = async function (params) {
   };
 
 
-  $('#affiliateAdminEditSaveBtn').on('click', affiliateAdminEditSave());
+  $('#affiliateAdminEditSaveBtn').on('click', affiliateAdminEditSave);
 }
 
 
