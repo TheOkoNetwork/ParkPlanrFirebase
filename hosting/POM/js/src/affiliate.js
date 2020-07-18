@@ -6,6 +6,7 @@ var affiliateAdmin = async function (params) {
 }
 var affiliateAdminEdit = async function (params) {
   console.log('Loading affiliate admin, new/edit affiliate page')
+
   if (params) {
     console.log("Edit existing affiliate");
     $('.showIfAffiliateAdd').hide();
@@ -15,6 +16,9 @@ var affiliateAdminEdit = async function (params) {
     $('.showIfAffiliateAdd').show();
     $('.showIfAffiliateEdit').hide();
   };
+
+
+  $('#affiliateAdminEditSaveBtn').on('click', affiliateAdminEditSave());
 }
 
 
@@ -27,9 +31,6 @@ var affiliateAdminEditSave = async function () {
     console.log("New affiliate");
   };
 }
-$('#affiliateAdminEditSaveBtn').on('click', function () {
-  affiliateAdminEditSave();
-})
 
 
 export { affiliateHome, affiliateAdmin, affiliateAdminEdit }
