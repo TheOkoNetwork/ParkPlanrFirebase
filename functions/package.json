@@ -4,6 +4,8 @@
   "scripts": {
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
+    "standard": "standard .",
+    "standardfix": "standard . --fix",
     "serve": "firebase serve --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
