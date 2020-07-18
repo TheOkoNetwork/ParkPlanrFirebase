@@ -19,7 +19,7 @@ var Navigo = require('navigo')
 require('firebase/auth')
 require('firebase/firestore')
 require('firebase/storage')
-
+var $ = window.$
 window.stateData = {}
 
 const init = async () => {
@@ -71,6 +71,7 @@ function userAuthenticated (user) {
       // Confirm the user is an Admin or an affiliate
       if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
         console.log('I am an admin or an affiliate')
+        initAppRouter()
       } else {
         console.log('I am not an admin, i should not be here')
         window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
@@ -195,112 +196,115 @@ function loadPage (page, params) {
 
 console.log(stateUrl())
 
-var root = `https://${window.location.href.split('/')[2]}/`
-var useHash = false
-var hash = '#!' // Defaults to: '#'
-var router = new Navigo(root, useHash, hash)
-window.router = router
+var router
+var initAppRouter = function () {
+  var root = `https://${window.location.href.split('/')[2]}/`
+  var useHash = false
+  var hash = '#!' // Defaults to: '#'
+  router = new Navigo(root, useHash, hash)
+  window.router = router
 
-router.on({
-  'inbox/conversation/:id': function (params) {
-    console.log('I am on a inbox conversation')
-    console.log(params)
-    loadPage('inbox/conversation', params)
-  },
-  inbox: function () {
-    console.log('I am on the inbox main page')
-    loadPage('inbox')
-  },
-  cms: {
-    as: 'cmsPage.list',
-    uses: function (params) {
-      console.log('I am on a cms list page')
+  router.on({
+    'inbox/conversation/:id': function (params) {
+      console.log('I am on a inbox conversation')
       console.log(params)
-      loadPage('cms', params)
+      loadPage('inbox/conversation', params)
+    },
+    inbox: function () {
+      console.log('I am on the inbox main page')
+      loadPage('inbox')
+    },
+    cms: {
+      as: 'cmsPage.list',
+      uses: function (params) {
+        console.log('I am on a cms list page')
+        console.log(params)
+        loadPage('cms', params)
+      }
+    },
+    'cms/new': {
+      as: 'cmsPage.new',
+      uses: function (params) {
+        console.log('I am on a cms new page')
+        console.log(params)
+        loadPage('cms/edit', params)
+      }
+    },
+    'cms/:pageId': {
+      as: 'cmsPage.edit',
+      uses: function (params) {
+        console.log('I am on a cms edit page')
+        console.log(params)
+        loadPage('cms/edit', params)
+      }
+    },
+    parks: {
+      as: 'park.list',
+      uses: function (params) {
+        console.log('I am on a parks list page')
+        console.log(params)
+        loadPage('parks', params)
+      }
+    },
+    'parks/new': {
+      as: 'park.new',
+      uses: function (params) {
+        console.log('I am on a park new page')
+        console.log(params)
+        loadPage('parks/edit', params)
+      }
+    },
+    'parks/:parkId': {
+      as: 'park.edit',
+      uses: function (params) {
+        console.log('I am on a park edit page')
+        console.log(params)
+        loadPage('parks/edit', params)
+      }
+    },
+    affiliate: {
+      as: 'affiliate.home',
+      uses: function (params) {
+        console.log('I am on the affiliate home page')
+        console.log(params)
+        loadPage('affiliate', params)
+      }
+    },
+    'affiliate/admin': {
+      as: 'affiliate.admin',
+      uses: function (params) {
+        console.log('I am on the affiliate admin page')
+        console.log(params)
+        loadPage('affiliate/admin', params)
+      }
+    },
+    'affiliate/admin/new': {
+      as: 'affiliate.admin.new',
+      uses: function (params) {
+        console.log('I am on the affiliate admin, new affiliate page')
+        console.log(params)
+        loadPage('affiliate/admin/edit', params)
+      }
+    },
+    '/': function () {
+      console.log('I am on the home page')
+      loadPage('index')
     }
-  },
-  'cms/new': {
-    as: 'cmsPage.new',
-    uses: function (params) {
-      console.log('I am on a cms new page')
-      console.log(params)
-      loadPage('cms/edit', params)
-    }
-  },
-  'cms/:pageId': {
-    as: 'cmsPage.edit',
-    uses: function (params) {
-      console.log('I am on a cms edit page')
-      console.log(params)
-      loadPage('cms/edit', params)
-    }
-  },
-  parks: {
-    as: 'park.list',
-    uses: function (params) {
-      console.log('I am on a parks list page')
-      console.log(params)
-      loadPage('parks', params)
-    }
-  },
-  'parks/new': {
-    as: 'park.new',
-    uses: function (params) {
-      console.log('I am on a park new page')
-      console.log(params)
-      loadPage('parks/edit', params)
-    }
-  },
-  'parks/:parkId': {
-    as: 'park.edit',
-    uses: function (params) {
-      console.log('I am on a park edit page')
-      console.log(params)
-      loadPage('parks/edit', params)
-    }
-  },
-  affiliate: {
-    as: 'affiliate.home',
-    uses: function (params) {
-      console.log('I am on the affiliate home page')
-      console.log(params)
-      loadPage('affiliate', params)
-    }
-  },
-  'affiliate/admin': {
-    as: 'affiliate.admin',
-    uses: function (params) {
-      console.log('I am on the affiliate admin page')
-      console.log(params)
-      loadPage('affiliate/admin', params)
-    }
-  },
-  'affiliate/admin/new': {
-    as: 'affiliate.admin.new',
-    uses: function (params) {
-      console.log('I am on the affiliate admin, new affiliate page')
-      console.log(params)
-      loadPage('affiliate/admin/edit', params)
-    }
-  },
-  '/': function () {
-    console.log('I am on the home page')
-    loadPage('index')
-  }
-})
-
-router.notFound(function () {
-  console.log('Route not found')
-  load404()
-})
-
-$(document).ready(function () {
-  $('.defaultFragmentHolder').each(function () {
-    var fragment = $(this).data('fragmentid')
-    window.loadFragment(fragment)
   })
 
-  router.resolve()
-})
+  router.notFound(function () {
+    console.log('Route not found')
+    load404()
+  })
+
+  $(document).ready(function () {
+    $('.defaultFragmentHolder').each(function () {
+      var fragment = $(this).data('fragmentid')
+      window.loadFragment(fragment)
+    })
+
+    router.resolve()
+  })
+}
 
 init()
