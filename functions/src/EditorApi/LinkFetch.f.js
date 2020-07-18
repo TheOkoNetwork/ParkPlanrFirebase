@@ -7,7 +7,7 @@ try {
 }
 
 var ogs = require('open-graph-scraper')
-const { uuid } = require('uuidv4')
+const uuid = require('uuid').v4
 const cors = require('cors')({ origin: true })
 
 const LinkFetch = functions.https.onRequest((request, response) => {
