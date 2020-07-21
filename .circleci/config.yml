@@ -50,6 +50,16 @@ jobs:
             ./scripts/buildPOM.sh
 
       - run:
+          name: style check site
+          command: |
+            ./scripts/standardStyleSite.sh
+
+      - run:
+          name: build site js modules
+          command: |
+            ./scripts/buildsite.sh
+
+      - run:
           name: Deploy to dev
           command: |
             firebase use ${FIREBASE_PROJECT_ID} --token ${FIREBASE_TOOLS_TOKEN}
