@@ -31,8 +31,6 @@ const init = async () => {
   window.auth = firebase.auth();
   $("body").trigger("authLoaded");
 
-  inboxMessageCount();
-
   $("#signoutButton").on("click", function () {
     window.auth.signOut();
   });
@@ -95,8 +93,6 @@ window.loadFragment = function (fragment) {
       $(".currentYear").text(today.getFullYear());
       $(".currentVersion").text(config("version"));
 
-      inboxMessageCount();
-
       switch (fragment) {
       }
     } catch (error) {
@@ -135,7 +131,6 @@ function loadPage(page, params) {
         $("body").html(data);
       }
       router.updatePageLinks();
-      inboxMessageCount();
 
       // updates any tags with the class CurrentYear with the YYYY year
       $(".CurrentYear").text(new Date().getFullYear());
