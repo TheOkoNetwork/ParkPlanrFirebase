@@ -58,7 +58,7 @@ jobs:
       - run:
           name: build site js modules
           command: |
-            ./scripts/buildsite.sh
+            ./scripts/buildSite.sh
 
       - run:
           name: Deploy to dev
