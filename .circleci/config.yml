@@ -30,11 +30,6 @@ jobs:
             ./scripts/IsFirestoreUpdates.sh
 
       - run:
-          name: Update version in Config.js for public site
-          command: |
-            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/site/js/Config.js
-
-      - run:
           name: Update version in Config.js for POM
           command: |
             sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/POM/js/src/config.js
@@ -48,6 +43,12 @@ jobs:
           name: build POM js modules
           command: |
             ./scripts/buildPOM.sh
+
+
+      - run:
+          name: Update version in Config.js for site
+          command: |
+            sed -i 's/{{APP_VERSION_HERE}}/'${CIRCLE_SHA1:(-10)}'/g' hosting/site/js/src/config.js
 
       - run:
           name: style check site
