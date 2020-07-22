@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="The app for theme parks">
+    <meta name="author" content="The Oko Network">
+    <title>ParkPlanr</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Pixel CSS -->
+    <link type="text/css" href="/css/pixel.css?022904" rel="stylesheet">
+
+
+	<!-- fix emoji colours in chrome -->
+	<link href="/css/emoji.css" rel="stylesheet">
+
+	<script src="/vendor/jquery/jquery.min.js"></script>
+
+
+	<script src="//d2wy8f7a9ursnm.cloudfront.net/v6/bugsnag.min.js"></script>
+	<script>window.bugsnagClient = bugsnag('a42d64afe55971b8279520e82df3b97b')</script>
+</head>
+	<body id="body">
+
+<!-- STANDALONE PAGE CONTENT-TAG_ID -->
+    <main>
+        <section class="min-vh-100 d-flex align-items-center">
+            <div class="bg-img-holder section-image top-0 left-0 col-lg-6 col-xl-7 z-10 vh-100 d-none d-lg-block"
+		style="background-image: url('/img/pressphotos/AltonTowers_Wickerman-1.jpg');">
+            </div>
+            <div class="container-fluid py-5">
+                <div class="row align-items-center">
+                    <div class="col-sm-10 col-lg-6 col-xl-5 mx-auto mr-lg-0">
+                        <div class="px-1 px-xl-6">
+                            <div>
+                                <div class="text-left text-sm-center">
+                                    <h1>Sign in</h1>
+                                    <p class="text-gray mb-0">Sign in to your account to continue.</p>
+                                </div>
+                                <div class="btn-wrapper my-4 text-left text-sm-center">
+                                    <a id="signinWithFacebookButton" class="btn btn-primary btn-sm btn-icon mb-1 mb-sm-0" style="color:#FFFFFF">
+                                        <span class="btn-inner-icon">
+                                            <i class="fab fa-facebook"></i>
+                                        </span>
+                                        <span class="btn-inner-text">Facebook</span>
+                                    </a>
+				    <a id="signinWithGoogleButton" class="btn btn-sm btn-icon mb-1 mb-sm-0"><img src="/img/social/btn_google_signin_light_normal_web.png"></a>
+                                </div>
+                                <span class="clearfix"></span>
+                                <form onsubmit="return false;">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-user"></i></span>
+                                            </div>
+                                            <input type="email" class="form-control" id="input-email"
+                                                placeholder="Enter email" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                                            </div>
+                                            <input class="form-control" placeholder="Password" type="password" id="input-password" required>
+<!--                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-eye"></i>
+                                                </span>
+                                            </div>
+-->
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-block btn-primary" id="signinWithEmailPasswordButton">Sign in</button>
+                                    </div>
+                                </form>
+                                <div class="d-block d-sm-flex justify-content-between align-items-center mt-4">
+                                    <span>
+                                        <small>Not registered?</small>
+                                        <a href="/signup" class="small font-weight-bold" data-navigo>Create account</a>
+                                    </span>
+                                    <div><a href="/forgotpassword" class="small text-right" data-navigo>Lost password?</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Core -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/popper/popper.min.js"></script>
+    <script src="/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="/vendor/headroom/headroom.min.js"></script>
+
+    <!-- Vendor JS -->
+    <script src="/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+    <script src="/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/vendor/smooth-scroll/smooth-scroll.polyfills.min.js"></script>
+    <script src="/vendor/prism/prism.js"></script>
+
+
+    <!-- site js -->
+    <script src="/js/dist/signinApp.js"></script>
+
+  </body>
+</html>

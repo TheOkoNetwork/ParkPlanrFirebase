@@ -24,6 +24,10 @@
         "function": "ChatbotApi"
       },
       {
+        "source": "signin",
+        "destination": "/signin.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
