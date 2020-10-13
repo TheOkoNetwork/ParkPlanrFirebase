@@ -55,7 +55,7 @@ app.post('/passwordReset/', async (req, res) => {
       console.log('User exists')
       console.log(userAccount)
       var passwordResetLink = await admin.auth().generatePasswordResetLink(userEmail)
-      console.log(`Got password reset link: ${passwordResetLink}`)
+      console.log('Got password reset link')
 
       var emailData = {
         to: userEmail,
