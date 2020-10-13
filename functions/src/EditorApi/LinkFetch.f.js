@@ -7,7 +7,7 @@ try {
 }
 
 var ogs = require('open-graph-scraper')
-const { uuid } = require('uuidv4')
+const uuid = require('uuid').v4
 const cors = require('cors')({ origin: true })
 
 const LinkFetch = functions.https.onRequest((request, response) => {
@@ -37,7 +37,7 @@ const LinkFetch = functions.https.onRequest((request, response) => {
         linkUrl = result.data.ogUrl
       } else {
         linkUrl = result.requestUrl
-      };
+      }
       SiteHostname = linkUrl.split('/')[2]
       switch (SiteHostname) {
         case 'twitter.com':

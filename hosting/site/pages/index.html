@@ -7,8 +7,8 @@
                     <div class="col-lg-8 col-xl-8">
                         <h1 class="display-1 font-weight-light mb-3">Park<span class="font-weight-bolder ml-3">Planr</span><span class="pixel-lite-badge"><i class="em em-fire"></i></span></h1>
                         <p class="lead px-xl-5" id="IndexHeaderLead">
-				<span class="Unauthenticated">Park<span class="font-weight-bold">Planr</span> is the one app you need for theme parks!</span>
-				<span class="Authenticated">Welcome <span class="font-weight-bold DisplayName"></span></span>
+				<span class="showIfUnauthenticated">Park<span class="font-weight-bold">Planr</span> is the one app you need for theme parks!</span>
+				<span class="showIfAuthenticated">Welcome <span class="font-weight-bold currentUsername"></span></span>
 			</p>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="col-md-6 col-lg-4" id="ParkInfoCard_{{this.id}}">
                         <div class="blog-card">
                             <div class="card shadow-soft border-light">
-                                    <a href="/parks/{{this.data().ParkCode}}" onclick="loadPageTag(this);return false;">
+                                    <a href="/parks/{{this.data().ParkCode}}" data-navigo>
 	                                <img src="{{this.data().Logo}}" class="card-img-top" alt="image">
 				    </a>
 	                         <div class="card-header">
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body pt-0">
-                                    <a href="/parks/{{this.data().ParkCode}}" onclick="loadPageTag(this);return false;">
+                                    <a href="/parks/{{this.data().ParkCode}}" data-navigo>
                                         <h4><span class="ParkInfoCardName">{{this.data().Name}}</span></h4>
                                     </a>
 					{{#if this.data().OpenToday}}
@@ -100,7 +100,7 @@
 					{{/if}}
                                 </div>
                                 <div class="card-footer mx-4 px-0 pt-0">
-                                    <a class="btn btn-sm btn-secondary" href="/parks/{{this.data().ParkCode}}" onclick="loadPageTag(this);return false;">
+                                    <a class="btn btn-sm btn-secondary" href="/parks/{{this.data().ParkCode}}" data-navigo>
                                     	See more
                                     </a>
                                 </div>

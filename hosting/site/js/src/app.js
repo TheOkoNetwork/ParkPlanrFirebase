@@ -1,18 +1,5 @@
 import { config } from './config.js'
 import { stateUrl } from './stateUrl.js'
-import {
-  inboxMessagePage,
-  inboxMessageHeader,
-  inboxMessageCount
-} from './inbox.js'
-import { cmsPagesLoad, cmsPageLoadEdit } from './cms.js'
-import { parksLoad, parksLoadEdit } from './parks.js'
-import {
-  affiliateHome,
-  affiliateAdmin,
-  affiliateAdminEdit,
-  affiliateAdminView
-} from './affiliate.js'
 
 var firebase = require('firebase/app')
 window.firebase = firebase
@@ -44,21 +31,18 @@ const init = async () => {
   window.auth = firebase.auth()
   $('body').trigger('authLoaded')
 
-  inboxMessageCount()
-
-  $('#signoutButton').on('click', function () {
-    window.auth.signOut()
-  })
-
   // when a user signs in, out or is first seen this session in either state
   window.auth.onAuthStateChanged(function (user) {
     if (user) {
       $('.currentUsername').text(window.auth.currentUser.displayName)
       $('.userProfileImage').prop('src', window.auth.currentUser.photoURL)
       userAuthenticated(user)
+      $('.showIfAuthenticated').show()
+      $('.showIfUnauthenticated').hide()
     } else {
       console.log('User is unauthenticated')
-      window.location = '/signin'
+      $('.showIfAuthenticated').hide()
+      $('.showIfUnauthenticated').show()
     }
   })
 }
@@ -83,8 +67,8 @@ function userAuthenticated (user) {
 }
 
 function load404 () {
-  // TODO: This but better
-  $('#contentDiv').html('4 oh 4')
+  // $('#contentDiv').html('4 oh 4')
+  loadPage('404')
 }
 
 window.loadFragment = function (fragment) {
@@ -108,11 +92,11 @@ window.loadFragment = function (fragment) {
       $('.currentYear').text(today.getFullYear())
       $('.currentVersion').text(config('version'))
 
-      inboxMessageCount()
-
       switch (fragment) {
-        case 'headerNav':
-          inboxMessageHeader()
+        case 'header':
+          $('#signOutButton').on('click', function () {
+            window.auth.signOut()
+          })
           break
       }
     } catch (error) {
@@ -136,56 +120,34 @@ function loadPage (page, params) {
       )
       if (!isPage && !isStandalonePage) {
         console.log('Page HTML file not found')
-        load404()
+        if (page === '404') {
+          $('#contentDiv').html('4 oh 4')
+        }
         return
       }
 
       // loads the page content into the dom
       if (isPage) {
-        //    if (!$('#contentDiv').length) {
-        //      console.log('Switching from standalone page, loading standard page core layout')
-        //      $('#body').html('<script id="header_Holder">LoadFragment("header");</script><main id="main"></main><script id="footer_Holder">LoadFragment("footer");</script>')
-        //    };
+        if (!$('#contentDiv').length) {
+          console.log(
+            'Switching from standalone page, loading standard page core layout'
+          )
+          $('#body').html(
+            '<script id="header_Holder">LoadFragment("header");</script><main id="contentDiv"></main><script id="footer_Holder">LoadFragment("footer");</script>'
+          )
+        }
         $('#contentDiv').html(data)
       } else {
         $('body').html(data)
       }
       router.updatePageLinks()
-      inboxMessageCount()
 
       // updates any tags with the class CurrentYear with the YYYY year
-      $('.CurrentYear').text(new Date().getFullYear())
+      $('.currentYear').text(new Date().getFullYear())
       // scrolls back to the top of the window
       window.scrollTo(0, 0)
 
       switch (page) {
-        case 'inbox':
-          inboxMessagePage()
-          break
-        case 'cms':
-          cmsPagesLoad()
-          break
-        case 'cms/edit':
-          cmsPageLoadEdit(params)
-          break
-        case 'parks':
-          parksLoad()
-          break
-        case 'parks/edit':
-          parksLoadEdit(params)
-          break
-        case 'affiliate':
-          affiliateHome(params)
-          break
-        case 'affiliate/admin':
-          affiliateAdmin(params)
-          break
-        case 'affiliate/admin/edit':
-          affiliateAdminEdit(params)
-          break
-        case 'affiliate/admin/view':
-          affiliateAdminView(params)
-          break
       }
     } catch (error) {
       console.log(error)
@@ -206,98 +168,13 @@ var router = new Navigo(root, useHash, hash)
 window.router = router
 
 router.on({
-  'inbox/conversation/:id': function (params) {
-    console.log('I am on a inbox conversation')
-    console.log(params)
-    loadPage('inbox/conversation', params)
-  },
-  inbox: function () {
-    console.log('I am on the inbox main page')
-    loadPage('inbox')
-  },
-  cms: {
-    as: 'cmsPage.list',
-    uses: function (params) {
-      console.log('I am on a cms list page')
-      console.log(params)
-      loadPage('cms', params)
-    }
-  },
-  'cms/new': {
-    as: 'cmsPage.new',
-    uses: function (params) {
-      console.log('I am on a cms new page')
-      console.log(params)
-      loadPage('cms/edit', params)
-    }
-  },
-  'cms/:pageId': {
-    as: 'cmsPage.edit',
-    uses: function (params) {
-      console.log('I am on a cms edit page')
-      console.log(params)
-      loadPage('cms/edit', params)
-    }
-  },
-  parks: {
-    as: 'park.list',
-    uses: function (params) {
-      console.log('I am on a parks list page')
-      console.log(params)
-      loadPage('parks', params)
-    }
-  },
-  'parks/new': {
-    as: 'park.new',
-    uses: function (params) {
-      console.log('I am on a park new page')
-      console.log(params)
-      loadPage('parks/edit', params)
-    }
-  },
-  'parks/:parkId': {
-    as: 'park.edit',
-    uses: function (params) {
-      console.log('I am on a park edit page')
-      console.log(params)
-      loadPage('parks/edit', params)
-    }
-  },
-  affiliate: {
-    as: 'affiliate.home',
-    uses: function (params) {
-      console.log('I am on the affiliate home page')
-      console.log(params)
-      loadPage('affiliate', params)
-    }
-  },
-  'affiliate/admin': {
-    as: 'affiliate.admin',
-    uses: function (params) {
-      console.log('I am on the affiliate admin page')
-      console.log(params)
-      loadPage('affiliate/admin', params)
-    }
-  },
-  'affiliate/admin/new': {
-    as: 'affiliate.admin.new',
-    uses: function (params) {
-      console.log('I am on the affiliate admin, new affiliate page')
-      console.log(params)
-      loadPage('affiliate/admin/edit', params)
-    }
-  },
-  'affilite/admin/:affiliateId': {
-    as: 'affiliate.admin.view',
-    uses: function (params) {
-      console.log('I am on a affiliate admin view affiliate page')
-      console.log(params)
-      loadPage('affiliate/admin/view', params)
-    }
-  },
   '/': function () {
     console.log('I am on the home page')
     loadPage('index')
+  },
+  '/signin': function () {
+    console.log('I am on the signin page')
+    window.location = '/signin'
   }
 })
 
