@@ -13,8 +13,8 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "firebase-admin": "^9.2.0",
-    "graphql": "^15.1.0",
-    "graphql-tag": "^2.10.3",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
     "node-fetch": "^2.6.1",
     "open": "^7.2.1",
     "play-sound": "^1.1.3"
