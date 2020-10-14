@@ -16,7 +16,7 @@
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
     "node-fetch": "^2.6.1",
-    "open": "^7.0.4",
+    "open": "^7.2.1",
     "play-sound": "^1.1.3"
   }
 }
