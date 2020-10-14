@@ -66,7 +66,6 @@ app.post('/passwordReset/', async (req, res) => {
         }
       }
       console.log('Sending email')
-      console.log(emailData)
       var emailResult = await sgMail.send(emailData)
       console.log(emailResult)
       actionsData.actions.push({ say: `Please check your email account (${userEmail}), and follow the instructions in the email we just sent you to reset your password` })
