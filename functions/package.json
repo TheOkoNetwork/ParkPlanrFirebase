@@ -39,7 +39,7 @@
     "querystring": "^0.2.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
-    "sharp": "^0.25.4",
+    "sharp": "^0.26.1",
     "snyk": "^1.399.1",
     "twilio": "^3.49.3",
     "uuid": "^8.3.0"
