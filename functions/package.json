@@ -31,7 +31,7 @@
     "firebase-functions": "^3.11.0",
     "glob": "^7.1.6",
     "graphql": "^15.0.0",
-    "graphql-tag": "^2.10.3",
+    "graphql-tag": "^2.11.0",
     "gravatar": "^1.8.0",
     "moment": "^2.29.0",
     "node-fetch": "^2.6.1",
