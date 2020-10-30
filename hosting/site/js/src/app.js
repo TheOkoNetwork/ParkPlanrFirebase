@@ -1,5 +1,6 @@
 import { config } from './config.js'
 import { stateUrl } from './stateUrl.js'
+import { ridecountHomeLoad } from './ridecount.js'
 
 var firebase = require('firebase/app')
 window.firebase = firebase
@@ -49,21 +50,6 @@ const init = async () => {
 
 function userAuthenticated (user) {
   console.log(user)
-
-  window.auth.currentUser
-    .getIdTokenResult()
-    .then((idTokenResult) => {
-      // Confirm the user is an Admin or an affiliate
-      if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
-        console.log('I am an admin or an affiliate')
-      } else {
-        console.log('I am not an admin, i should not be here')
-        window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-    })
 }
 
 function load404 () {
@@ -122,6 +108,8 @@ function loadPage (page, params) {
         console.log('Page HTML file not found')
         if (page === '404') {
           $('#contentDiv').html('4 oh 4')
+        } else {
+          loadPage('404', params)
         }
         return
       }
@@ -148,6 +136,9 @@ function loadPage (page, params) {
       window.scrollTo(0, 0)
 
       switch (page) {
+        case 'ridecount':
+          ridecountHomeLoad(params)
+          break
       }
     } catch (error) {
       console.log(error)
@@ -175,6 +166,14 @@ router.on({
   '/signin': function () {
     console.log('I am on the signin page')
     window.location = '/signin'
+  },
+  '/ridecount': function () {
+    console.log('I am on the ridecount page')
+    loadPage('ridecount')
+  },
+  '/ridecount/import': function () {
+    console.log('I am on the ridecount import page')
+    loadPage('ridecount/import')
   }
 })
 
