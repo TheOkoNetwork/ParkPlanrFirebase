@@ -3,7 +3,7 @@ var Fuse = require('fuse.js').default
 var affiliateHome = async function (params) {
   console.log('Loading affiliate homepage')
 }
-var affiliateAdmin = async function (params) {
+const affiliateAdmin = async function (params) {
   if (!window.db) {
     console.log('DB not ready yet, unable to load admin affiliate list')
     $('body').on('dbLoaded', function () {
@@ -133,7 +133,7 @@ var affiliateAdminEdit = async function (params) {
   $('#affiliateAdminEditSaveBtn').on('click', affiliateAdminEditSave)
 }
 
-var affiliateAdminView = async function (params) {
+const affiliateAdminView = async function (params) {
   if (!window.db) {
     console.log('DB not ready yet, unable to load admin view affiliate page')
     $('body').on('dbLoaded', function () {
@@ -189,7 +189,7 @@ var affiliateAdminView = async function (params) {
   })
 }
 
-var affiliateAdminEditSave = async function () {
+const affiliateAdminEditSave = async function () {
   console.log('Affiliate admin, new/edit affiliate save')
   var params = window.router._lastRouteResolved.params
 
