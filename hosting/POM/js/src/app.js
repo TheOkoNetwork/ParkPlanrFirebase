@@ -202,7 +202,7 @@ console.log(stateUrl())
 var root = `https://${window.location.href.split('/')[2]}/`
 var useHash = false
 var hash = '#!' // Defaults to: '#'
-var router = new Navigo(root, useHash, hash)
+let router = new Navigo(root, useHash, hash)
 window.router = router
 
 router.on({
