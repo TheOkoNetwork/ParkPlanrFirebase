@@ -1,6 +1,7 @@
 var Fuse = require('fuse.js').default
 
 async function parksLoadEdit (params) {
+  let parkDoc;
   if (!window.db) {
     console.log('DB not ready yet, unable to load parks')
     $('body').on('dbLoaded', function () {
@@ -40,7 +41,7 @@ async function parksLoadEdit (params) {
     $('.showIfParkEdit').show()
     $('.showIfParkAdd').hide()
 
-    var parkDoc = await window.db.collection('parks').doc(params.parkId).get()
+    parkDoc = await window.db.collection('parks').doc(params.parkId).get()
     console.log(parkDoc.id)
     console.log(parkDoc.data())
     var parkName = parkDoc.data().name.name
