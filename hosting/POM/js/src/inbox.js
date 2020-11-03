@@ -1,7 +1,7 @@
 var Template7 = require('template7').default
 var moment = require('moment')
 
-var inboxMessagePage = async function () {
+const inboxMessagePage = async function () {
   if (!window.db) {
     console.log('DB not ready yet, unable to load inbox messages')
     $('body').on('dbLoaded', function () {
@@ -53,7 +53,7 @@ var inboxMessagePage = async function () {
   window.router.updatePageLinks()
 }
 
-var inboxMessageHeader = function () {
+const inboxMessageHeader = function () {
   if (!window.db) {
     console.log('DB not ready yet, unable to load inbox messages header')
     $('body').on('dbLoaded', function () {
@@ -87,7 +87,7 @@ var inboxMessageHeader = function () {
     })
 }
 
-var inboxMessageCount = function () {
+const inboxMessageCount = function () {
   if (!window.db) {
     console.log('DB not ready yet')
     return
