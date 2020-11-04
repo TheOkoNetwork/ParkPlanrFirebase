@@ -22,7 +22,7 @@
     "@editorjs/link": "^2.2.0",
     "@editorjs/list": "^1.5.0",
     "@editorjs/quote": "^2.3.0",
-    "@editorjs/raw": "^2.1.2",
+    "@editorjs/raw": "^2.2.0",
     "@editorjs/table": "^1.2.2",
     "firebase": "^7.23.0",
     "fuse.js": "^6.0.4",
