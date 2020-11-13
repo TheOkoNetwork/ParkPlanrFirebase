@@ -2,13 +2,13 @@ import { config } from './config.js'
 import { stateUrl } from './stateUrl.js'
 import { ridecountHomeLoad } from './ridecount.js'
 
-var firebase = require('firebase/app')
+const firebase = require('firebase/app')
 window.firebase = firebase
-var Navigo = require('navigo')
+const Navigo = require('navigo')
 require('firebase/auth')
 require('firebase/firestore')
 require('firebase/storage')
-var $ = window.$
+const $ = window.$
 window.stateData = {}
 
 const init = async () => {
@@ -61,7 +61,7 @@ window.loadFragment = function (fragment) {
   console.log(`Loading fragment: ${fragment}`)
   $.get(`/fragments/${fragment}.html`, function (data) {
     try {
-      var isFragment = data.startsWith('<!-- FRAGMENT CONTENT-TAG_ID -->')
+      const isFragment = data.startsWith('<!-- FRAGMENT CONTENT-TAG_ID -->')
 
       if (!isFragment) {
         console.log('Fragment HTML file not found')
@@ -74,7 +74,7 @@ window.loadFragment = function (fragment) {
       })
       router.updatePageLinks()
 
-      var today = new Date()
+      const today = new Date()
       $('.currentYear').text(today.getFullYear())
       $('.currentVersion').text(config('version'))
 
@@ -100,8 +100,8 @@ window.loadFragment = function (fragment) {
 function loadPage (page, params) {
   $.get(`/pages/${page}.html`, function (data) {
     try {
-      var isPage = data.startsWith('<!-- PAGE CONTENT-TAG_ID -->')
-      var isStandalonePage = data.startsWith(
+      const isPage = data.startsWith('<!-- PAGE CONTENT-TAG_ID -->')
+      const isStandalonePage = data.startsWith(
         '<!-- STANDALONE PAGE CONTENT-TAG_ID -->'
       )
       if (!isPage && !isStandalonePage) {
@@ -152,10 +152,10 @@ function loadPage (page, params) {
 
 console.log(stateUrl())
 
-var root = `https://${window.location.href.split('/')[2]}/`
-var useHash = false
-var hash = '#!' // Defaults to: '#'
-var router = new Navigo(root, useHash, hash)
+const root = `https://${window.location.href.split('/')[2]}/`
+const useHash = false
+const hash = '#!' // Defaults to: '#'
+const router = new Navigo(root, useHash, hash)
 window.router = router
 
 router.on({
@@ -174,6 +174,10 @@ router.on({
   '/ridecount/import': function () {
     console.log('I am on the ridecount import page')
     loadPage('ridecount/import')
+  },
+  '/ridecount/import/ridecountcom': function () {
+    console.log('I am on the ridecount.com import page')
+    loadPage('ridecount/import/ridecountcom')
   }
 })
 
@@ -184,7 +188,7 @@ router.notFound(function () {
 
 $(document).ready(function () {
   $('.defaultFragmentHolder').each(function () {
-    var fragment = $(this).data('fragmentid')
+    const fragment = $(this).data('fragmentid')
     window.loadFragment(fragment)
   })
 
