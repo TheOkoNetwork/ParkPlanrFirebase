@@ -174,10 +174,6 @@ router.on({
   '/ridecount/import': function () {
     console.log('I am on the ridecount import page')
     loadPage('ridecount/import')
-  },
-  '/ridecount/import/ridecountcom': function () {
-    console.log('I am on the ridecount.com import page')
-    loadPage('ridecount/import/ridecountcom')
   }
 })
 
