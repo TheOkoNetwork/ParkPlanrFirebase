@@ -1,7 +1,7 @@
-var Fuse = require('fuse.js').default
+const Fuse = require('fuse.js').default
 
 async function parksLoadEdit (params) {
-  let parkDoc;
+  let parkDoc
   if (!window.db) {
     console.log('DB not ready yet, unable to load parks')
     $('body').on('dbLoaded', function () {
@@ -44,7 +44,7 @@ async function parksLoadEdit (params) {
     parkDoc = await window.db.collection('parks').doc(params.parkId).get()
     console.log(parkDoc.id)
     console.log(parkDoc.data())
-    var parkName = parkDoc.data().name.name
+    const parkName = parkDoc.data().name.name
 
     $('.parkEditName').text(parkName)
     $('#parkEditFieldName').val(parkName)
@@ -96,10 +96,10 @@ async function parksLoad () {
   }
 
   console.log('Loading parks')
-  var parkDocs = await window.db.collection('parks').get()
-  var parks = []
+  const parkDocs = await window.db.collection('parks').get()
+  const parks = []
   parkDocs.forEach(function (parkDoc) {
-    var park = parkDoc.data()
+    const park = parkDoc.data()
     park.id = parkDoc.id
     // name.name is the default name, planning on eventually having
     // name.EN name.DE etc...
@@ -178,7 +178,7 @@ async function parksLoad () {
         console.log(Fuse)
         console.log('Loading data')
         console.log(filter)
-        var filteredItems = $.grep(parks, function (park) {
+        let filteredItems = $.grep(parks, function (park) {
           if (typeof filter.active === 'boolean') {
             if (filter.active !== park.active) {
               return false
@@ -212,7 +212,7 @@ async function parksLoad () {
         console.log(filteredItems)
 
         if (filter.id) {
-          var idFilterFuse = new Fuse(filteredItems, {
+          const idFilterFuse = new Fuse(filteredItems, {
             keys: ['id']
           })
           filteredItems = idFilterFuse.search(filter.id).map(function (item) {
@@ -223,7 +223,7 @@ async function parksLoad () {
         console.log(filteredItems)
 
         if (filter.nameDefault) {
-          var nameFilterFuse = new Fuse(filteredItems, {
+          const nameFilterFuse = new Fuse(filteredItems, {
             keys: ['nameDefault']
           })
           filteredItems = nameFilterFuse
@@ -236,7 +236,7 @@ async function parksLoad () {
         console.log(filteredItems)
 
         if (filter.country) {
-          var countryFilterFuse = new Fuse(filteredItems, {
+          const countryFilterFuse = new Fuse(filteredItems, {
             keys: ['country']
           })
           filteredItems = countryFilterFuse

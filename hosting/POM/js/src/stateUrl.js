@@ -1,5 +1,5 @@
 export function stateUrl () {
-  var url = window.location.href.split('?')[0].split('#')[0].split('/')
+  let url = window.location.href.split('?')[0].split('#')[0].split('/')
   url = url.filter(function (el) {
     return el !== ''
   })

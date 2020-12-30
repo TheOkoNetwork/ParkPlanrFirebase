@@ -1,6 +1,6 @@
 import { config } from './config.js'
 
-var firebase = require('firebase/app')
+const firebase = require('firebase/app')
 require('firebase/auth')
 
 window.firebase = firebase
@@ -61,8 +61,8 @@ function getFirebaseRedirectResult () {
 }
 
 function signinEmail () {
-  var email = $('#email').val()
-  var password = $('#password').val()
+  const email = $('#email').val()
+  const password = $('#password').val()
 
   if (!email) {
     console.log('No email address provided')
@@ -85,16 +85,16 @@ function signinEmail () {
 }
 
 function signinFacebook () {
-  var provider = new firebase.auth.FacebookAuthProvider()
+  const provider = new firebase.auth.FacebookAuthProvider()
   firebase.auth().signInWithRedirect(provider)
 }
 function signinGoogle () {
-  var provider = new firebase.auth.GoogleAuthProvider()
+  const provider = new firebase.auth.GoogleAuthProvider()
   firebase.auth().signInWithRedirect(provider)
 }
 
 function signinApple () {
-  var provider = new firebase.auth.OAuthProvider('apple.com')
+  const provider = new firebase.auth.OAuthProvider('apple.com')
   firebase.auth().signInWithRedirect(provider)
 }
 

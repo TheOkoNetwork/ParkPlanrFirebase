@@ -1,6 +1,6 @@
-var Fuse = require('fuse.js').default
+const Fuse = require('fuse.js').default
 
-var affiliateHome = async function (params) {
+const affiliateHome = async function (params) {
   console.log('Loading affiliate homepage')
 }
 const affiliateAdmin = async function (params) {
@@ -15,12 +15,12 @@ const affiliateAdmin = async function (params) {
 
   console.log('Loading affiliate admin page')
 
-  var affiliateDocs = await window.db.collection('affiliates').get()
+  const affiliateDocs = await window.db.collection('affiliates').get()
   console.log(affiliateDocs)
-  var affiliates = []
+  const affiliates = []
   affiliateDocs.forEach(function (affiliateDoc) {
     console.log(affiliateDoc.id, affiliateDoc.data())
-    var affiliate = affiliateDoc.data()
+    const affiliate = affiliateDoc.data()
     affiliate.id = affiliateDoc.id
     affiliates.push(affiliate)
   })
@@ -59,10 +59,10 @@ const affiliateAdmin = async function (params) {
         console.log(Fuse)
         console.log('Loading data')
         console.log(filter)
-        var filteredItems = affiliates
+        let filteredItems = affiliates
 
         if (filter.id) {
-          var idFilterFuse = new Fuse(filteredItems, {
+          const idFilterFuse = new Fuse(filteredItems, {
             keys: ['id']
           })
           filteredItems = idFilterFuse.search(filter.id).map(function (item) {
@@ -73,7 +73,7 @@ const affiliateAdmin = async function (params) {
         console.log(filteredItems)
 
         if (filter.name) {
-          var nameFilterFuse = new Fuse(filteredItems, {
+          const nameFilterFuse = new Fuse(filteredItems, {
             keys: ['name']
           })
           filteredItems = nameFilterFuse
@@ -86,7 +86,7 @@ const affiliateAdmin = async function (params) {
         console.log(filteredItems)
 
         if (filter.website) {
-          var websiteFilterFuse = new Fuse(filteredItems, {
+          const websiteFilterFuse = new Fuse(filteredItems, {
             keys: ['website']
           })
           filteredItems = websiteFilterFuse
@@ -99,7 +99,7 @@ const affiliateAdmin = async function (params) {
         console.log(filteredItems)
 
         if (filter.slug) {
-          var slugFilterFuse = new Fuse(filteredItems, {
+          const slugFilterFuse = new Fuse(filteredItems, {
             keys: ['slug']
           })
           filteredItems = slugFilterFuse
@@ -117,7 +117,7 @@ const affiliateAdmin = async function (params) {
   })
   $('#affiliatesJSGrid').jsGrid('search')
 }
-var affiliateAdminEdit = async function (params) {
+const affiliateAdminEdit = async function (params) {
   console.log('Loading affiliate admin, new/edit affiliate page')
 
   if (params) {
@@ -145,7 +145,7 @@ const affiliateAdminView = async function (params) {
 
   console.log('Loading affiliate admin, view affiliate page')
   console.log(params)
-  var docPromises = [
+  const docPromises = [
     window.db.collection('affiliates').doc(params.affiliateId).get(),
     window.db
       .collection('affiliates')
@@ -155,10 +155,10 @@ const affiliateAdminView = async function (params) {
       .get()
   ]
 
-  var promiseResults = await Promise.all(docPromises)
+  const promiseResults = await Promise.all(docPromises)
   console.log(promiseResults)
   promiseResults.forEach(function (promiseResult) {
-    var refSplit = promiseResult.ref.path.split('/')
+    const refSplit = promiseResult.ref.path.split('/')
     switch (refSplit[refSplit.length - 2]) {
       case 'affiliates':
         console.log('Public doc')
@@ -191,20 +191,20 @@ const affiliateAdminView = async function (params) {
 
 const affiliateAdminEditSave = async function () {
   console.log('Affiliate admin, new/edit affiliate save')
-  var params = window.router._lastRouteResolved.params
+  const params = window.router._lastRouteResolved.params
 
-  var formData = {}
+  const formData = {}
   $($('#affiliateEditForm').serializeArray()).each(function (index, obj) {
     formData[obj.name] = obj.value
   })
   console.log(formData)
 
-  var publicDocData = {
+  const publicDocData = {
     name: formData.affiliateEditFieldName,
     website: formData.affiliateEditFieldWebsite,
     slug: formData.affiliateEditFieldSlug
   }
-  var paymentDocData = {
+  const paymentDocData = {
     method: 'UK_BANK_TRANSFER',
     bankAccount: {
       name: formData.affiliateEditFieldPaymentName,
@@ -235,7 +235,7 @@ const affiliateAdminEditSave = async function () {
       break
   }
 
-  var affiliatePublicDoc
+  let affiliatePublicDoc
   if (params) {
     console.log('Edit existing affiliate')
     affiliatePublicDoc = window.db
@@ -245,7 +245,7 @@ const affiliateAdminEditSave = async function () {
     console.log('New affiliate')
     affiliatePublicDoc = window.db.collection('affiliates').doc()
   }
-  var affiliatePaymentDoc = window.db
+  const affiliatePaymentDoc = window.db
     .collection('affiliates')
     .doc(affiliatePublicDoc.id)
     .collection('private')

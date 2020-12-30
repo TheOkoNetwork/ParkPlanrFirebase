@@ -1,5 +1,5 @@
-var Template7 = require('template7').default
-var moment = require('moment')
+const Template7 = require('template7').default
+const moment = require('moment')
 
 const inboxMessagePage = async function () {
   if (!window.db) {
@@ -28,13 +28,13 @@ const inboxMessagePage = async function () {
   })
 
   console.log('Loading inbox messages')
-  var inboxMessages = await window.db
+  const inboxMessages = await window.db
     .collection('inbox')
     .where('open', '==', true)
     .where('folder', '==', 'INBOX')
     .get()
 
-  var templateInboxMessage = Template7.compile(
+  const templateInboxMessage = Template7.compile(
     $('#templateInboxMessage').html()
   )
 
@@ -42,7 +42,7 @@ const inboxMessagePage = async function () {
   inboxMessages.forEach(function (inboxMessage) {
     console.log(inboxMessage)
 
-    var data = inboxMessage.data()
+    const data = inboxMessage.data()
     data.id = inboxMessage.id
     data.lastMessageReceivedAgo = moment(
       data.lastMessageReceived.toDate()
@@ -68,13 +68,13 @@ const inboxMessageHeader = function () {
     .where('open', '==', true)
     .orderBy('lastMessageReceived', 'desc')
     .onSnapshot(function (inboxMessages) {
-      var templateHeaderNavInboxMessage = Template7.compile(
+      const templateHeaderNavInboxMessage = Template7.compile(
         $('#templateHeaderNavInboxMessage').html()
       )
       $('#headerNavInboxMessagesDiv').empty()
       inboxMessages.forEach(function (inboxMessageConversation) {
         console.log(inboxMessageConversation)
-        var data = inboxMessageConversation.data()
+        const data = inboxMessageConversation.data()
         data.id = inboxMessageConversation.id
         data.lastMessageReceivedAgo = moment(
           data.lastMessageReceived.toDate()
@@ -113,7 +113,7 @@ const inboxMessageCount = function () {
       .collection('inbox')
       .where('open', '==', true)
       .onSnapshot(function (inboxMessages) {
-        var messageCount = inboxMessages.docs.length
+        const messageCount = inboxMessages.docs.length
         window.stateData.inboxMessageCount = messageCount
 
         window.stateData.inboxUnreadMessageCount = 0
