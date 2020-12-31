@@ -19,7 +19,7 @@
     "node": "10"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.3.0",
+    "@sendgrid/mail": "^7.4.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
@@ -27,10 +27,10 @@
     "connect-slashes": "^1.4.0",
     "express": "^4.17.1",
     "fb-messenger": "^2.3.1",
-    "firebase-admin": "^9.3.0",
-    "firebase-functions": "^3.11.0",
+    "firebase-admin": "^9.4.2",
+    "firebase-functions": "^3.13.0",
     "glob": "^7.1.6",
-    "graphql": "^15.0.0",
+    "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
     "gravatar": "^1.8.0",
     "moment": "^2.29.1",
@@ -40,9 +40,9 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "sharp": "^0.26.2",
-    "snyk": "^1.420.1",
+    "snyk": "^1.434.4",
     "twilio": "^4.6.0",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
