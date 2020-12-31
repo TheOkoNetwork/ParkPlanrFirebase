@@ -20,7 +20,7 @@
     "@editorjs/header": "^2.5.0",
     "@editorjs/image": "^2.6.0",
     "@editorjs/link": "^2.3.1",
-    "@editorjs/list": "^1.5.0",
+    "@editorjs/list": "^1.6.1",
     "@editorjs/quote": "^2.3.0",
     "@editorjs/raw": "^2.2.0",
     "@editorjs/table": "^1.2.2",
