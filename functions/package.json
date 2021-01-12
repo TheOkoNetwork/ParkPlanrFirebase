@@ -41,7 +41,7 @@
     "request-promise": "^4.2.6",
     "sharp": "^0.26.2",
     "snyk": "^1.436.0",
-    "twilio": "^3.51.0",
+    "twilio": "^3.54.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
