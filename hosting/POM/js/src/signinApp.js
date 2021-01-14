@@ -1,6 +1,6 @@
 import { config } from './config.js'
 
-const firebase = require('firebase/app')
+const firebase = require('firebase/app').default
 require('firebase/auth')
 
 window.firebase = firebase

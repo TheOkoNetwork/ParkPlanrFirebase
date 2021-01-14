@@ -14,7 +14,7 @@ import {
   affiliateAdminView
 } from './affiliate.js'
 
-const firebase = require('firebase/app')
+const firebase = require('firebase/app').default
 window.firebase = firebase
 const Navigo = require('navigo')
 require('firebase/auth')
