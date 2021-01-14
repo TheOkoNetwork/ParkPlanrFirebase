@@ -13,6 +13,16 @@
 {
     "target": "site",
     "public": "hosting/site",
+    "headers": [
+      {
+        "source": "/**",
+        "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }],
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -37,6 +47,16 @@
 {
     "target": "POM",
     "public": "hosting/POM",
+    "headers": [
+      {
+        "source": "/**",
+        "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }],
     "ignore": [
       "firebase.json",
       "**/.*",
