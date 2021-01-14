@@ -5,6 +5,8 @@
   "scripts": {
     "standardSite": "./scripts/standardStyleSite.sh",
     "standardPOM": "./scripts/standardStylePOM.sh",
+    "installSite": "./scripts/installSite.sh",
+    "installPOM": "./scripts/installPOM.sh",
     "standardAll": "npm run standardSite && npm run standardPOM",
     "buildSite": "./scripts/buildSite.sh",
     "buildPOM": "./scripts/buildPOM.sh",

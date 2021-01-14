@@ -2,7 +2,7 @@
 
 echo "building POM"
 cd hosting/POM/js
-npm install --dev
+npm install --also=dev
 echo "building POM sign in"
 npx webpack --config signinApp.webpack.config.js
 echo "building POM app"
