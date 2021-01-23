@@ -27,7 +27,7 @@
     "@editorjs/raw": "^2.3.0",
     "@editorjs/table": "^1.3.0",
     "firebase": "^8.2.1",
-    "fuse.js": "^6.4.4",
+    "fuse.js": "^6.4.5",
     "jquery": "^3.4.1",
     "moment": "^2.29.1",
     "navigo": "^7.1.3",
