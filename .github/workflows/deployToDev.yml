@@ -42,7 +42,7 @@ jobs:
         with:
           name: POMDist
           path: hosting/POM/js/dist
-          
+
   deploy:
     name: Deploy
     needs: [buildSite,buildPOM]
@@ -69,6 +69,23 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy
+          args: deploy --except functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+  deployFunctions:
+    name: Deploy functions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Install function dependencies
+        run: npm run installFunctions
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
