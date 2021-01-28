@@ -1,6 +1,6 @@
 import { config } from './config.js'
 import { stateUrl } from './stateUrl.js'
-import { ridecountHomeLoad } from './ridecount.js'
+import { ridecountHomeLoad, ridecountImportLoad } from './ridecount.js'
 
 const firebase = require('firebase/app')
 window.firebase = firebase
@@ -139,7 +139,10 @@ function loadPage (page, params) {
         case 'ridecount':
           ridecountHomeLoad(params)
           break
-      }
+        case 'ridecount':
+          ridecountImportLoad(params)
+          break
+        }
     } catch (error) {
       console.log(error)
       // showFatalErrorPage(error, 'PPERPGCA')
