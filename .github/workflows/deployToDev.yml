@@ -61,10 +61,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: POMDist
-          path: hosting/POM/js/dist     
-
-      - name: Install function dependencies
-        run: npm run installFunctions
+          path: hosting/POM/js/dist
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
