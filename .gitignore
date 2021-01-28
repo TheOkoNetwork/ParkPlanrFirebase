@@ -74,7 +74,7 @@ themeparks.db
 
 
 #webpack build output
-/hosting/admin/js/dist
+/hosting/POM/js/dist
 
 #copyrighted images
 signinpressphotos
@@ -86,3 +86,5 @@ DefendTheTowers/
 
 #Clone of former ridetimes.co.uk
 public/projectrt
+
+hosting/POM/js/dist
