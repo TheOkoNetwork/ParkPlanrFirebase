@@ -66,6 +66,15 @@ async function ridecountImportLoad (params, authLoaded) {
 
   console.log('Loading ride count import page')
 
+  $('#wizardFormTabWelcome').find('.service').each(function() {
+    $(this).on('click', function() {
+      serviceId = $(this).data('service');
+      $('#wizardFormTabWelcome').find('.service').addClass('disabled');
+      console.log(`${serviceId} selected`);
+      $(this).removeClass('disabled');
+    })
+  })
+
   const isBrowsingUserAuthenticated = Boolean(window.auth.currentUser)
   if (isBrowsingUserAuthenticated) {
     console.log('The user browsing this page is authenticated');
