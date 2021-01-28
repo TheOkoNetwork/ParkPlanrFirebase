@@ -12,10 +12,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
 
-      - name: Install Dependencies for site/POM/Functions
+      - name: Install Dependencies
         run: npm run installAll
 
-      - name: Build hosting
+      - name: Build hosting js
         run: npm run buildAll
 
       - name: Archive site dist folder
@@ -43,7 +43,19 @@ jobs:
         with:
           name: dist
           path: dist
-          
+
+      - name: Retrieve site dist folder
+        uses: actions/download-artifact@master
+        with:
+          name: siteDist
+          path: hosting/site/js/dist
+
+      - name: Retrieve POM dist folder
+        uses: actions/download-artifact@master
+        with:
+          name: siteDist
+          path: hosting/POM/js/dist     
+
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
