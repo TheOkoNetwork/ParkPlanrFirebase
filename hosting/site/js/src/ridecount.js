@@ -69,10 +69,45 @@ async function ridecountImportLoad (params, authLoaded) {
   $('#wizardFormTabWelcome').find('.service').each(function() {
     $(this).on('click', function() {
       const serviceId = $(this).data('service');
-      $('#wizardFormTabWelcome').find('.service').addClass('disabled');
       console.log(`${serviceId} selected`);
-      $(this).removeClass('disabled');
+
+      $('#wizardFormTabWelcome').find('.service')
+        .addClass('disabled')
+        .removeClass('selected');
+        
+      $(this)
+        .removeClass('disabled')
+        .addClass('selected');
     })
+  })
+  
+  $('#wizardFormNext').on('click', function() {
+    console.log("Next button clicked");
+    currentPage = $('.wizardFormTab:visible').first().data('page');
+    switch (currentPage) {
+      case "welcome":
+        console.log("Next clicked on welcome page");
+        const selectedService = $('#wizardFormTabWelcome')
+          .find('.service')
+          .find('.selected')
+          .data('service');
+        if (selectedService) {
+          switch (selectedService) {
+            case "other":
+              console.log("Unsupported service selected");
+              wizardPage("unsupportedService");
+              break;
+            case "ridecountcom":
+              console.log("ridecount.com selected");
+              wizardPage("ridecountcomUser");
+              break;
+          }
+        } else {
+          console.log("No service selected");
+          window.alert("Please select which service or app you want to bring your trips over from")
+        }
+        break;
+    }
   })
 
   const isBrowsingUserAuthenticated = Boolean(window.auth.currentUser)
@@ -94,6 +129,12 @@ const wizardPage = async function(page) {
       console.log("Loading wizard welcome page");
       $('#wizardFormTabWelcome').show();
       $('#wizardFormNext').show();
+      break;
+
+    case "unsupportedService":
+      console.log("Loading wizard unsupported service page");
+      $('#wizardFormTabUnsupportedService').show();
+      $('#wizardFormPrevious').show();
     }
 }
 export { ridecountHomeLoad, ridecountImportLoad }

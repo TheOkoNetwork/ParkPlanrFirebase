@@ -24,11 +24,19 @@
                 <div class="row">
                     <div id="wizardForm">
                         <!-- One "tab" for each step in the form: -->
-                        <div class="wizardFormTab" id="wizardFormTabWelcome">
+                        
+                        <div class="wizardFormTab" id="wizardFormTabWelcome" data-page="welcome">
                           <p><button class="btn btn-primary service disabled" data-service="ridecountcom">ridecount.com</button></p>
                           <p><button class="btn btn-primary service disabled" data-service="other">Other</button></p>
                         </div>
-                        
+                        <div class="wizardFormTab" id="wizardFormTabUnsupportedService" data-page="unsupportedService">
+                          <p>Sorry, we don't support that service yet</p>
+                          <!-- @todo make this fill out the contactus form -->
+                          <button class="btn btn-success">Request this service</button>
+                        </div>
+
+
+
                         <div style="overflow:auto;">
                           <div style="float:right;">
                             <button class="btn btn-primary" id="wizardFormPrevious">Previous</button>
