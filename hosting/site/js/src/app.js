@@ -139,7 +139,7 @@ function loadPage (page, params) {
         case 'ridecount':
           ridecountHomeLoad(params)
           break
-        case 'ridecount':
+        case 'ridecount/import':
           ridecountImportLoad(params)
           break
         }
