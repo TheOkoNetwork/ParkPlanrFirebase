@@ -18,7 +18,7 @@ async function ridecountHomeLoad (params, authLoaded) {
 
   if (!authLoaded) {
     console.log('Waiting for auth to complete loading')
-    var authWaitUnsubscribe = window.auth.onAuthStateChanged(function (user) {
+    const authWaitUnsubscribe = window.auth.onAuthStateChanged(function (user) {
       console.log('Auth loaded')
       authWaitUnsubscribe()
       ridecountHomeLoad(params, true)
@@ -28,7 +28,7 @@ async function ridecountHomeLoad (params, authLoaded) {
 
   console.log('Loading ride count home page')
 
-  var isBrowsingUserAuthenticated = Boolean(window.auth.currentUser)
+  const isBrowsingUserAuthenticated = Boolean(window.auth.currentUser)
   if (isBrowsingUserAuthenticated) {
     console.log('The user browsing this page is authenticated')
   } else {

@@ -2,7 +2,7 @@ import EditorJS from '@editorjs/editorjs'
 import ImageTool from '@editorjs/image'
 import List from '@editorjs/list'
 import { config } from './config.js'
-var Fuse = require('fuse.js').default
+const Fuse = require('fuse.js').default
 const Table = require('@editorjs/table')
 const Header = require('@editorjs/header')
 const LinkTool = require('@editorjs/link')
@@ -11,7 +11,7 @@ const Checklist = require('@editorjs/checklist')
 const Embed = require('@editorjs/embed')
 const Quote = require('@editorjs/quote')
 
-var adminCMSPagesEditor
+let adminCMSPagesEditor
 async function cmsPageLoadEdit (params = {}) {
   if (!window.db) {
     console.log('DB not ready yet, unable to load edit page')
@@ -33,14 +33,14 @@ async function cmsPageLoadEdit (params = {}) {
   $('#cmsPageDeleteButton').on('click', async function () {
     console.log('CMS delete button clicked')
     // TODO: This but prettier
-    var deleteConfirm = window.confirm(
+    const deleteConfirm = window.confirm(
       'Are you sure you want to delete this page?'
     )
     if (deleteConfirm) {
       console.log('Deleting')
 
-      var pageId = window.router._lastRouteResolved.params.pageId
-      var cmsPageDoc = window.db.collection('cmsPages').doc(pageId)
+      const pageId = window.router._lastRouteResolved.params.pageId
+      const cmsPageDoc = window.db.collection('cmsPages').doc(pageId)
       await cmsPageDoc.delete()
       console.log('Deleted')
       window.router.navigate(window.router.generate('cmsPage.list'))
@@ -54,12 +54,12 @@ async function cmsPageLoadEdit (params = {}) {
     console.log('CMS save button clicked')
     console.log(adminCMSPagesEditor)
 
-    var title = $('#pageCmsEditTitle').val()
-    var subTitle = $('#pageCmsEditTitle').val()
-    var slug = $('#pageCmsEditSlug').val()
+    const title = $('#pageCmsEditTitle').val()
+    const subTitle = $('#pageCmsEditTitle').val()
+    const slug = $('#pageCmsEditSlug').val()
 
     // TODO: Implement the public checkbox
-    var publicPage = true
+    const publicPage = true
     // var publicPage = $('#AdminCMSPagesPublic-0').is(':checked')
 
     if (!title) {
@@ -72,11 +72,11 @@ async function cmsPageLoadEdit (params = {}) {
     }
 
     console.log('Fetching page content from editor')
-    var pageContent = await adminCMSPagesEditor.save()
+    const pageContent = await adminCMSPagesEditor.save()
     console.log(pageContent)
 
-    var pageId
-    var cmsPageDoc
+    let pageId
+    let cmsPageDoc
     if (
       window.router._lastRouteResolved.params &&
       window.router._lastRouteResolved.params.pageId
@@ -109,13 +109,13 @@ async function cmsPageLoadEdit (params = {}) {
     window.alert('Saved!')
   })
 
-  var cmsPageData
+  let cmsPageData
   if (params && params.pageId) {
     console.log('Loading page to edit')
     $('.showIfCmsEdit').show()
     $('.showIfCmsAdd').hide()
 
-    var cmsPageDoc = await window.db
+    const cmsPageDoc = await window.db
       .collection('cmsPages')
       .doc(params.pageId)
       .get()
@@ -175,13 +175,13 @@ async function cmsPageLoadEdit (params = {}) {
               })
                 .then(function (file) {
                   console.log('Fetched image')
-                  var uint = new Uint8Array(file.slice(0, 4))
+                  const uint = new Uint8Array(file.slice(0, 4))
                   const bytes = []
                   uint.forEach((byte) => {
                     bytes.push(byte.toString(16))
                   })
-                  var hex = bytes.join('').toUpperCase()
-                  var filetype
+                  const hex = bytes.join('').toUpperCase()
+                  let filetype
                   console.log(hex)
                   switch (hex) {
                     case '89504E47':
@@ -202,9 +202,9 @@ async function cmsPageLoadEdit (params = {}) {
                       }
                   }
                   console.log(filetype)
-                  var imageID = window.db.collection('CMSImages').doc().id
+                  const imageID = window.db.collection('CMSImages').doc().id
 
-                  var metadata = {
+                  const metadata = {
                     contentType: filetype
                   }
 
@@ -218,7 +218,7 @@ async function cmsPageLoadEdit (params = {}) {
                       return ImageSnapshot.ref
                         .getDownloadURL()
                         .then(function (url) {
-                          var imageUrl = url.split('&token')[0]
+                          const imageUrl = url.split('&token')[0]
                           console.log(`Got image URL: ${imageUrl}`)
                           return {
                             success: 1,
@@ -253,7 +253,7 @@ async function cmsPageLoadEdit (params = {}) {
                 })
             },
             uploadByFile (file) {
-              var imageID = window.db.collection('CMSImages').doc().id
+              const imageID = window.db.collection('CMSImages').doc().id
               return window.storage
                 .ref()
                 .child(`CMSImages/${imageID}`)
@@ -264,7 +264,7 @@ async function cmsPageLoadEdit (params = {}) {
                   return ImageSnapshot.ref
                     .getDownloadURL()
                     .then(function (url) {
-                      var imageUrl = url.split('&token')[0]
+                      const imageUrl = url.split('&token')[0]
                       console.log(`Got image URL: ${imageUrl}`)
                       return {
                         success: 1,
@@ -329,10 +329,10 @@ async function cmsPagesLoad () {
   }
 
   console.log('Loading cms pages')
-  var cmsPageDocs = await window.db.collection('cmsPages').get()
-  var cmsPages = []
+  const cmsPageDocs = await window.db.collection('cmsPages').get()
+  const cmsPages = []
   cmsPageDocs.forEach(function (cmsPageDoc) {
-    var cmsPage = cmsPageDoc.data()
+    const cmsPage = cmsPageDoc.data()
     cmsPage.id = cmsPageDoc.id
     cmsPages.push(cmsPage)
   })
@@ -381,7 +381,7 @@ async function cmsPagesLoad () {
       loadData: function (filter) {
         console.log('Loading data')
         console.log(filter)
-        var filteredItems = $.grep(cmsPages, function (cmsPage) {
+        let filteredItems = $.grep(cmsPages, function (cmsPage) {
           if (typeof filter.public === 'boolean') {
             if (filter.public !== cmsPage.public) {
               return false
@@ -391,7 +391,7 @@ async function cmsPagesLoad () {
         })
 
         if (filter.id) {
-          var idFilterFuse = new Fuse(filteredItems, {
+          const idFilterFuse = new Fuse(filteredItems, {
             keys: ['id']
           })
           filteredItems = idFilterFuse.search(filter.id).map(function (item) {
@@ -400,7 +400,7 @@ async function cmsPagesLoad () {
         }
 
         if (filter.name) {
-          var nameFilterFuse = new Fuse(filteredItems, {
+          const nameFilterFuse = new Fuse(filteredItems, {
             keys: ['name']
           })
           filteredItems = nameFilterFuse
@@ -411,7 +411,7 @@ async function cmsPagesLoad () {
         }
 
         if (filter.slug) {
-          var slugFilterFuse = new Fuse(filteredItems, {
+          const slugFilterFuse = new Fuse(filteredItems, {
             keys: ['slug']
           })
           filteredItems = slugFilterFuse
@@ -422,7 +422,7 @@ async function cmsPagesLoad () {
         }
 
         if (filter.title) {
-          var titleFilterFuse = new Fuse(filteredItems, {
+          const titleFilterFuse = new Fuse(filteredItems, {
             keys: ['title']
           })
           filteredItems = titleFilterFuse
@@ -433,7 +433,7 @@ async function cmsPagesLoad () {
         }
 
         if (filter.subTitle) {
-          var subTitleFilterFuse = new Fuse(filteredItems, {
+          const subTitleFilterFuse = new Fuse(filteredItems, {
             keys: ['subTitle']
           })
           filteredItems = subTitleFilterFuse

@@ -1,5 +1,5 @@
 export function config (key) {
-  var configStore = {}
+  const configStore = {}
   configStore.firebaseDevEnviromentProject = 'parkplanr-dev'
   configStore.SiteDefaultTitle = 'ParkPlanr'
   configStore.DevEnviromentFirebaseFunctionsUrl =
