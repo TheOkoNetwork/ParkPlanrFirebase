@@ -42,26 +42,10 @@ jobs:
         with:
           name: POMDist
           path: hosting/POM/js/dist
-
-  installFunctions:
-    name: Install functions
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-
-      - name: Install dependencies
-        run: npm run installFunctions
-
-      - name: Archive functions folder
-        uses: actions/upload-artifact@master
-        with:
-          name: functions
-          path: functions    
-
+          
   deploy:
     name: Deploy
-    needs: [buildSite,buildPOM,installFunctions]
+    needs: [buildSite,buildPOM]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -79,11 +63,8 @@ jobs:
           name: POMDist
           path: hosting/POM/js/dist     
 
-      - name: Retrieve functions folder
-        uses: actions/download-artifact@master
-        with:
-          name: functions
-          path: functions 
+      - name: Install function dependencies
+        run: npm run installFunctions
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
