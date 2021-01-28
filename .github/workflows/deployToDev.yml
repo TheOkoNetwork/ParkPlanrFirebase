@@ -44,7 +44,7 @@ jobs:
           path: hosting/POM/js/dist
 
   deploy:
-    name: Deploy
+    name: Deploy everything except functions
     needs: [buildSite,buildPOM]
     runs-on: ubuntu-latest
     steps:
