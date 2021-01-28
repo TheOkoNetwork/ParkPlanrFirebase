@@ -83,7 +83,7 @@ async function ridecountImportLoad (params, authLoaded) {
   
   $('#wizardFormNext').on('click', function() {
     console.log("Next button clicked");
-    currentPage = $('.wizardFormTab:visible').first().data('page');
+    const currentPage = $('.wizardFormTab:visible').first().data('page');
     switch (currentPage) {
       case "welcome":
         console.log("Next clicked on welcome page");
