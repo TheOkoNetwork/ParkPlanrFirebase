@@ -68,7 +68,7 @@ async function ridecountImportLoad (params, authLoaded) {
 
   $('#wizardFormTabWelcome').find('.service').each(function() {
     $(this).on('click', function() {
-      serviceId = $(this).data('service');
+      const serviceId = $(this).data('service');
       $('#wizardFormTabWelcome').find('.service').addClass('disabled');
       console.log(`${serviceId} selected`);
       $(this).removeClass('disabled');
