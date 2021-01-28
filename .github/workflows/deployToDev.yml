@@ -1,0 +1,88 @@
+name: Build and Deploy (Dev)
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  buildSite:
+    name: Build Site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Install Dependencies
+        run: npm run installSite
+
+      - name: Build site js
+        run: npm run buildSite
+
+      - name: Archive site dist folder
+        uses: actions/upload-artifact@master
+        with:
+          name: siteDist
+          path: hosting/site/js/dist   
+
+  buildPOM:
+    name: Build POM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Install Dependencies
+        run: npm run installPOM
+
+      - name: Build POM js
+        run: npm run buildPOM
+
+      - name: Archive POM dist folder
+        uses: actions/upload-artifact@master
+        with:
+          name: POMDist
+          path: hosting/POM/js/dist
+
+  deploy:
+    name: Deploy everything except functions
+    needs: [buildSite,buildPOM]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Retrieve site dist folder
+        uses: actions/download-artifact@master
+        with:
+          name: siteDist
+          path: hosting/site/js/dist
+
+      - name: Retrieve POM dist folder
+        uses: actions/download-artifact@master
+        with:
+          name: POMDist
+          path: hosting/POM/js/dist
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --except functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+  deployFunctions:
+    name: Deploy functions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Install function dependencies
+        run: npm run installFunctions
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
