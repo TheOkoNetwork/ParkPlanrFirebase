@@ -5,44 +5,51 @@ on:
       - newCI
 
 jobs:
-  build:
-    name: Build
+  buildSite:
+    name: Build Site
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
 
       - name: Install Dependencies
-        run: npm run installAll
+        run: npm run installSite
 
-      - name: Build hosting js
-        run: npm run buildAll
+      - name: Build site js
+        run: npm run buildSite
 
       - name: Archive site dist folder
         uses: actions/upload-artifact@master
         with:
           name: siteDist
-          path: hosting/site/js/dist
+          path: hosting/site/js/dist   
 
-      - name: Archive POM dist folder
-        uses: actions/upload-artifact@master
-        with:
-          name: siteDist
-          path: hosting/POM/js/dist
-
-  deploy:
-    name: Deploy
-    needs: build
+  buildPOM:
+    name: Build POM
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
 
-      - name: Download Artifact
-        uses: actions/download-artifact@master
+      - name: Install Dependencies
+        run: npm run installPOM
+
+      - name: Build POM js
+        run: npm run buildPOM
+
+      - name: Archive POM dist folder
+        uses: actions/upload-artifact@master
         with:
-          name: dist
-          path: dist
+          name: POMDist
+          path: hosting/POM/js/dist          
+
+  deploy:
+    name: Deploy
+    needs: [buildSite,buildPOM]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
 
       - name: Retrieve site dist folder
         uses: actions/download-artifact@master
@@ -53,7 +60,7 @@ jobs:
       - name: Retrieve POM dist folder
         uses: actions/download-artifact@master
         with:
-          name: siteDist
+          name: POMDist
           path: hosting/POM/js/dist     
 
       - name: Deploy to Firebase
