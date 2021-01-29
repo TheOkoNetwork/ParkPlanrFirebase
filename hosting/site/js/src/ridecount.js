@@ -107,6 +107,17 @@ async function ridecountImportLoad (params, authLoaded) {
           window.alert("Please select which service or app you want to bring your trips over from")
         }
         break;
+      case "ridecountcomUser":
+        console.log("Next clicked on ridecount.com username input page");
+        const ridecountcomUsername = $('#ridecountcomUsername').val();
+        if (ridecountcomUsername) {
+          console.log(`${ridecountcomUsername} entered`);
+          wizardPage("ridecountcomUserConfirm");
+        } else {
+          console.log("No username entered.");
+          window.alert("Please enter your username for ridecount.com");
+        }
+        break;
     }
   })
 
@@ -141,6 +152,7 @@ const wizardPage = async function(page) {
       console.log("Loading wizard ridecount.com username entry page");
       $('#wizardFormTabRidecountcomUser').show();
       $('#wizardFormPrevious').show();
+      $('#wizardFormNext').show();
       break;
   }
 }
