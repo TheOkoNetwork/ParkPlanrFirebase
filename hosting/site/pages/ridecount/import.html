@@ -37,9 +37,12 @@
 
                         <div class="wizardFormTab" id="wizardFormTabRidecountcomUser" data-page="ridecountcomUser">
                             <p>What's your username for ridecount.com?</p>
-
                             <input class="form-control input-md" id="ridecountcomUsername" />
-                          </div>
+                        </div>
+                        <div class="wizardFormTab" id="wizardFormTabRidecountcomUserConfirm" data-page="ridecountcomUserConfirm">
+                            <p>Just to confirm, your ridecount.com username is <span id="ridecountcomUserConfirmUsername"></span></p>
+                            <p>If that's correct, please click finish to import your trips</p>
+                        </div>
   
 
 
@@ -47,6 +50,7 @@
                           <div style="float:right;">
                             <button class="btn btn-primary" id="wizardFormPrevious">Previous</button>
                             <button class="btn btn-success" id="wizardFormNext">Next</button>
+                            <button class="btn btn-success" id="wizardFormFinish">Import my trips!</button>
                           </div>
                         </div>
                         

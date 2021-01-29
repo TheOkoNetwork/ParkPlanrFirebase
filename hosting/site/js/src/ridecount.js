@@ -134,6 +134,7 @@ const wizardPage = async function(page) {
   $('.wizardFormTab').hide();
   $('#wizardFormPrevious').hide();
   $('#wizardFormNext').hide();
+  $('#wizardFormFinish').hide();
 
   switch (page) {
     case "welcome":
@@ -154,6 +155,14 @@ const wizardPage = async function(page) {
       $('#wizardFormPrevious').show();
       $('#wizardFormNext').show();
       break;
+
+    case "ridecountcomUserConfirm":
+      console.log("Loading wizard ridecount.com username confirm page");
+      $('#wizardFormTabRidecountcomUserConfirm').show();
+      const ridecountcomUsername = $('#ridecountcomUsername').val();
+      $('#ridecountcomUserConfirmUsername').text(ridecountcomUsername);
+      $('#wizardFormPrevious').show();
+      $('#wizardFormFinish').show();
   }
 }
 export { ridecountHomeLoad, ridecountImportLoad }
