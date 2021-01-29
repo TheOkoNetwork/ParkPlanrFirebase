@@ -134,7 +134,7 @@ async function ridecountImportLoad (params, authLoaded) {
         console.log("Previous clicked on ridecount.com username input page");
         wizardPage("welcome");
         break; 
-      case "ridecountcomUser":
+      case "ridecountcomUserConfirm":
         console.log("Previous clicked on ridecount.com username confirm page");
         wizardPage("ridecountcomUser");
         break;  
