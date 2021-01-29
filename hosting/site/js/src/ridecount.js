@@ -88,9 +88,9 @@ async function ridecountImportLoad (params, authLoaded) {
       case "welcome":
         console.log("Next clicked on welcome page");
         const selectedService = $('#wizardFormTabWelcome')
-          .find('.service')
-          .find('.selected')
+          .find('.service.selected')
           .data('service');
+        console.log(`Service: ${selectedService} selected`);
         if (selectedService) {
           switch (selectedService) {
             case "other":
