@@ -142,5 +142,6 @@ const wizardPage = async function(page) {
       $('#wizardFormTabRidecountcomUser').show();
       $('#wizardFormPrevious').show();
       break;
+  }
 }
 export { ridecountHomeLoad, ridecountImportLoad }
