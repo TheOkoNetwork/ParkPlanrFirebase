@@ -135,6 +135,12 @@ const wizardPage = async function(page) {
       console.log("Loading wizard unsupported service page");
       $('#wizardFormTabUnsupportedService').show();
       $('#wizardFormPrevious').show();
-    }
+      break;
+
+    case "ridecountcomUser":
+      console.log("Loading wizard ridecount.com username entry page");
+      $('#wizardFormTabRidecountcomUser').show();
+      $('#wizardFormPrevious').show();
+      break;
 }
 export { ridecountHomeLoad, ridecountImportLoad }
