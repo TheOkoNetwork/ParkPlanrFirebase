@@ -121,6 +121,26 @@ async function ridecountImportLoad (params, authLoaded) {
     }
   })
 
+
+  $('#wizardFormPrevious').on('click', function() {
+    console.log("Previous button clicked");
+    const currentPage = $('.wizardFormTab:visible').first().data('page');
+    switch (currentPage) {
+      case "wizardFormTabUnsupportedService":
+        console.log("Previous clicked on unsupported service page");
+        wizardPage("welcome");
+        break;
+      case "ridecountcomUser":
+        console.log("Previous clicked on ridecount.com username input page");
+        wizardPage("welcome");
+        break; 
+      case "ridecountcomUser":
+        console.log("Previous clicked on ridecount.com username confirm page");
+        wizardPage("ridecountcomUser");
+        break;  
+    }
+  })
+
   const isBrowsingUserAuthenticated = Boolean(window.auth.currentUser)
   if (isBrowsingUserAuthenticated) {
     console.log('The user browsing this page is authenticated');
