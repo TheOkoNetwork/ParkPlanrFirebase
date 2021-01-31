@@ -153,7 +153,7 @@ async function ridecountImportLoad (params, authLoaded) {
           await db.collection("ridecountMigrationRequests").doc().set({
             service: "ridecountcom",
             ridecountcomUsername: ridecountcomUsername,
-            user: window.auth().currentUser.uid,
+            user: window.auth.currentUser.uid,
             status: 0,
             inProgress: true
           })
@@ -161,6 +161,7 @@ async function ridecountImportLoad (params, authLoaded) {
           wizardPage("importInProgress");
         } catch (err) {
           console.log("Got error creating migration request");
+          console.log(err);
           //@todo this but prettier and with a correllation Id
           window.alert("Sorry, something went wrong migrating your trips");
         }
