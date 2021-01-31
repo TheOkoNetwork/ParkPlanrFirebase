@@ -150,7 +150,7 @@ async function ridecountImportLoad (params, authLoaded) {
         console.log("Finish button clicked on ridecount.com username confirm page");
         const ridecountcomUsername = $('#ridecountcomUsername').val();
         try {
-          await db.collection("ridecountMigrationRequests").doc().set({
+          await window.db.collection("ridecountMigrationRequests").doc().set({
             service: "ridecountcom",
             ridecountcomUsername: ridecountcomUsername,
             user: window.auth.currentUser.uid,
@@ -189,6 +189,14 @@ const wizardPage = async function(page) {
 
   switch (page) {
     case "welcome":
+      const existingRequestQuery = await window.db
+        .collection("ridecountMigrationRequests")
+        .where("user","==",window.auth.currentUser.uid)
+        .where("inProgress","==",true).get()
+      if (!existingRequestQuery.empty) {
+        console.log("There is an existing migration request open for this user");
+        return wizardPage("importInProgress");
+      }
       console.log("Loading wizard welcome page");
       $('#wizardFormTabWelcome').show();
       $('#wizardFormNext').show();
