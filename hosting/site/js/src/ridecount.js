@@ -126,7 +126,7 @@ async function ridecountImportLoad (params, authLoaded) {
     console.log("Previous button clicked");
     const currentPage = $('.wizardFormTab:visible').first().data('page');
     switch (currentPage) {
-      case "wizardFormTabUnsupportedService":
+      case "unsupportedService":
         console.log("Previous clicked on unsupported service page");
         wizardPage("welcome");
         break;
@@ -167,6 +167,15 @@ async function ridecountImportLoad (params, authLoaded) {
         }
         break;
     }
+
+    $('#unsupportedServiceRequestButton').on('click', function() {
+      console.log("Request an unsupported service button clicked");
+      window.router.navigate(
+        window.router.generate('contact', {
+          contactReason: "submitRidecountImportService"
+        })
+      )
+    })
   });
 
   const isBrowsingUserAuthenticated = Boolean(window.auth.currentUser)
