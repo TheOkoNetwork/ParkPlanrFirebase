@@ -81,7 +81,7 @@ async function ridecountImportLoad (params, authLoaded) {
     })
   })
   
-  $('#wizardFormNext').on('click', function() {
+  $('#wizardFormNext').on('click', async function() {
     console.log("Next button clicked");
     const currentPage = $('.wizardFormTab:visible').first().data('page');
     switch (currentPage) {
@@ -122,7 +122,7 @@ async function ridecountImportLoad (params, authLoaded) {
   })
 
 
-  $('#wizardFormPrevious').on('click', function() {
+  $('#wizardFormPrevious').on('click', async function() {
     console.log("Previous button clicked");
     const currentPage = $('.wizardFormTab:visible').first().data('page');
     switch (currentPage) {
@@ -140,6 +140,33 @@ async function ridecountImportLoad (params, authLoaded) {
         break;  
     }
   })
+
+  $('#wizardFormFinish').on('click', async function() {
+    console.log("Previous button clicked");
+    const currentPage = $('.wizardFormTab:visible').first().data('page');
+
+    switch (currentPage) {
+      case "ridecountcomUserConfirm":
+        console.log("Finish button clicked on ridecount.com username confirm page");
+        const ridecountcomUsername = $('#ridecountcomUsername').val();
+        try {
+          await db.collection("ridecountMigrationRequests").doc().set({
+            service: "ridecountcom",
+            ridecountcomUsername: ridecountcomUsername,
+            user: window.auth().currentUser.uid,
+            status: 0,
+            inProgress: true
+          })
+          console.log(`Requested migration for username: ${ridecountcomUsername}`);
+          wizardPage("importInProgress");
+        } catch (err) {
+          console.log("Got error creating migration request");
+          //@todo this but prettier and with a correllation Id
+          window.alert("Sorry, something went wrong migrating your trips");
+        }
+        break;
+    }
+  });
 
   const isBrowsingUserAuthenticated = Boolean(window.auth.currentUser)
   if (isBrowsingUserAuthenticated) {
@@ -183,6 +210,11 @@ const wizardPage = async function(page) {
       $('#ridecountcomUserConfirmUsername').text(ridecountcomUsername);
       $('#wizardFormPrevious').show();
       $('#wizardFormFinish').show();
+  
+    case "importInProgress":
+      console.log("Loading import in progress page");
+      $('#wizardFormTabImportInProgress').show();
+      break;
   }
 }
 export { ridecountHomeLoad, ridecountImportLoad }
