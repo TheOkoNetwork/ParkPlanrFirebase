@@ -178,6 +178,9 @@ async function ridecountImportLoad (params, authLoaded) {
   }
 }
 
+const wizardStep = function(step) {
+  $('.wizardFormStep').removeClass('active').eq(step).addClass('active');
+}
 const wizardPage = async function(page) {
   $('.wizardFormTab').hide();
   $('#wizardFormPrevious').hide();
@@ -189,12 +192,14 @@ const wizardPage = async function(page) {
       console.log("Loading wizard welcome page");
       $('#wizardFormTabWelcome').show();
       $('#wizardFormNext').show();
+      wizardStep(0);
       break;
 
     case "unsupportedService":
       console.log("Loading wizard unsupported service page");
       $('#wizardFormTabUnsupportedService').show();
       $('#wizardFormPrevious').show();
+      wizardStep(3);
       break;
 
     case "ridecountcomUser":
@@ -202,6 +207,7 @@ const wizardPage = async function(page) {
       $('#wizardFormTabRidecountcomUser').show();
       $('#wizardFormPrevious').show();
       $('#wizardFormNext').show();
+      wizardStep(1);
       break;
 
     case "ridecountcomUserConfirm":
@@ -211,10 +217,13 @@ const wizardPage = async function(page) {
       $('#ridecountcomUserConfirmUsername').text(ridecountcomUsername);
       $('#wizardFormPrevious').show();
       $('#wizardFormFinish').show();
+      wizardStep(2);
+      break;
   
     case "importInProgress":
       console.log("Loading import in progress page");
       $('#wizardFormTabImportInProgress').show();
+      wizardStep(3);
       break;
   }
 }
