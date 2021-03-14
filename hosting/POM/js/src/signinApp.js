@@ -27,11 +27,11 @@ const init = async () => {
       firebase.auth().signInWithCustomToken(tokenSplit[1]);
       const postAuthUrl = localStorage.postAuthUrl || "/";
       delete localStorage.postAuthUrl;
-      window.router.navigate(postAuthUrl);
+      window.location = (postAuthUrl);
     } catch (err) {
       console.log("Error signing in with custom token");
       console.log(err);
-      //window.location = "/signin";
+      window.location = "/signin";
     }
   } else {
     console.log("No token, redirect to authcore");
