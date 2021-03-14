@@ -38,7 +38,7 @@ const init = async () => {
     var service = location.hostname;
     let authCoreUrl;
     console.log(redirectUrl);
-    if (location.hostname == "dev.parkplanr.app") {
+    if (service == "pom.dev.parkplanr.app") {
       authCoreUrl = "auth.dev.parkplanr.app";
     } else {
       authCoreUrl = "auth.parkplanr.app";
