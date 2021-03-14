@@ -2,7 +2,7 @@ import { config } from './config.js'
 import { stateUrl } from './stateUrl.js'
 import { ridecountHomeLoad, ridecountImportLoad } from './ridecount.js'
 
-const firebase = require('firebase/app')
+const firebase = require('firebase/app').default
 window.firebase = firebase
 const Navigo = require('navigo')
 require('firebase/auth')
