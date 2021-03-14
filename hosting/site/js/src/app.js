@@ -81,7 +81,8 @@ window.loadFragment = function (fragment) {
       switch (fragment) {
         case 'header':
           $('#signOutButton').on('click', function () {
-            window.auth.signOut()
+            //todo handle AuthCORE
+            //window.auth.signOut()
           })
           break
       }
@@ -168,7 +169,8 @@ router.on({
   },
   '/signin': function () {
     console.log('I am on the signin page')
-    window.location = '/signin'
+    //todo handle auth core
+    //window.location = '/signin'
   },
   '/ridecount': function () {
     console.log('I am on the ridecount page')
