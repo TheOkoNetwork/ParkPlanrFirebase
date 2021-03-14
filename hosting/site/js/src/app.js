@@ -96,7 +96,7 @@ const init = async () => {
             console.log("Got auth token, attempt sign in with custom token");
             try {
                 firebase.auth().signInWithCustomToken(tokenSplit[1]);
-                postAuthUrl = localStorage.postAuthUrl || "/";
+                const postAuthUrl = localStorage.postAuthUrl || "/";
                 delete(localStorage.postAuthUrl);
                 window.router.navigate(postAuthUrl);
             } catch(err) {
