@@ -11,6 +11,15 @@ require('firebase/storage')
 const $ = window.$
 window.stateData = {}
 
+function getCurrentUser(auth) {
+  return new Promise((resolve, reject) => {
+     const unsubscribe = auth.onAuthStateChanged(user => {
+        unsubscribe();
+        resolve(user);
+     }, reject);
+  });
+}
+
 const init = async () => {
   console.log(`I am running on version: ${config('version')}`)
 
@@ -166,9 +175,9 @@ router.on({
     console.log('I am on the home page')
     loadPage('index')
   },
-  '/signout': function () {
+  '/signout': async function () {
     console.log('I am on the signout page');
-    $('body').on('authLoaded', function () {
+    await getCurrentUser(window.auth);
       console.log('Auth Loaded, sign in flow')
       var signoutSplit = window.location.hash.split('signout=')
       if (signoutSplit.length > 1) {
@@ -176,7 +185,7 @@ router.on({
         window.auth.signOut()
         window.router.navigate("/");
       } else {
-        console.log("No post sign out dlag, redirect to authcore");
+        console.log("No post sign out flag, redirect to authcore");
         var service = location.hostname;
         let authCoreUrl;
         console.log(redirectUrl);
@@ -190,11 +199,10 @@ router.on({
         console.log(`Got redirect url: ${redirectUrl}`);        
         location.href = redirectUrl;
       }
-    });
   },
   '/signin': function () {
     console.log('I am on the signin page');
-    $('body').on('authLoaded', function () {
+    await getCurrentUser(window.auth);
       console.log('Auth Loaded, sign in flow')
       var tokenSplit = window.location.hash.split('token=')
       if (tokenSplit.length > 1) {
@@ -225,7 +233,6 @@ router.on({
           console.log(`Got redirect url: ${redirectUrl}`);        
           location.href = redirectUrl;
       };  
-    })
   },
   '/ridecount': function () {
     console.log('I am on the ridecount page')
