@@ -169,32 +169,35 @@ router.on({
   },
   '/signin': function () {
     console.log('I am on the signin page');
-    var tokenSplit = window.location.hash.split('token=')
-    if (tokenSplit.length > 1) {
-        console.log("Got auth token, attempt sign in with custom token");
-        try {
-            firebase.auth().signInWithCustomToken(tokenSplit[1]);
-        } catch(err) {
-            console.log("Error signing in with custom token");
-            console.log(err);
-            window.alert("Failed signing in");
-//            window.location = "/signin";
-        };
-    } else {
-        console.log("No token, redirect to authcore");
-        var service = location.hostname;
-        let authCoreUrl;
-        console.log(redirectUrl);
-        if (location.hostname == "dev.parkplanr.app") {
-          authCoreUrl = "auth.dev.parkplanr.app"
-        } else {
-          authCoreUrl = "auth.parkplanr.app"
-        }
-        console.log(`Detected auth core URL: ${authCoreUrl}`);
-        var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
-        console.log(`Got redirect url: ${redirectUrl}`);        
-        location.href = redirectUrl;
-    };
+    $('body').on('authLoaded', function () {
+      console.log('Auth Loaded, sign in flow')
+      var tokenSplit = window.location.hash.split('token=')
+      if (tokenSplit.length > 1) {
+          console.log("Got auth token, attempt sign in with custom token");
+          try {
+              firebase.auth().signInWithCustomToken(tokenSplit[1]);
+          } catch(err) {
+              console.log("Error signing in with custom token");
+              console.log(err);
+              window.alert("Failed signing in");
+  //            window.location = "/signin";
+          };
+      } else {
+          console.log("No token, redirect to authcore");
+          var service = location.hostname;
+          let authCoreUrl;
+          console.log(redirectUrl);
+          if (location.hostname == "dev.parkplanr.app") {
+            authCoreUrl = "auth.dev.parkplanr.app"
+          } else {
+            authCoreUrl = "auth.parkplanr.app"
+          }
+          console.log(`Detected auth core URL: ${authCoreUrl}`);
+          var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
+          console.log(`Got redirect url: ${redirectUrl}`);        
+          location.href = redirectUrl;
+      };  
+    })
   },
   '/ridecount': function () {
     console.log('I am on the ridecount page')
