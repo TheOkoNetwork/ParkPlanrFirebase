@@ -81,8 +81,7 @@ window.loadFragment = function (fragment) {
       switch (fragment) {
         case 'header':
           $('#signOutButton').on('click', function () {
-            //todo handle AuthCORE
-            //window.auth.signOut()
+            window.router.navigate("/signout");
           })
           break
       }
@@ -167,6 +166,32 @@ router.on({
     console.log('I am on the home page')
     loadPage('index')
   },
+  '/signout': function () {
+    console.log('I am on the signout page');
+    $('body').on('authLoaded', function () {
+      console.log('Auth Loaded, sign in flow')
+      var signoutSplit = window.location.hash.split('signout=')
+      if (signoutSplit.length > 1) {
+        console.log("Sign out flow complete");
+        window.auth.signOut()
+        window.router.navigate("/");
+      } else {
+        console.log("No post sign out dlag, redirect to authcore");
+        var service = location.hostname;
+        let authCoreUrl;
+        console.log(redirectUrl);
+        if (location.hostname == "dev.parkplanr.app") {
+          authCoreUrl = "auth.dev.parkplanr.app"
+        } else {
+          authCoreUrl = "auth.parkplanr.app"
+        }
+        console.log(`Detected auth core URL: ${authCoreUrl}`);
+        var redirectUrl = `https://${authCoreUrl}/signout#service=${service}`;
+        console.log(`Got redirect url: ${redirectUrl}`);        
+        location.href = redirectUrl;
+      }
+    });
+  },
   '/signin': function () {
     console.log('I am on the signin page');
     $('body').on('authLoaded', function () {
@@ -176,11 +201,14 @@ router.on({
           console.log("Got auth token, attempt sign in with custom token");
           try {
               firebase.auth().signInWithCustomToken(tokenSplit[1]);
+              postAuthUrl = localStorage.postAuthUrl || "/";
+              delete(localStorage.postAuthUrl);
+              window.router.navigate(postAuthUrl);
           } catch(err) {
               console.log("Error signing in with custom token");
               console.log(err);
-              window.alert("Failed signing in");
-  //            window.location = "/signin";
+//             window.alert("Failed signing in");
+              window.location = "/signin";
           };
       } else {
           console.log("No token, redirect to authcore");
