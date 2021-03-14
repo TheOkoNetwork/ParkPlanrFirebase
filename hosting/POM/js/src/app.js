@@ -44,8 +44,6 @@ const init = async () => {
   window.auth = firebase.auth()
   $('body').trigger('authLoaded')
 
-  inboxMessageCount()
-
   $('#signoutButton').on('click', function () {
     window.router.navigate('/signout');
   })
@@ -240,7 +238,9 @@ function userAuthenticated (user) {
     .then((idTokenResult) => {
       // Confirm the user is an Admin or an affiliate
       if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
-        console.log('I am an admin or an affiliate')
+        console.log('I am an admin or an affiliate');
+
+        inboxMessageCount()
       } else {
         console.log('I am not an admin, i should not be here')
         window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
