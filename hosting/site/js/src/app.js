@@ -11,9 +11,9 @@ require('firebase/storage')
 const $ = window.$
 window.stateData = {}
 
-function getCurrentUser(auth) {
+function getCurrentUser() {
   return new Promise((resolve, reject) => {
-     const unsubscribe = auth.onAuthStateChanged(user => {
+     const unsubscribe = window.auth.onAuthStateChanged(user => {
         unsubscribe();
         resolve(user);
      }, reject);
@@ -177,7 +177,7 @@ router.on({
   },
   '/signout': async function () {
     console.log('I am on the signout page');
-    await getCurrentUser(window.auth);
+    await getCurrentUser();
       console.log('Auth Loaded, sign in flow')
       var signoutSplit = window.location.hash.split('signout=')
       if (signoutSplit.length > 1) {
