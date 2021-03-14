@@ -22,17 +22,38 @@
                     </div>
                 </div>
                 <div class="row">
-                    <form id="wizardForm" action="">
+                    <div id="wizardForm">
                         <!-- One "tab" for each step in the form: -->
-                        <div class="wizardFormTab" id="wizardFormTabWelcome">
-                          <p><button class="btn btn-primary service disabled" data-serviceId="ridecountcom">ridecount.com</button></p>
-                          <p><button class="btn btn-primary service disabled" data-serviceId="other">Other</button></p>
-                        </div>
                         
+                        <div class="wizardFormTab" id="wizardFormTabWelcome" data-page="welcome">
+                          <p><button class="btn btn-primary service disabled" data-service="ridecountcom">ridecount.com</button></p>
+                          <p><button class="btn btn-primary service disabled" data-service="other">Other</button></p>
+                        </div>
+                        <div class="wizardFormTab" id="wizardFormTabUnsupportedService" data-page="unsupportedService">
+                          <p>Sorry, we don't support that service yet</p>
+                          <!-- @todo make this fill out the contactus form -->
+                          <button class="btn btn-success" id="unsupportedServiceRequestButton">Request this service</button>
+                        </div>
+
+                        <div class="wizardFormTab" id="wizardFormTabRidecountcomUser" data-page="ridecountcomUser">
+                            <p>What's your username for ridecount.com?</p>
+                            <input class="form-control input-md" id="ridecountcomUsername" />
+                        </div>
+                        <div class="wizardFormTab" id="wizardFormTabRidecountcomUserConfirm" data-page="ridecountcomUserConfirm">
+                            <p>Just to confirm, your ridecount.com username is <span id="ridecountcomUserConfirmUsername"></span></p>
+                            <p>If that's correct, please click finish to import your trips</p>
+                        </div>
+  
+                        <div class="wizardFormTab" id="wizardFormTabImportInProgress" data-page="importInProgress">
+                            <p>Thanks, we are working on importing your rides right now!</p>
+                        </div>
+
+
                         <div style="overflow:auto;">
                           <div style="float:right;">
                             <button class="btn btn-primary" id="wizardFormPrevious">Previous</button>
                             <button class="btn btn-success" id="wizardFormNext">Next</button>
+                            <button class="btn btn-success" id="wizardFormFinish">Import my trips!</button>
                           </div>
                         </div>
                         
@@ -42,9 +63,8 @@
                           <span class="wizardFormStep"></span>
                           <span class="wizardFormStep"></span>
                           <span class="wizardFormStep"></span>
-                        </div>
-                        
-                        </form>   
+                        </div>    
+                    </div>   
                 </div>
             </div>
         </section>
