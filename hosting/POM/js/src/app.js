@@ -279,9 +279,7 @@ window.loadFragment = function (fragment) {
       
       switch (fragment) {
         case 'headerNav':
-          $('body').on('claimsPassed'), function () {
-            inboxMessageHeader()
-          };
+          inboxMessageHeader()
           break
       }
     } catch (error) {
