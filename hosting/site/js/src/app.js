@@ -168,9 +168,31 @@ router.on({
     loadPage('index')
   },
   '/signin': function () {
-    console.log('I am on the signin page')
-    //todo handle auth core
-    //window.location = '/signin'
+    console.log('I am on the signin page');
+    var tokenSplit = window.location.hash.split('token=')
+    if (tokenSplit.length > 1) {
+        console.log("Got auth token, attempt sign in with custom token");
+        try {
+            firebase.auth().signInWithCustomToken(tokenSplit[1]);
+        } catch(err) {
+            console.log("Error signing in with custom token");
+            window.alert("Failed signing in");
+            window.location = "/signin";
+        };
+    } else {
+        console.log("No token, redirect to authcore");
+        var service = location.hostname;
+        let authCoreUrl;
+        console.log(redirectUrl);
+        if (location.hostname == "dev.parkplanr.app") {
+          authCoreUrl = "auth.dev.parkplanr.app"
+        } else {
+          authCoreUrl = "auth.parkplanr.app"
+        }
+        console.log(`Detected auth core URL: ${authCoreUrl}`);
+        var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
+        console.log(`Got redirect url: ${redirectUrl}`);        
+    };
   },
   '/ridecount': function () {
     console.log('I am on the ridecount page')
