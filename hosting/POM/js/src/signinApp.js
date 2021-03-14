@@ -25,9 +25,6 @@ const init = async () => {
     console.log("Got auth token, attempt sign in with custom token");
     try {
       firebase.auth().signInWithCustomToken(tokenSplit[1]);
-      const postAuthUrl = localStorage.postAuthUrl || "/";
-      delete localStorage.postAuthUrl;
-      window.location = (postAuthUrl);
     } catch (err) {
       console.log("Error signing in with custom token");
       console.log(err);
@@ -54,8 +51,10 @@ const init = async () => {
     console.log('Auth state changed')
     console.log(user)
     if (user) {
-      console.log('Authenticated, redirecting to home')
-      window.location.href = '/'
+      console.log('Authenticated, redirecting to post auth url')
+      const postAuthUrl = localStorage.postAuthUrl || "/";
+      delete localStorage.postAuthUrl;
+      window.location = (postAuthUrl);
     } else {
       console.log('Unauthenticated')
       getFirebaseRedirectResult()
