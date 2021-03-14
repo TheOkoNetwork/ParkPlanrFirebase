@@ -159,7 +159,6 @@ const init = async () => {
     },
     "/signout": async function () {
       console.log("I am on the signout page");
-      await getCurrentUser();
       console.log("Auth Loaded, sign in flow");
       var signoutSplit = window.location.hash.split("signout=");
       if (signoutSplit.length > 1) {
@@ -184,7 +183,6 @@ const init = async () => {
     },
     '/signin': function () {
       console.log("I am on the signin page");
-      await getCurrentUser(window.auth);
       console.log("Auth Loaded, sign in flow");
       var tokenSplit = window.location.hash.split("token=");
       if (tokenSplit.length > 1) {
