@@ -1,7 +1,7 @@
 import { config } from "./config.js";
 import { stateUrl } from "./stateUrl.js";
 import { ridecountHomeLoad, ridecountImportLoad } from "./ridecount.js";
-
+import { initHeaderParksDropdown } from "./header.js";
 const firebase = require("firebase/app").default;
 window.firebase = firebase;
 const Navigo = require("navigo");
@@ -101,8 +101,7 @@ const init = async () => {
         } catch (err) {
           console.log("Error signing in with custom token");
           console.log(err);
-          //             window.alert("Failed signing in");
-          ///window.location = "/signin";
+          window.location = "/signin";
         }
       } else {
         console.log("No token, redirect to authcore");
@@ -180,6 +179,7 @@ window.loadFragment = function (fragment) {
           $("#signOutButton").on("click", function () {
             window.router.navigate("/signout");
           });
+          initHeaderParksDropdown();
           break;
       }
     } catch (error) {
