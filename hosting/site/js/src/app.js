@@ -176,8 +176,9 @@ router.on({
             firebase.auth().signInWithCustomToken(tokenSplit[1]);
         } catch(err) {
             console.log("Error signing in with custom token");
+            console.log(err);
             window.alert("Failed signing in");
-            window.location = "/signin";
+//            window.location = "/signin";
         };
     } else {
         console.log("No token, redirect to authcore");
@@ -192,6 +193,7 @@ router.on({
         console.log(`Detected auth core URL: ${authCoreUrl}`);
         var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
         console.log(`Got redirect url: ${redirectUrl}`);        
+        location.href = redirectUrl;
     };
   },
   '/ridecount': function () {
