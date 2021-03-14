@@ -239,6 +239,7 @@ function userAuthenticated (user) {
       // Confirm the user is an Admin or an affiliate
       if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
         console.log('I am an admin or an affiliate');
+        $('body').trigger('claimsPassed')
         inboxMessageCount()
       } else {
         console.log('I am not an admin, i should not be here')
@@ -278,7 +279,9 @@ window.loadFragment = function (fragment) {
       
       switch (fragment) {
         case 'headerNav':
-          inboxMessageHeader()
+          $(body).on('claimsPassed'), function () {
+            inboxMessageHeader()
+          });
           break
       }
     } catch (error) {
