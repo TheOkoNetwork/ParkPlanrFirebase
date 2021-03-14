@@ -55,6 +55,95 @@ const init = async () => {
       $('.showIfUnauthenticated').show()
     }
   })
+
+
+  router.on({
+    '/': function () {
+      console.log('I am on the home page')
+      loadPage('index')
+    },
+    '/signout': async function () {
+      console.log('I am on the signout page');
+      await getCurrentUser();
+        console.log('Auth Loaded, sign in flow')
+        var signoutSplit = window.location.hash.split('signout=')
+        if (signoutSplit.length > 1) {
+          console.log("Sign out flow complete");
+          window.auth.signOut()
+          window.router.navigate("/");
+        } else {
+          console.log("No post sign out flag, redirect to authcore");
+          var service = location.hostname;
+          let authCoreUrl;
+          console.log(redirectUrl);
+          if (location.hostname == "dev.parkplanr.app") {
+            authCoreUrl = "auth.dev.parkplanr.app"
+          } else {
+            authCoreUrl = "auth.parkplanr.app"
+          }
+          console.log(`Detected auth core URL: ${authCoreUrl}`);
+          var redirectUrl = `https://${authCoreUrl}/signout#service=${service}`;
+          console.log(`Got redirect url: ${redirectUrl}`);        
+          location.href = redirectUrl;
+        }
+    },
+    '/signin': async function () {
+      console.log('I am on the signin page');
+      await getCurrentUser(window.auth);
+        console.log('Auth Loaded, sign in flow')
+        var tokenSplit = window.location.hash.split('token=')
+        if (tokenSplit.length > 1) {
+            console.log("Got auth token, attempt sign in with custom token");
+            try {
+                firebase.auth().signInWithCustomToken(tokenSplit[1]);
+                postAuthUrl = localStorage.postAuthUrl || "/";
+                delete(localStorage.postAuthUrl);
+                window.router.navigate(postAuthUrl);
+            } catch(err) {
+                console.log("Error signing in with custom token");
+                console.log(err);
+  //             window.alert("Failed signing in");
+                window.location = "/signin";
+            };
+        } else {
+            console.log("No token, redirect to authcore");
+            var service = location.hostname;
+            let authCoreUrl;
+            console.log(redirectUrl);
+            if (location.hostname == "dev.parkplanr.app") {
+              authCoreUrl = "auth.dev.parkplanr.app"
+            } else {
+              authCoreUrl = "auth.parkplanr.app"
+            }
+            console.log(`Detected auth core URL: ${authCoreUrl}`);
+            var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
+            console.log(`Got redirect url: ${redirectUrl}`);        
+            location.href = redirectUrl;
+        };  
+    },
+    '/ridecount': function () {
+      console.log('I am on the ridecount page')
+      loadPage('ridecount')
+    },
+    '/ridecount/import': function () {
+      console.log('I am on the ridecount import page')
+      loadPage('ridecount/import')
+    }
+  })
+  
+  router.notFound(function () {
+    console.log('Route not found')
+    load404()
+  })
+  
+  $(document).ready(function () {
+    $('.defaultFragmentHolder').each(function () {
+      const fragment = $(this).data('fragmentid')
+      window.loadFragment(fragment)
+    })
+  
+    router.resolve()
+  })
 }
 
 function userAuthenticated (user) {
@@ -168,94 +257,5 @@ const root = `https://${window.location.href.split('/')[2]}/`
 const useHash = false
 const hash = '#!' // Defaults to: '#'
 const router = new Navigo(root, useHash, hash)
-window.router = router
-
-router.on({
-  '/': function () {
-    console.log('I am on the home page')
-    loadPage('index')
-  },
-  '/signout': async function () {
-    console.log('I am on the signout page');
-    await getCurrentUser();
-      console.log('Auth Loaded, sign in flow')
-      var signoutSplit = window.location.hash.split('signout=')
-      if (signoutSplit.length > 1) {
-        console.log("Sign out flow complete");
-        window.auth.signOut()
-        window.router.navigate("/");
-      } else {
-        console.log("No post sign out flag, redirect to authcore");
-        var service = location.hostname;
-        let authCoreUrl;
-        console.log(redirectUrl);
-        if (location.hostname == "dev.parkplanr.app") {
-          authCoreUrl = "auth.dev.parkplanr.app"
-        } else {
-          authCoreUrl = "auth.parkplanr.app"
-        }
-        console.log(`Detected auth core URL: ${authCoreUrl}`);
-        var redirectUrl = `https://${authCoreUrl}/signout#service=${service}`;
-        console.log(`Got redirect url: ${redirectUrl}`);        
-        location.href = redirectUrl;
-      }
-  },
-  '/signin': async function () {
-    console.log('I am on the signin page');
-    await getCurrentUser(window.auth);
-      console.log('Auth Loaded, sign in flow')
-      var tokenSplit = window.location.hash.split('token=')
-      if (tokenSplit.length > 1) {
-          console.log("Got auth token, attempt sign in with custom token");
-          try {
-              firebase.auth().signInWithCustomToken(tokenSplit[1]);
-              postAuthUrl = localStorage.postAuthUrl || "/";
-              delete(localStorage.postAuthUrl);
-              window.router.navigate(postAuthUrl);
-          } catch(err) {
-              console.log("Error signing in with custom token");
-              console.log(err);
-//             window.alert("Failed signing in");
-              window.location = "/signin";
-          };
-      } else {
-          console.log("No token, redirect to authcore");
-          var service = location.hostname;
-          let authCoreUrl;
-          console.log(redirectUrl);
-          if (location.hostname == "dev.parkplanr.app") {
-            authCoreUrl = "auth.dev.parkplanr.app"
-          } else {
-            authCoreUrl = "auth.parkplanr.app"
-          }
-          console.log(`Detected auth core URL: ${authCoreUrl}`);
-          var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
-          console.log(`Got redirect url: ${redirectUrl}`);        
-          location.href = redirectUrl;
-      };  
-  },
-  '/ridecount': function () {
-    console.log('I am on the ridecount page')
-    loadPage('ridecount')
-  },
-  '/ridecount/import': function () {
-    console.log('I am on the ridecount import page')
-    loadPage('ridecount/import')
-  }
-})
-
-router.notFound(function () {
-  console.log('Route not found')
-  load404()
-})
-
-$(document).ready(function () {
-  $('.defaultFragmentHolder').each(function () {
-    const fragment = $(this).data('fragmentid')
-    window.loadFragment(fragment)
-  })
-
-  router.resolve()
-})
-
+window.router = router;
 init()
