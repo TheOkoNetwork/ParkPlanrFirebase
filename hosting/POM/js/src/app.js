@@ -157,8 +157,9 @@ const init = async () => {
       console.log('I am on the home page')
       loadPage('index')
     },
-    '/signin': function () {
-      console.log('I am on the signout page')
+    "/signout": async function () {
+      console.log("I am on the signout page");
+      await getCurrentUser();
       console.log("Auth Loaded, sign in flow");
       var signoutSplit = window.location.hash.split("signout=");
       if (signoutSplit.length > 1) {
@@ -180,6 +181,39 @@ const init = async () => {
         console.log(`Got redirect url: ${redirectUrl}`);
         location.href = redirectUrl;
       }
+    },
+    '/signin': function () {
+      console.log("I am on the signin page");
+      await getCurrentUser(window.auth);
+      console.log("Auth Loaded, sign in flow");
+      var tokenSplit = window.location.hash.split("token=");
+      if (tokenSplit.length > 1) {
+        console.log("Got auth token, attempt sign in with custom token");
+        try {
+          firebase.auth().signInWithCustomToken(tokenSplit[1]);
+          const postAuthUrl = localStorage.postAuthUrl || "/";
+          delete localStorage.postAuthUrl;
+          window.router.navigate(postAuthUrl);
+        } catch (err) {
+          console.log("Error signing in with custom token");
+          console.log(err);
+          window.location = "/signin";
+        }
+      } else {
+        console.log("No token, redirect to authcore");
+        var service = location.hostname;
+        let authCoreUrl;
+        console.log(redirectUrl);
+        if (location.hostname == "pom.dev.parkplanr.app") {
+          authCoreUrl = "auth.dev.parkplanr.app";
+        } else {
+          authCoreUrl = "auth.parkplanr.app";
+        }
+        console.log(`Detected auth core URL: ${authCoreUrl}`);
+        var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
+        console.log(`Got redirect url: ${redirectUrl}`);
+        location.href = redirectUrl;
+      }
     }
   })
   
@@ -197,7 +231,7 @@ const init = async () => {
     router.resolve()
   })
 
-  
+
 }
 
 function userAuthenticated (user) {
