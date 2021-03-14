@@ -58,7 +58,7 @@ const init = async () => {
       userAuthenticated(user)
     } else {
       console.log('User is unauthenticated')
-      window.location = '/signin'
+      //window.location = '/signin'
     }
   })
 
