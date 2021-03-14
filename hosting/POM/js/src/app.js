@@ -239,7 +239,6 @@ function userAuthenticated (user) {
       // Confirm the user is an Admin or an affiliate
       if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
         console.log('I am an admin or an affiliate');
-
         inboxMessageCount()
       } else {
         console.log('I am not an admin, i should not be here')
@@ -276,9 +275,7 @@ window.loadFragment = function (fragment) {
       const today = new Date()
       $('.currentYear').text(today.getFullYear())
       $('.currentVersion').text(config('version'))
-
-      inboxMessageCount()
-
+      
       switch (fragment) {
         case 'headerNav':
           inboxMessageHeader()
@@ -320,7 +317,6 @@ function loadPage (page, params) {
         $('body').html(data)
       }
       router.updatePageLinks()
-      inboxMessageCount()
 
       // updates any tags with the class CurrentYear with the YYYY year
       $('.CurrentYear').text(new Date().getFullYear())
