@@ -31,7 +31,7 @@ const init = async () => {
     } catch (err) {
       console.log("Error signing in with custom token");
       console.log(err);
-      window.location = "/signin";
+      //window.location = "/signin";
     }
   } else {
     console.log("No token, redirect to authcore");
