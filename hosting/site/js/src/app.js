@@ -200,7 +200,7 @@ router.on({
         location.href = redirectUrl;
       }
   },
-  '/signin': function () {
+  '/signin': async function () {
     console.log('I am on the signin page');
     await getCurrentUser(window.auth);
       console.log('Auth Loaded, sign in flow')
