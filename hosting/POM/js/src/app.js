@@ -44,10 +44,8 @@ const init = async () => {
   window.auth = firebase.auth()
   $('body').trigger('authLoaded')
 
-  inboxMessageCount()
-
   $('#signoutButton').on('click', function () {
-    window.auth.signOut()
+    window.router.navigate('/signout');
   })
 
   // when a user signs in, out or is first seen this session in either state
@@ -58,9 +56,178 @@ const init = async () => {
       userAuthenticated(user)
     } else {
       console.log('User is unauthenticated')
-      window.location = '/signin'
+      //window.location = '/signin'
     }
   })
+
+
+  router.on({
+    'inbox/conversation/:id': function (params) {
+      console.log('I am on a inbox conversation')
+      console.log(params)
+      loadPage('inbox/conversation', params)
+    },
+    inbox: function () {
+      console.log('I am on the inbox main page')
+      loadPage('inbox')
+    },
+    cms: {
+      as: 'cmsPage.list',
+      uses: function (params) {
+        console.log('I am on a cms list page')
+        console.log(params)
+        loadPage('cms', params)
+      }
+    },
+    'cms/new': {
+      as: 'cmsPage.new',
+      uses: function (params) {
+        console.log('I am on a cms new page')
+        console.log(params)
+        loadPage('cms/edit', params)
+      }
+    },
+    'cms/:pageId': {
+      as: 'cmsPage.edit',
+      uses: function (params) {
+        console.log('I am on a cms edit page')
+        console.log(params)
+        loadPage('cms/edit', params)
+      }
+    },
+    parks: {
+      as: 'park.list',
+      uses: function (params) {
+        console.log('I am on a parks list page')
+        console.log(params)
+        loadPage('parks', params)
+      }
+    },
+    'parks/new': {
+      as: 'park.new',
+      uses: function (params) {
+        console.log('I am on a park new page')
+        console.log(params)
+        loadPage('parks/edit', params)
+      }
+    },
+    'parks/:parkId': {
+      as: 'park.edit',
+      uses: function (params) {
+        console.log('I am on a park edit page')
+        console.log(params)
+        loadPage('parks/edit', params)
+      }
+    },
+    affiliate: {
+      as: 'affiliate.home',
+      uses: function (params) {
+        console.log('I am on the affiliate home page')
+        console.log(params)
+        loadPage('affiliate', params)
+      }
+    },
+    'affiliate/admin': {
+      as: 'affiliate.admin',
+      uses: function (params) {
+        console.log('I am on the affiliate admin page')
+        console.log(params)
+        loadPage('affiliate/admin', params)
+      }
+    },
+    'affiliate/admin/new': {
+      as: 'affiliate.admin.new',
+      uses: function (params) {
+        console.log('I am on the affiliate admin, new affiliate page')
+        console.log(params)
+        loadPage('affiliate/admin/edit', params)
+      }
+    },
+    'affilite/admin/:affiliateId': {
+      as: 'affiliate.admin.view',
+      uses: function (params) {
+        console.log('I am on a affiliate admin view affiliate page')
+        console.log(params)
+        loadPage('affiliate/admin/view', params)
+      }
+    },
+    '/': function () {
+      console.log('I am on the home page')
+      loadPage('index')
+    },
+    "/signout": async function () {
+      console.log("I am on the signout page");
+      console.log("Auth Loaded, sign in flow");
+      var signoutSplit = window.location.hash.split("signout=");
+      if (signoutSplit.length > 1) {
+        console.log("Sign out flow complete");
+        window.auth.signOut();
+        window.router.navigate("/");
+      } else {
+        console.log("No post sign out flag, redirect to authcore");
+        var service = location.hostname;
+        let authCoreUrl;
+        console.log(redirectUrl);
+        if (location.hostname == "pom.dev.parkplanr.app") {
+          authCoreUrl = "auth.dev.parkplanr.app";
+        } else {
+          authCoreUrl = "auth.parkplanr.app";
+        }
+        console.log(`Detected auth core URL: ${authCoreUrl}`);
+        var redirectUrl = `https://${authCoreUrl}/signout#service=${service}`;
+        console.log(`Got redirect url: ${redirectUrl}`);
+        location.href = redirectUrl;
+      }
+    },
+    '/signin': function () {
+      console.log("I am on the signin page");
+      console.log("Auth Loaded, sign in flow");
+      var tokenSplit = window.location.hash.split("token=");
+      if (tokenSplit.length > 1) {
+        console.log("Got auth token, attempt sign in with custom token");
+        try {
+          firebase.auth().signInWithCustomToken(tokenSplit[1]);
+          const postAuthUrl = localStorage.postAuthUrl || "/";
+          delete localStorage.postAuthUrl;
+          window.router.navigate(postAuthUrl);
+        } catch (err) {
+          console.log("Error signing in with custom token");
+          console.log(err);
+          window.location = "/signin";
+        }
+      } else {
+        console.log("No token, redirect to authcore");
+        var service = location.hostname;
+        let authCoreUrl;
+        console.log(redirectUrl);
+        if (location.hostname == "pom.dev.parkplanr.app") {
+          authCoreUrl = "auth.dev.parkplanr.app";
+        } else {
+          authCoreUrl = "auth.parkplanr.app";
+        }
+        console.log(`Detected auth core URL: ${authCoreUrl}`);
+        var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
+        console.log(`Got redirect url: ${redirectUrl}`);
+        location.href = redirectUrl;
+      }
+    }
+  })
+  
+  router.notFound(function () {
+    console.log('Route not found')
+    load404()
+  })
+  
+  $(document).ready(function () {
+    $('.defaultFragmentHolder').each(function () {
+      const fragment = $(this).data('fragmentid')
+      window.loadFragment(fragment)
+    })
+  
+    router.resolve()
+  })
+
+
 }
 
 function userAuthenticated (user) {
@@ -71,7 +238,9 @@ function userAuthenticated (user) {
     .then((idTokenResult) => {
       // Confirm the user is an Admin or an affiliate
       if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
-        console.log('I am an admin or an affiliate')
+        console.log('I am an admin or an affiliate');
+        $('body').trigger('claimsPassed')
+        inboxMessageCount()
       } else {
         console.log('I am not an admin, i should not be here')
         window.location.href = `https://parkplanr.app/notTeamMember?uid=${user.uid}`
@@ -107,9 +276,7 @@ window.loadFragment = function (fragment) {
       const today = new Date()
       $('.currentYear').text(today.getFullYear())
       $('.currentVersion').text(config('version'))
-
-      inboxMessageCount()
-
+      
       switch (fragment) {
         case 'headerNav':
           inboxMessageHeader()
@@ -151,7 +318,6 @@ function loadPage (page, params) {
         $('body').html(data)
       }
       router.updatePageLinks()
-      inboxMessageCount()
 
       // updates any tags with the class CurrentYear with the YYYY year
       $('.CurrentYear').text(new Date().getFullYear())
@@ -204,115 +370,5 @@ const useHash = false
 const hash = '#!' // Defaults to: '#'
 const router = new Navigo(root, useHash, hash)
 window.router = router
-
-router.on({
-  'inbox/conversation/:id': function (params) {
-    console.log('I am on a inbox conversation')
-    console.log(params)
-    loadPage('inbox/conversation', params)
-  },
-  inbox: function () {
-    console.log('I am on the inbox main page')
-    loadPage('inbox')
-  },
-  cms: {
-    as: 'cmsPage.list',
-    uses: function (params) {
-      console.log('I am on a cms list page')
-      console.log(params)
-      loadPage('cms', params)
-    }
-  },
-  'cms/new': {
-    as: 'cmsPage.new',
-    uses: function (params) {
-      console.log('I am on a cms new page')
-      console.log(params)
-      loadPage('cms/edit', params)
-    }
-  },
-  'cms/:pageId': {
-    as: 'cmsPage.edit',
-    uses: function (params) {
-      console.log('I am on a cms edit page')
-      console.log(params)
-      loadPage('cms/edit', params)
-    }
-  },
-  parks: {
-    as: 'park.list',
-    uses: function (params) {
-      console.log('I am on a parks list page')
-      console.log(params)
-      loadPage('parks', params)
-    }
-  },
-  'parks/new': {
-    as: 'park.new',
-    uses: function (params) {
-      console.log('I am on a park new page')
-      console.log(params)
-      loadPage('parks/edit', params)
-    }
-  },
-  'parks/:parkId': {
-    as: 'park.edit',
-    uses: function (params) {
-      console.log('I am on a park edit page')
-      console.log(params)
-      loadPage('parks/edit', params)
-    }
-  },
-  affiliate: {
-    as: 'affiliate.home',
-    uses: function (params) {
-      console.log('I am on the affiliate home page')
-      console.log(params)
-      loadPage('affiliate', params)
-    }
-  },
-  'affiliate/admin': {
-    as: 'affiliate.admin',
-    uses: function (params) {
-      console.log('I am on the affiliate admin page')
-      console.log(params)
-      loadPage('affiliate/admin', params)
-    }
-  },
-  'affiliate/admin/new': {
-    as: 'affiliate.admin.new',
-    uses: function (params) {
-      console.log('I am on the affiliate admin, new affiliate page')
-      console.log(params)
-      loadPage('affiliate/admin/edit', params)
-    }
-  },
-  'affilite/admin/:affiliateId': {
-    as: 'affiliate.admin.view',
-    uses: function (params) {
-      console.log('I am on a affiliate admin view affiliate page')
-      console.log(params)
-      loadPage('affiliate/admin/view', params)
-    }
-  },
-  '/': function () {
-    console.log('I am on the home page')
-    loadPage('index')
-  }
-})
-
-router.notFound(function () {
-  console.log('Route not found')
-  load404()
-})
-
-$(document).ready(function () {
-  $('.defaultFragmentHolder').each(function () {
-    const fragment = $(this).data('fragmentid')
-    window.loadFragment(fragment)
-  })
-
-  router.resolve()
-})
 
 init()

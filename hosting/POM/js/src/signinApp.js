@@ -17,28 +17,44 @@ const init = async () => {
   firebase.initializeApp(firebaseConfig)
   console.log(firebase.auth())
 
-  $('#signinWithEmailPasswordButton').on('click', function () {
-    signinEmail()
-  })
+  console.log("I am on the signin page");
 
-  $('#signinWithFacebookButton').on('click', function () {
-    signinFacebook()
-  })
+  console.log("Auth Loaded, sign in flow");
+  var tokenSplit = window.location.hash.split("token=");
+  if (tokenSplit.length > 1) {
+    console.log("Got auth token, attempt sign in with custom token");
+    try {
+      firebase.auth().signInWithCustomToken(tokenSplit[1]);
+    } catch (err) {
+      console.log("Error signing in with custom token");
+      console.log(err);
+      window.location = "/signin";
+    }
+  } else {
+    console.log("No token, redirect to authcore");
+    var service = location.hostname;
+    let authCoreUrl;
+    console.log(redirectUrl);
+    if (service == "pom.dev.parkplanr.app") {
+      authCoreUrl = "auth.dev.parkplanr.app";
+    } else {
+      authCoreUrl = "auth.parkplanr.app";
+    }
+    console.log(`Detected auth core URL: ${authCoreUrl}`);
+    var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
+    console.log(`Got redirect url: ${redirectUrl}`);
+    location.href = redirectUrl;
+  }
 
-  $('#signinWithGoogleButton').on('click', function () {
-    signinGoogle()
-  })
-
-  $('#signinWithAppleButton').on('click', function () {
-    signinApple()
-  })
 
   firebase.auth().onAuthStateChanged(function (user) {
     console.log('Auth state changed')
     console.log(user)
     if (user) {
-      console.log('Authenticated, redirecting to home')
-      window.location.href = '/'
+      console.log('Authenticated, redirecting to post auth url')
+      const postAuthUrl = localStorage.postAuthUrl || "/";
+      delete localStorage.postAuthUrl;
+      window.location = (postAuthUrl);
     } else {
       console.log('Unauthenticated')
       getFirebaseRedirectResult()
@@ -58,44 +74,6 @@ function getFirebaseRedirectResult () {
       console.log(error)
       window.alert(error.message)
     })
-}
-
-function signinEmail () {
-  const email = $('#email').val()
-  const password = $('#password').val()
-
-  if (!email) {
-    console.log('No email address provided')
-    return
-  }
-  if (!password) {
-    console.log('No password provided')
-    return
-  }
-
-  console.log('Attempting to sign in with email address and password')
-
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .catch(function (error) {
-      console.log('Error signing in with email address and password')
-      console.table(error)
-    })
-}
-
-function signinFacebook () {
-  const provider = new firebase.auth.FacebookAuthProvider()
-  firebase.auth().signInWithRedirect(provider)
-}
-function signinGoogle () {
-  const provider = new firebase.auth.GoogleAuthProvider()
-  firebase.auth().signInWithRedirect(provider)
-}
-
-function signinApple () {
-  const provider = new firebase.auth.OAuthProvider('apple.com')
-  firebase.auth().signInWithRedirect(provider)
 }
 
 init()

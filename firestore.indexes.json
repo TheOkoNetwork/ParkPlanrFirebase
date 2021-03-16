@@ -41,6 +41,20 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "name.name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "parks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "active",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "queuetimes",
           "order": "ASCENDING"
         },
