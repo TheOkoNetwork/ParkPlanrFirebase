@@ -1,6 +1,143 @@
 const Fuse = require('fuse.js').default
 const $ = window.$
 
+async function parkAttractionsLoadEdit (params) {
+  if (!window.db) {
+    console.log('DB not ready yet, unable to load park attraction edit')
+    $('body').on('dbLoaded', function () {
+      console.log('DB Loaded, loading park attraction edit')
+      parkAttractionsLoadEdit(params)
+    })
+    return
+  }
+
+  const parkId = params.parkId
+  console.log(`Loading park: ${parkId}`)
+  const parkDoc = await window.db.collection('parks').doc(parkId).get()
+
+  $('#rideEditFieldMiscLogo').on('change', function () {
+    $('#rideEditFieldMiscLogoImg').attr('src', $(this).val())
+  })
+
+  if (!parkDoc.exists) {
+    console.log(`Park with ID: ${parkId} does not exist`)
+    window.alert('Park does not exist')
+    window.router.navigate(window.router.generate('parks.list'))
+    return
+  }
+  const parkData = parkDoc.data()
+  parkData.id = parkDoc.id
+  console.log(parkData)
+  $('.parkName').text(parkData.name.name)
+
+  if (params.rideId) {
+    console.log('Edit ride')
+    const rideId = params.rideId
+    console.log(`Loading ride: ${rideId}`)
+    const rideDoc = await window.db
+      .collection('parks')
+      .doc(parkId)
+      .collection('rides')
+      .doc(rideId)
+      .get()
+    if (!rideDoc.exists) {
+      console.log(`Ride with ID: ${rideId} does not exist`)
+      window.alert('Ride does not exist')
+      window.router.navigate(
+        window.router.generate('park.attractions.list', { parkId: parkId })
+      )
+      return
+    }
+    const rideData = rideDoc.data()
+    rideData.id = rideDoc.id
+    console.log(rideData)
+    $('.rideName').text(rideData.name.name)
+
+    $('#rideEditFieldName').val(rideData.name.name)
+    $('#rideEditFieldActive').prop('checked', rideData.active)
+    $('#rideEditFieldMiscLogo').val(rideData.logo)
+    $('#rideEditFieldMiscLogoImg').attr('src', rideData.logo)
+    $('#rideEditFieldMiscRidecountcomAttractionId').val(
+      rideData.ridecountcomAttractionId
+    )
+
+    $('.showIfRideAdd').hide()
+    $('.showIfRideEdit').show()
+  } else {
+    console.log('New ride')
+    $('.showIfRideAdd').show()
+    $('.showIfRideEdit').hide()
+  }
+
+  $('#rideEditSaveButton').on('click', async function () {
+    console.log('Save button clicked')
+    // todo actually save ride
+    const params = window.router.lastRouteResolved().params
+    const parkId = params.parkId
+    const rideId = params.rideId
+    // ride id will be undefined which is falsely if adding
+
+    const rideName = $('#rideEditFieldName').val()
+    const rideActive = $('#rideEditFieldActive').prop('checked')
+    const rideLogo = $('#rideEditFieldMiscLogo').val()
+    const ridecountcomAttractionId =
+      Number($('#rideEditFieldMiscRidecountcomAttractionId').val()) ||
+      window.firebase.firestore.FieldValue.delete()
+
+    if (!rideName) {
+      return window.alert('Ride name required')
+    }
+    if (!rideLogo) {
+      return window.alert('Ride logo required')
+    }
+
+    if (rideId) {
+      console.log('Saving existing ride')
+
+      await window.db
+        .collection('parks')
+        .doc(parkId)
+        .collection('rides')
+        .doc(rideId)
+        .update({
+          'name.name': rideName,
+          logo: rideLogo,
+          active: rideActive,
+          ridecountcomAttractionId: ridecountcomAttractionId
+        })
+      window.alert(`Successfully saved ride: ${rideName}`)
+      window.router.navigate(
+        window.router.generate('park.attractions.list', { parkId: parkId })
+      )
+    } else {
+      console.log('Adding new ride')
+
+      const docRef = window.db
+        .collection('parks')
+        .doc(parkId)
+        .collection('rides')
+        .doc()
+
+      await docRef.set({
+        name: {
+          name: rideName
+        },
+        logo: rideLogo,
+        active: rideActive,
+        ridecountcomAttractionId: ridecountcomAttractionId
+      })
+      window.alert(`Successfully added ride: ${rideName}`)
+      window.router.navigate(
+        window.router.generate('park.attractions.list', { parkId: parkId })
+      )
+    }
+  })
+  $('#rideEditDeleteButton').on('click', async function () {
+    console.log('Delete button clicked')
+    // todo actually delete ride (after confirmation prompt)
+  })
+}
+
 async function parkAttractionsLoad (params) {
   if (!window.db) {
     console.log('DB not ready yet, unable to load park attractions')
@@ -59,9 +196,9 @@ async function parkAttractionsLoad (params) {
       console.log(args)
       const parkId = window.router.lastRouteResolved().params.parkId
       window.router.navigate(
-        window.router.generate('park.attractions.view', {
+        window.router.generate('park.attractions.edit', {
           parkId: parkId,
-          attractionId: args.item.id
+          rideId: args.item.id
         })
       )
     },
@@ -156,4 +293,4 @@ async function parkAttractionsLoad (params) {
   })
 }
 
-export { parkAttractionsLoad }
+export { parkAttractionsLoad, parkAttractionsLoadEdit }

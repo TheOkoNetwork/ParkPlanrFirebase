@@ -1,0 +1,120 @@
+<!-- PAGE CONTENT-TAG_ID -->
+<!-- Content Header (Page header) -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1><span class="rideName"></span></h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a href="/" data-navigo="">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="/parks" data-navigo="">Parks & Attractions</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="/parks/attractions" data-navigo="">Rides & Attractions</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="#"><span class="parkName"></span></a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="#"><span class="rideName"></span></a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section><!-- Main content -->
+  <section class="content">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title showIfRideAdd" style="display:none;">New Ride/Attraction</h3>
+        <h3 class="card-title showIfRideEdit" style="display:none;">
+	Editing
+	</h3>
+      </div><!-- /.card-header -->
+      <div class="card-body">
+
+
+        <div id="rideEditAccordion">
+
+          <div class="card">
+            <div class="card-header" id="rideEditHeadingBasic">
+              <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#rideEditCollapseBasic" aria-expanded="false" aria-controls=
+              "rideEditCollapseBasic">Basic info</button></h5>
+            </div>
+            <div id="rideEditCollapseBasic" class="collapse" aria-labelledby="rideEditHeadingBasic" data-parent="#rideEditAccordion">
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="rideEditFieldName">Name</label>
+                  <div class="col-md-4">
+                    <input id="rideEditFieldName" name="rideEditFieldName" type="text" placeholder="" class="form-control input-md" required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <div class="checkbox">
+                      <label for="rideEditFieldActive-0">
+                        <input type="checkbox" name="rideEditFieldActive" id="rideEditFieldActive">
+                          Active?
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="rideEditFieldMiscLogo">Logo</label>
+                  <div class="col-md-5">
+                    <input id="rideEditFieldMiscLogo" name="rideEditFieldMiscLogo" type="text" placeholder="" class="form-control input-md" required="">
+                  </div>
+                  <div class="col-md-4">
+                    <img id="rideEditFieldMiscLogoImg" style="width:100%" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card">
+            <div class="card-header" id="rideEditHeadingMisc">
+              <h5 class="mb-0"><button class="btn btn-link" data-toggle="collapse" data-target="#rideEditCollapseMisc" aria-expanded="false" aria-controls=
+              "rideEditCollapseMisc">Misc</button></h5>
+            </div>
+            <div id="rideEditCollapseMisc" class="collapse" aria-labelledby="rideEditHeadingMisc" data-parent="#rideEditAccordion">
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="rideEditFieldMiscRidecountcomAttractionId">Ridecount.com attraction ID</label>
+                  <div class="col-md-8">
+                    <input id="rideEditFieldMiscRidecountcomAttractionId" name="rideEditFieldMiscRidecountcomAttractionId" type="text" placeholder="" class="form-control input-md" required="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <button class="btn btn-success" id="rideEditSaveButton">
+                <span class="showIfRideAdd">Add ride</span>
+                <span class="showIfRideEdit">Save ride</span>
+        </button>
+        <button class="btn btn-danger showIfRideEdit" id="rideEditDeleteButton">
+                <span class="showIfRideEdit">Delete ride</span>
+        </button>
+
+      </div><!-- /.card-body -->
+    </div><!-- /.card -->
+  </section><!-- /.content -->
+</body>
+</html>

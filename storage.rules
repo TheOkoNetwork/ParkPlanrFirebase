@@ -1,3 +1,5 @@
+rules_version = '2';
+
 service firebase.storage {
 	match /b/{bucket}/o {
 		match /CMSImages/{ImageFilename} {
@@ -6,6 +8,9 @@ service firebase.storage {
 		}
 		match /rides/{ImageFilename} {
       allow write: if request.auth.token.admin == true
+			allow read;
+		}
+		match /legacyRideImages/{ImageFilename} {
 			allow read;
 		}
 	}

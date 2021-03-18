@@ -7,7 +7,10 @@ import {
 } from './inbox.js'
 import { cmsPagesLoad, cmsPageLoadEdit } from './cms.js'
 import { parksLoad, parksLoadEdit } from './parks.js'
-import { parkAttractionsLoad } from './parkAttractions.js'
+import {
+  parkAttractionsLoad,
+  parkAttractionsLoadEdit
+} from './parkAttractions.js'
 import {
   affiliateHome,
   affiliateAdmin,
@@ -127,12 +130,20 @@ const init = async () => {
         loadPage('parks/attractions', params)
       }
     },
-    'parks/:parkId/attractions/:attractionId': {
-      as: 'park.attractions.view',
+    'parks/:parkId/attractions/new': {
+      as: 'park.attractions.new',
       uses: function (params) {
-        console.log('I am on a attractions view page')
+        console.log('I am on an add attraction page page')
         console.log(params)
-        loadPage('parks/attractions/attraction', params)
+        loadPage('parks/attractions/edit', params)
+      }
+    },
+    'parks/:parkId/attractions/:rideId': {
+      as: 'park.attractions.edit',
+      uses: function (params) {
+        console.log('I am on a attractions edit page')
+        console.log(params)
+        loadPage('parks/attractions/edit', params)
       }
     },
     affiliate: {
@@ -354,6 +365,9 @@ function loadPage (page, params) {
           break
         case 'parks/attractions':
           parkAttractionsLoad(params)
+          break
+        case 'parks/attractions/edit':
+          parkAttractionsLoadEdit(params)
           break
         case 'affiliate':
           affiliateHome(params)
