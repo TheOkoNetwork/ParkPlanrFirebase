@@ -104,7 +104,7 @@ const OnRideCountComMigrationRequested = functions.firestore
           migrationRequestId: requestData.id,
           user: requestData.user,
           tripLink: link,
-	  status: 0
+          status: 0
         }
         batches[currentBatch].set(docRef, tripData)
         currentBatchCount++
