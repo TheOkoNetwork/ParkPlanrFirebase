@@ -24,6 +24,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "camelcase": "^5.3.1",
+    "cheerio": "^1.0.0-rc.5",
     "connect-slashes": "^1.4.0",
     "express": "^4.17.1",
     "fb-messenger": "^2.3.1",
@@ -39,8 +40,7 @@
     "querystring": "^0.2.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "sharp": "^0.26.2",
-    "snyk": "^1.436.0",
+    "snyk": "^1.498.0",
     "twilio": "^3.54.2",
     "uuid": "^8.3.2"
   },
