@@ -77,6 +77,13 @@ async function parksLoadEdit (params) {
       $('#parkEditFormGroupClosedMessage').show()
       $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage)
     }
+
+    $('#parkEditAttractionsButton').on('click', function () {
+      const parkId = window.router.lastRouteResolved().params.parkId
+      window.router.navigate(
+        window.router.generate('park.attractions.list', { parkId: parkId })
+      )
+    })
   } else {
     console.log('New park page, no park to load')
 
