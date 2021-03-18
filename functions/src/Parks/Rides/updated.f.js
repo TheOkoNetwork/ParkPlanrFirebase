@@ -17,7 +17,8 @@ const onAddRidecountComIdAdd = functions.firestore
       console.log('Has ridecount.com attraction ID')
       const docs = await db
         .collection('ridecountcomTrips')
-        .where('array-contains', rideData.ridecountcomAttractionId)
+        .where('missingAttractionIds', 'array-contains', rideData.ridecountcomAttractionId)
+        .where('status', '==', 98)
         .get()
       if (docs.empty) {
         console.log('No ridecount.com trips missing this attraction ID')
@@ -38,7 +39,11 @@ const onAddRidecountComIdAdd = functions.firestore
             currentBatchCount = 0
           }
           const docRef = db.collection('ridecountcomTrips').doc(doc.id)
-          batches[currentBatch].delete(docRef)
+          batches[currentBatch].set(docRef, {
+		status: 0,
+		missingAttractionIds: [],
+		missingAttractions: []
+	  }, {merge: true})
           currentBatchCount++
         })
         batches.forEach((batch) => {
