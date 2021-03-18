@@ -7,7 +7,7 @@ try {
   // yes this is meant to be empty
 }
 const db = admin.firestore()
-var gravatar = require('gravatar')
+const gravatar = require('gravatar')
 
 const CreateMissingUserDoc = functions.https.onCall((data, context) => {
   return admin.auth().getUser(context.auth.uid).then((user) => {

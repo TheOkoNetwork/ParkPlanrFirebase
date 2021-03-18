@@ -29,17 +29,17 @@ app.use((req, res, next) => {
 app.use(slashes(false))
 
 app.post('/passwordReset/', async (req, res) => {
-  var bodyData = req.body
+  const bodyData = req.body
   console.log(bodyData)
 
-  var userEmail
+  let userEmail
 
-  var actionsData = {
+  const actionsData = {
     actions: []
   }
 
   if (bodyData.Memory) {
-    var Memory = JSON.parse(bodyData.Memory)
+    const Memory = JSON.parse(bodyData.Memory)
     if (Memory.twilio.collected_data) {
       if (Memory.twilio.collected_data.userEmail) {
         userEmail = Memory.twilio.collected_data.userEmail.answers.userEmailAddress.answer
@@ -47,17 +47,17 @@ app.post('/passwordReset/', async (req, res) => {
     }
   }
   if (userEmail) {
-    var passwordResetEmailInvalidCount = 0
+    let passwordResetEmailInvalidCount = 0
     console.log(`Found user email: ${userEmail}, looking up user`)
     console.log(userEmail)
     try {
-      var userAccount = await admin.auth().getUserByEmail(userEmail)
+      const userAccount = await admin.auth().getUserByEmail(userEmail)
       console.log('User exists')
       console.log(userAccount)
-      var passwordResetLink = await admin.auth().generatePasswordResetLink(userEmail)
+      const passwordResetLink = await admin.auth().generatePasswordResetLink(userEmail)
       console.log('Got password reset link')
 
-      var emailData = {
+      const emailData = {
         to: userEmail,
         from: 'support@parkplanr.app',
         templateId: 'd-2815cea91a5241b585f8a5e5695cd5fe',
@@ -66,7 +66,7 @@ app.post('/passwordReset/', async (req, res) => {
         }
       }
       console.log('Sending email')
-      var emailResult = await sgMail.send(emailData)
+      const emailResult = await sgMail.send(emailData)
       console.log(emailResult)
       actionsData.actions.push({ say: `Please check your email account (${userEmail}), and follow the instructions in the email we just sent you to reset your password` })
       actionsData.actions.push({ say: 'Is there anything else we can do for you?' })

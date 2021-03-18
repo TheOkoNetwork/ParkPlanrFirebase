@@ -9,10 +9,10 @@ try {
 const db = admin.firestore()
 
 const OnRideCountAddEditOrDelete = functions.firestore.document('users/{uID}/ridecount/{tripId}/rides/{countId}').onWrite((change, context) => {
-  var beforeCount
-  var afterCount
-  var countValue
-  var count
+  let beforeCount
+  let afterCount
+  let countValue
+  let count
 
   if (change.before.exists) {
     console.log('Existing count doc')

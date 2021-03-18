@@ -6,19 +6,19 @@ try {
   // yes this is meant to be empty
 }
 
-var ogs = require('open-graph-scraper')
+const ogs = require('open-graph-scraper')
 const uuid = require('uuid').v4
 const cors = require('cors')({ origin: true })
 
 const LinkFetch = functions.https.onRequest((request, response) => {
-  var outputResult
-  var SiteHostname
-  var CorrellationID
-  var result
-  var linkUrl
+  let outputResult
+  let SiteHostname
+  let CorrellationID
+  let result
+  let linkUrl
 
   cors(request, response, () => {
-    var options = { url: request.query.url }
+    const options = { url: request.query.url }
     return ogs(options).then((result) => {
       console.log('result:', result)
       outputResult = {
