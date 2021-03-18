@@ -42,7 +42,9 @@ app.post('/passwordReset/', async (req, res) => {
     const Memory = JSON.parse(bodyData.Memory)
     if (Memory.twilio.collected_data) {
       if (Memory.twilio.collected_data.userEmail) {
-        userEmail = Memory.twilio.collected_data.userEmail.answers.userEmailAddress.answer
+        userEmail =
+          Memory.twilio.collected_data.userEmail.answers.userEmailAddress
+            .answer
       }
     }
   }
@@ -54,7 +56,9 @@ app.post('/passwordReset/', async (req, res) => {
       const userAccount = await admin.auth().getUserByEmail(userEmail)
       console.log('User exists')
       console.log(userAccount)
-      const passwordResetLink = await admin.auth().generatePasswordResetLink(userEmail)
+      const passwordResetLink = await admin
+        .auth()
+        .generatePasswordResetLink(userEmail)
       console.log('Got password reset link')
 
       const emailData = {
@@ -68,33 +72,48 @@ app.post('/passwordReset/', async (req, res) => {
       console.log('Sending email')
       const emailResult = await sgMail.send(emailData)
       console.log(emailResult)
-      actionsData.actions.push({ say: `Please check your email account (${userEmail}), and follow the instructions in the email we just sent you to reset your password` })
-      actionsData.actions.push({ say: 'Is there anything else we can do for you?' })
+      actionsData.actions.push({
+        say: `Please check your email account (${userEmail}), and follow the instructions in the email we just sent you to reset your password`
+      })
+      actionsData.actions.push({
+        say: 'Is there anything else we can do for you?'
+      })
       res.status(200).json(actionsData)
       return
     } catch (error) {
       console.log('Error looking up user by email')
       console.log(error)
       console.log(passwordResetEmailInvalidCount)
-      actionsData.actions.push({ remember: { passwordResetEmailInvalidCount: passwordResetEmailInvalidCount++ } })
-      actionsData.actions.push({ say: "Sorry, we couldn't find an account with that email address, please try again" })
+      actionsData.actions.push({
+        remember: {
+          passwordResetEmailInvalidCount: passwordResetEmailInvalidCount++
+        }
+      })
+      actionsData.actions.push({
+        say:
+          "Sorry, we couldn't find an account with that email address, please try again"
+      })
     }
   }
 
   actionsData.actions.push({
     collect: {
       name: 'userEmail',
-      questions: [{
-        question: 'What is your email address?',
-        name: 'userEmailAddress',
-        type: 'Twilio.EMAIL'
-      }],
+      questions: [
+        {
+          question: 'What is your email address?',
+          name: 'userEmailAddress',
+          type: 'Twilio.EMAIL'
+        }
+      ],
       on_complete: {
         redirect: 'task://passwordReset'
       }
     }
   })
-  actionsData.actions.push({ say: 'Just a second whilst we find your account' })
+  actionsData.actions.push({
+    say: 'Just a second whilst we find your account'
+  })
   res.status(200).json(actionsData)
 })
 exports = module.exports = functions.https.onRequest(app)

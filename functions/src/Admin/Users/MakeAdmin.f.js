@@ -19,7 +19,9 @@ const MakeAdmin = functions.https.onRequest(async (request, response) => {
   uidListString = ''
 
   uids.forEach((uid) => {
-    uidSetClaimPromises.push(admin.auth().setCustomUserClaims(uid, { admin: true }))
+    uidSetClaimPromises.push(
+      admin.auth().setCustomUserClaims(uid, { admin: true })
+    )
     uidListString += ` ${uid}`
   })
 

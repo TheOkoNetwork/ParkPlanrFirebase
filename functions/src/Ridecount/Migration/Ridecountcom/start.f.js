@@ -21,10 +21,12 @@ const OnRideCountComMigrationRequested = functions.firestore
       .collection('ridecountMigrationRequests')
       .doc(requestData.id)
     if (requestData.service !== 'ridecountcom') {
-      return console.log('Service is not ridecountcom')
+      console.log('Service is not ridecountcom')
+      return
     }
     if (requestData.status !== 0) {
-      return console.log('status not 0')
+      console.log('status not 0')
+      return
     }
     let pageNumber = 1
     let leftToProcess = true
@@ -33,6 +35,7 @@ const OnRideCountComMigrationRequested = functions.firestore
       for (let i = 0; leftToProcess; i++) {
         const requestUrl = `https://ridecount.com/profiles/${requestData.ridecountcomUsername}?page=${pageNumber}`
         console.log(`Requesting url: ${requestUrl}`)
+        // eslint-disable-next-line no-await-in-loop
         const fetchResult = await fetch(requestUrl, {
           headers: {
             'User-Agent': 'parkplanr.app'
@@ -42,6 +45,7 @@ const OnRideCountComMigrationRequested = functions.firestore
           method: 'GET'
         })
         console.log('Got fetch result')
+        // eslint-disable-next-line no-await-in-loop
         const resultBody = await fetchResult.text()
         console.log('Got result body')
         const $ = cheerio.load(resultBody)
