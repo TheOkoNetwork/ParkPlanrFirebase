@@ -15,7 +15,7 @@ const { v4: uuidv4 } = require('uuid')
 const moment = require('moment')
 
 const onRideCountComMigrationHandleTrip = functions.firestore
-  .document('ridecountMigrationRequests/{migrationRequestId}')
+  .document('ridecountcomTrips/{migrationRequestId}')
   .onWrite(async (change, context) => {
     const requestData = change.after.data()
     requestData.id = context.params.migrationRequestId
