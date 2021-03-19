@@ -40,10 +40,10 @@ const onAddRidecountComIdAdd = functions.firestore
           }
           const docRef = db.collection('ridecountcomTrips').doc(doc.id)
           batches[currentBatch].set(docRef, {
-		status: 0,
-		missingAttractionIds: [],
-		missingAttractions: []
-	  }, {merge: true})
+            status: 0,
+            missingAttractionIds: [],
+            missingAttractions: []
+          }, { merge: true })
           currentBatchCount++
         })
         batches.forEach((batch) => {
