@@ -88,7 +88,7 @@ const onRideCountComMigrationHandleTrip = functions.firestore
         const attractionData = attractionDoc.data()
         attractionData.id = attractionDoc.id
         attractionData.parkId = attractionDoc.ref.path.split('/')[1]
-        // attractionsData[attractionData.ridecountcomAttractionId] = attractionData
+        attractionsData[attractionData.ridecountcomAttractionId] = attractionData
         console.log(attractionData)
       }
     })
