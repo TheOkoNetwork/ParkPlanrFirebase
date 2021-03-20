@@ -57,9 +57,13 @@ async function parkAttractionsLoadEdit (params) {
     $('#rideEditFieldActive').prop('checked', rideData.active)
     $('#rideEditFieldMiscLogo').val(rideData.logo)
     $('#rideEditFieldMiscLogoImg').attr('src', rideData.logo)
-    $('#rideEditFieldMiscRidecountcomAttractionId').val(
-      rideData.ridecountcomAttractionId.join(',')
-    )
+    let ridecountcomAttractionIds;
+    if (rideData.ridecountcomAttractionId) {
+    	ridecountcomAttractionIds = rideData.ridecountcomAttractionId.join(',');
+    } else {
+	ridecountcomAttractionIds = "";
+    };
+    $('#rideEditFieldMiscRidecountcomAttractionId').val(ridecountcomAttractionIds)
 
     $('.showIfRideAdd').hide()
     $('.showIfRideEdit').show()
