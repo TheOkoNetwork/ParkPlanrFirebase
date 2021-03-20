@@ -17,7 +17,7 @@ const onAddRidecountComIdAdd = functions.firestore
       console.log('Has ridecount.com attraction ID')
       const docs = await db
         .collection('ridecountcomTrips')
-        .where('missingAttractionIds', 'array-contains', rideData.ridecountcomAttractionId)
+        .where('missingAttractionIds', 'array-contains-any', rideData.ridecountcomAttractionId)
         .where('status', '==', 98)
         .get()
       if (docs.empty) {
@@ -31,18 +31,30 @@ const onAddRidecountComIdAdd = functions.firestore
         let currentBatchCount = 0
         const maxBatchCount = 250
 
-        docs.docs.forEach(function (doc) {
+        docs.docs.forEach((doc) => {
           if (currentBatchCount >= maxBatchCount) {
             console.log('Creating new batch')
             currentBatch++
             batches[currentBatch] = db.batch()
             currentBatchCount = 0
           }
-          const docRef = db.collection('ridecountcomTrips').doc(doc.id)
-          batches[currentBatch].set(docRef, {
+          const tripDocRef = db.collection('ridecountcomTrips').doc(doc.id)
+          batches[currentBatch].set(tripDocRef, {
             status: 0,
             missingAttractionIds: [],
             missingAttractions: []
+          }, { merge: true })
+          currentBatchCount++
+
+          if (currentBatchCount >= maxBatchCount) {
+            console.log('Creating new batch')
+            currentBatch++
+            batches[currentBatch] = db.batch()
+            currentBatchCount = 0
+          }
+          const requestDocRef = db.collection('ridecountMigrationRequests').doc(doc.data().migrationRequestId)
+          batches[currentBatch].set(requestDocRef, {
+            failedTrips: admin.firestore.FieldValue.arrayRemove(doc.id)
           }, { merge: true })
           currentBatchCount++
         })

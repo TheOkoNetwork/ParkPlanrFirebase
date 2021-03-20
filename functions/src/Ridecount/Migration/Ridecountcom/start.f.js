@@ -53,7 +53,6 @@ const OnRideCountComMigrationRequested = functions.firestore
         $('a').each(function () {
           const link = $(this).attr('href')
           if (link.startsWith('https://ridecount.com/trips/')) {
-            console.log('Ride count trip link')
             links.push(link)
           }
         })
@@ -86,13 +85,13 @@ const OnRideCountComMigrationRequested = functions.firestore
             totalTrips: 0,
             unprocessedTrips: 0,
             processedTrips: 0,
-            failedTrips: 0
+            failedTrips: []
           },
           { merge: true }
         )
         return
       }
-      links.forEach(function (link) {
+      links.forEach((link) => {
         if (currentBatchCount >= maxBatchCount) {
           console.log('Creating new batch')
           currentBatch++

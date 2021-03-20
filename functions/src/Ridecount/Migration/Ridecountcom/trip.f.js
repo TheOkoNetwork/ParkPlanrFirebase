@@ -19,12 +19,15 @@ const onRideCountComMigrationHandleTrip = functions.firestore
   .onWrite(async (change, context) => {
     const requestData = change.after.data()
     requestData.id = context.params.migrationRequestId
+    const correlationId = uuidv4()
+    console.log(`Correlation ID: ${correlationId}`)
     console.log(requestData)
     const requestDocRef = db
       .collection('ridecountcomTrips')
       .doc(requestData.id)
     if (requestData.status !== 0) {
-      return console.log('status not 0')
+      console.log('status not 0')
+      return null
     }
     const requestUrl = requestData.tripLink
     console.log(`Requesting url: ${requestUrl}`)
@@ -58,24 +61,24 @@ const onRideCountComMigrationHandleTrip = functions.firestore
 
     const uniqueAttractions = {}
     const rides = []
-    attractionsJson.forEach(function (attractionData) {
+    attractionsJson.forEach((attractionData) => {
       console.log(attractionData)
       uniqueAttractions[attractionData.id] = attractionData.name
       rides.push(attractionData)
     })
     console.log(uniqueAttractions)
     const uniqueAttractionDocPromises = []
-    Object.keys(uniqueAttractions).forEach(function (attractionId) {
+    Object.keys(uniqueAttractions).forEach((attractionId) => {
       uniqueAttractionDocPromises.push(
         db
           .collectionGroup('rides')
-          .where('ridecountcomAttractionId', '==', Number(attractionId))
+          .where('ridecountcomAttractionId', 'array-contains', Number(attractionId))
           .get()
       )
     })
     const uniqueAttractionDocs = await Promise.all(uniqueAttractionDocPromises)
     const attractionsData = {}
-    uniqueAttractionDocs.forEach(function (attractionDocs) {
+    uniqueAttractionDocs.forEach((attractionDocs) => {
       let attractionId
       if (attractionDocs.empty) {
         attractionId = attractionDocs.query._queryOptions.fieldFilters[0].value
@@ -88,7 +91,9 @@ const onRideCountComMigrationHandleTrip = functions.firestore
         const attractionData = attractionDoc.data()
         attractionData.id = attractionDoc.id
         attractionData.parkId = attractionDoc.ref.path.split('/')[1]
-        attractionsData[attractionData.ridecountcomAttractionId] = attractionData
+        attractionsData[
+          attractionData.ridecountcomAttractionId
+        ] = attractionData
         console.log(attractionData)
       }
     })
@@ -105,11 +110,10 @@ const onRideCountComMigrationHandleTrip = functions.firestore
       console.log(
         'This means there is an attraction in ridecount.com data that does not exist in firestore'
       )
-      const correlationId = uuidv4()
       console.log(`Correlation ID: ${correlationId}`)
       const missingAttractions = []
       const missingAttractionIds = []
-      Object.keys(uniqueAttractions).forEach(function (attractionId) {
+      Object.keys(uniqueAttractions).forEach((attractionId) => {
         if (!attractionsData[attractionId]) {
           const uniqueAttractionName = uniqueAttractions[attractionId]
           const missingAttraction = {
@@ -131,7 +135,7 @@ const onRideCountComMigrationHandleTrip = functions.firestore
       batch.set(
         migrateRequestDocRef,
         {
-          failedTrips: admin.firestore.FieldValue.increment(1)
+          failedTrips: admin.firestore.FieldValue.arrayUnion(requestData.id)
         },
         { merge: true }
       )
@@ -147,8 +151,8 @@ const onRideCountComMigrationHandleTrip = functions.firestore
       )
 
       await batch.commit()
-      console.log('Flagged as failed')
-      return
+      console.log(`Flagged ridecount.com trip: ${requestData.id} as failed`)
+      return null
     }
 
     const batches = []
@@ -159,18 +163,16 @@ const onRideCountComMigrationHandleTrip = functions.firestore
     const maxBatchCount = 250
 
     const tripDocs = {}
-    const parkTotalRides = {}
 
-    Object.keys(attractionsData).forEach(function (attractionId) {
+    Object.keys(attractionsData).forEach((attractionId) => {
       const attractionData = attractionsData[attractionId]
       tripDocs[attractionData.parkId] = db
         .collection('users')
         .doc(requestData.user)
         .collection('ridecount')
         .doc()
-      parkTotalRides[attractionData.parkId] = 0
     })
-    rides.forEach(function (ride) {
+    rides.forEach((ride) => {
       const rideCount = ride.pivot.count
       const attractionData = attractionsData[ride.id]
       const docRef = tripDocs[attractionData.parkId].collection('rides').doc()
@@ -188,9 +190,8 @@ const onRideCountComMigrationHandleTrip = functions.firestore
         time: tripDate
       })
       currentBatchCount++
-      parkTotalRides[attractionData.parkId] += rideCount
     })
-    Object.keys(attractionsData).forEach(function (attractionId) {
+    Object.keys(attractionsData).forEach((attractionId) => {
       if (currentBatchCount >= maxBatchCount) {
         console.log('Creating new batch')
         currentBatch++
@@ -203,7 +204,7 @@ const onRideCountComMigrationHandleTrip = functions.firestore
       tripDocs[attractionData.parkId].set({
         date: tripDate,
         park: attractionData.parkId,
-        totalRides: parkTotalRides[attractionData.parkId]
+        totalRides: 0
       })
     })
 
@@ -246,6 +247,7 @@ const onRideCountComMigrationHandleTrip = functions.firestore
     const batchResult = await Promise.all(batchPromises)
     const batchCount = batchResult.length
     console.log(`Comitted ${batchCount} batches`)
+    return null
   })
 
 exports = module.exports = onRideCountComMigrationHandleTrip
