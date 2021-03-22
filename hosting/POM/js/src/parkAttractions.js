@@ -57,13 +57,15 @@ async function parkAttractionsLoadEdit (params) {
     $('#rideEditFieldActive').prop('checked', rideData.active)
     $('#rideEditFieldMiscLogo').val(rideData.logo)
     $('#rideEditFieldMiscLogoImg').attr('src', rideData.logo)
-    let ridecountcomAttractionIds;
+    let ridecountcomAttractionIds
     if (rideData.ridecountcomAttractionId) {
-    	ridecountcomAttractionIds = rideData.ridecountcomAttractionId.join(',');
+      ridecountcomAttractionIds = rideData.ridecountcomAttractionId.join(',')
     } else {
-	ridecountcomAttractionIds = "";
-    };
-    $('#rideEditFieldMiscRidecountcomAttractionId').val(ridecountcomAttractionIds)
+      ridecountcomAttractionIds = ''
+    }
+    $('#rideEditFieldMiscRidecountcomAttractionId').val(
+      ridecountcomAttractionIds
+    )
 
     $('.showIfRideAdd').hide()
     $('.showIfRideEdit').show()
@@ -85,8 +87,10 @@ async function parkAttractionsLoadEdit (params) {
     const rideActive = $('#rideEditFieldActive').prop('checked')
     const rideLogo = $('#rideEditFieldMiscLogo').val()
     const ridecountcomAttractionId =
-      $('#rideEditFieldMiscRidecountcomAttractionId').val().split(',').map(x => Number(x)) ||
-      window.firebase.firestore.FieldValue.delete()
+      $('#rideEditFieldMiscRidecountcomAttractionId')
+        .val()
+        .split(',')
+        .map((x) => Number(x)) || window.firebase.firestore.FieldValue.delete()
 
     if (!rideName) {
       return window.alert('Ride name required')

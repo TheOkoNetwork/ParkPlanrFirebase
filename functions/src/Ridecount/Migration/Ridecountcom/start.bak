@@ -16,12 +16,14 @@ function sleep (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const OnRideCountComMigrationRequested = functions
-  .runWith({ timeoutSeconds: 300 })
-  .firestore.document('ridecountMigrationRequests/{migrationRequestId}')
-  .onCreate(async (doc, context) => {
-    const requestData = doc.data()
-    requestData.id = context.params.migrationRequestId
+doit = async () => {
+    const requestData = {
+	id: "2TfyVcSTpqEwHCJeVuP4",
+	ridecountcomUsername: "spinba11",
+	service: "ridecountcom",
+	status: 0,
+	user: "G5urWzoptvOiy5OdRLDUCwOlPt23"
+    };
 
     const correlationId = uuidv4()
     console.log(requestData)
@@ -38,8 +40,6 @@ const OnRideCountComMigrationRequested = functions
       return
     }
     console.log(requestData)
-
-    // todo flag as a in progress status code
     const requestUrl = `https://ridecount.com/profiles/${requestData.ridecountcomUsername}`
     const pageCountFetchRes = await fetch(requestUrl)
     const pageCountBody = await pageCountFetchRes.text()
@@ -96,19 +96,36 @@ const OnRideCountComMigrationRequested = functions
     // console.log(pageBodies);
 
     const links = []
-    pageBodies.forEach((pageBody) => {
+    pageBodies.forEach((pageBody,pageIndex) => {
       const pageBody$ = cheerio.load(pageBody)
+      let linksFoundInPage = false;
+      let foundInPage = 0;
       pageBody$('a').each(function () {
         const link = pageBody$(this).attr('href')
         if (link.startsWith('https://ridecount.com/trips/')) {
           links.push(link)
+	  linksFoundInPage=true;
+	  foundInPage++;
         }
       })
+      if (linksFoundInPage) {
+	console.log(`Found: ${foundInPage} links in page`);
+      } else {
+	console.log("***** ***** ***** ***** ***** ***** *****");
+	console.log("***** No links found for this page  *****");
+	console.log(`***** Page index: ${pageIndex}      ******`);
+	console.log("***** ***** ***** ***** ***** ***** *****");
+      };
     })
     // deduplicate any duplicates
     const deduplicatedLinks = [...new Set(links)]
     console.log(`Got all links length: ${links.length}`)
     console.log(`Got deduplicated links length: ${deduplicatedLinks.length}`)
+    var duplicates = links.reduce(function(acc, el, i, arr) {
+  	if (arr.indexOf(el) !== i && acc.indexOf(el) < 0) acc.push(el); return acc;
+    }, []);
+    console.log(duplicates);
+
 
     const batches = []
     const batchPromises = []
@@ -151,7 +168,7 @@ const OnRideCountComMigrationRequested = functions
         failedTrips: [],
         processedTrips: [],
         totalTrips: deduplicatedLinks.length,
-        unprocessedTrips: tripDocIds,
+        unprocessedTrips: [tripDocIds],
         inProgress: true,
         status: 1,
         correlationIds: [correlationId],
@@ -160,11 +177,14 @@ const OnRideCountComMigrationRequested = functions
       { merge: true }
     )
 
+	console.log(processedPages);
+	process.exit();
+	return null;
     batches.forEach((batch) => {
       batchPromises.push(batch.commit())
     })
     const batchResult = await Promise.all(batchPromises)
     const batchCount = batchResult.length
     console.log(`Comitted ${batchCount} park batches`)
-  })
-exports = module.exports = OnRideCountComMigrationRequested
+};
+doit();

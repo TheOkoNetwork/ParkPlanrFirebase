@@ -35,7 +35,7 @@ const OnRideCountAddEditOrDelete = functions.firestore
     }
     console.log(`Incrementing count: ${count}`)
     return db
-      .collection('Users')
+      .collection('users')
       .doc(context.params.uID)
       .collection('ridecount')
       .doc(context.params.tripId)

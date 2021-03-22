@@ -1,0 +1,23 @@
+const functions = require('firebase-functions')
+const admin = require('firebase-admin')
+
+try {
+  admin.initializeApp()
+} catch (e) {
+  // yes this is meant to be empty
+}
+const db = admin.firestore()
+//.where("status","==",98)
+
+statusCounts={};
+db.collection("ridecountcomTrips").get().then(function(docs) {
+	docs.forEach(function(doc) {
+		status = doc.data().status;
+		if (!statusCounts[status]) {
+			statusCounts[status]=0;
+		};
+		statusCounts[status]++;
+        });
+	console.log(statusCounts);
+	console.log(`${docs.docs.length} total`);
+});
