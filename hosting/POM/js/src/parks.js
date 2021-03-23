@@ -126,7 +126,7 @@ async function parksLoadEdit (params) {
     } else {
       console.log('Adding park')
       await window.db
-        .collection('park')
+        .collection('parks')
         .doc()
         .set({
           active: false,
