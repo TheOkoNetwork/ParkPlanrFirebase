@@ -32,7 +32,9 @@ async function parksLoadEdit (params) {
       $('#parkEditFieldClosedMessage').val('')
     } else {
       $('#parkEditFormGroupClosedMessage').show()
-      $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage)
+      if (parkDoc && parkDoc.data()) {
+        $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage)
+      }
     }
   })
 
@@ -108,7 +110,7 @@ async function parksLoadEdit (params) {
     const parkLat = $('#parkEditFieldLocationLat').val()
     const parkLon = $('#parkEditFieldLocationLon').val()
     const parkLogo = $('#parkEditFieldMiscLogo').val()
-    const parkOpen = $('#parkEditFieldOpen').attr('checked')
+    const parkOpen = $('#parkEditFieldOpen').prop('checked')
     const parkClosedMessage = $('#parkEditFieldClosedMessage').val()
     if (!parkName) {
       return window.alert('Park name is required')
