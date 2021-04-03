@@ -7,21 +7,22 @@ try {
 }
 
 const MakeAdmin = functions.https.onRequest(async (request, response) => {
-  var uids
-  var uidSetClaimPromises
-  var uidListString
+  let uidListString
 
-  uids = [
+  const uids = [
     'aCQ1HTs57yflWgfgh8RHE3lyM7w2', // Gregory
     'G5urWzoptvOiy5OdRLDUCwOlPt23', // Gregory FB
-    'igijrjp6IpZLf7FuzedzzZacTSC3' // Steve
+    'igijrjp6IpZLf7FuzedzzZacTSC3', // Steve
+    'wp4yJpzzrrdmAnbdBla3BImX7tJ2' // Alex
   ]
 
-  uidSetClaimPromises = []
+  const uidSetClaimPromises = []
   uidListString = ''
 
   uids.forEach((uid) => {
-    uidSetClaimPromises.push(admin.auth().setCustomUserClaims(uid, { admin: true }))
+    uidSetClaimPromises.push(
+      admin.auth().setCustomUserClaims(uid, { admin: true })
+    )
     uidListString += ` ${uid}`
   })
 

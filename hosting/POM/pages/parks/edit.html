@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.2.0">
   <title></title>
 </head>
 <body>
@@ -32,7 +31,13 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title showIfParkAdd" style="display:none;">New park</h3>
-        <h3 class="card-title showIfParkEdit" style="display:none;">Editing</h3>
+        <h3 class="card-title showIfParkEdit" style="display:none;">
+	Editing
+	<button class="btn btn-primary" id="parkEditAttractionsButton">
+		<span class="fas fa-laugh"></span>
+		<span>Attractions</span>
+	</button>
+	</h3>
       </div><!-- /.card-header -->
       <div class="card-body">
 
@@ -128,6 +133,14 @@
                   </div>
                 </div>
 
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="parkEditFieldAddressCountry">Country</label>
+                  <div class="col-md-4">
+                    <input id="parkEditFieldAddressCountry" name="parkEditFieldAddressCountry" type="text" placeholder="" class="form-control input-md" required=
+                    "">
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -187,6 +200,9 @@
 
 
         </div>
+        <button class="btn btn-success" id="parkEditSaveButton">
+		<span class="showIfParkAdd">Add park</span>
+        </button>
       </div><!-- /.card-body -->
     </div><!-- /.card -->
   </section><!-- /.content -->
