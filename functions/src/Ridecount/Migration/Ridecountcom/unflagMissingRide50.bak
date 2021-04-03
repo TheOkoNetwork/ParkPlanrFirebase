@@ -1,0 +1,28 @@
+const functions = require('firebase-functions')
+const admin = require('firebase-admin')
+
+try {
+  admin.initializeApp()
+} catch (e) {
+  // yes this is meant to be empty
+}
+const db = admin.firestore()
+
+flag = async function() {
+db.collection("ridecountcomTrips")
+	.where("status","==",50)
+	.limit(1).get().then(async function(docs) {
+		doc = docs.docs[0];
+		data = doc.data();
+		console.log(doc.id);
+		console.log(data['tripParkName']);
+		console.log(data['missingAttractions']);
+		console.log(data['tripLink']);
+		await doc.ref.set({
+			status: 0
+		}, {merge:true});
+		console.log("Flagged");
+		return flag();
+});
+};
+flag();

@@ -32,7 +32,9 @@ async function parksLoadEdit (params) {
       $('#parkEditFieldClosedMessage').val('')
     } else {
       $('#parkEditFormGroupClosedMessage').show()
-      $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage)
+      if (parkDoc && parkDoc.data()) {
+        $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage)
+      }
     }
   })
 
@@ -58,6 +60,9 @@ async function parksLoadEdit (params) {
       parkDoc.data().location.address.postalCode
     )
     $('#parkEditFieldAddressState').val(parkDoc.data().location.address.state)
+    $('#parkEditFieldAddressCountry').val(
+      parkDoc.data().location.address.country
+    )
 
     $('#parkEditFieldLocationLat').val(
       parkDoc.data().location.coordinates.latitude
@@ -77,12 +82,88 @@ async function parksLoadEdit (params) {
       $('#parkEditFormGroupClosedMessage').show()
       $('#parkEditFieldClosedMessage').val(parkDoc.data().closedMessage)
     }
+
+    $('#parkEditAttractionsButton').on('click', function () {
+      const parkId = window.router.lastRouteResolved().params.parkId
+      window.router.navigate(
+        window.router.generate('park.attractions.list', { parkId: parkId })
+      )
+    })
   } else {
     console.log('New park page, no park to load')
 
     $('.showIfParkEdit').hide()
     $('.showIfParkAdd').show()
   }
+
+  $('#parkEditSaveButton').on('click', async function () {
+    console.log('Save button clicked')
+    const params = window.router.lastRouteResolved().params
+    const parkName = $('#parkEditFieldName').val()
+    const parkWebsite = $('#parkEditFieldWebsite').val()
+    const parkAddr1 = $('#parkEditFieldAddressAddr1').val()
+    const parkAddr2 = $('#parkEditFieldAddressAddr2').val()
+    const parkCity = $('#parkEditFieldAddressCity').val()
+    const parkPostalCode = $('#parkEditFieldAddressPostalCode').val()
+    const parkState = $('#parkEditFieldAddressState').val()
+    const parkCountry = $('#parkEditFieldAddressCountry').val()
+    const parkLat = $('#parkEditFieldLocationLat').val()
+    const parkLon = $('#parkEditFieldLocationLon').val()
+    const parkLogo = $('#parkEditFieldMiscLogo').val()
+    const parkOpen = $('#parkEditFieldOpen').prop('checked')
+    const parkClosedMessage = $('#parkEditFieldClosedMessage').val()
+    if (!parkName) {
+      return window.alert('Park name is required')
+    }
+    if (!parkWebsite) {
+      return window.alert('Park website is required')
+    }
+    if (!parkCountry) {
+      return window.alert('Park country is required')
+    }
+    if (params && params.parkId) {
+      console.log('Saving park')
+    } else {
+      console.log('Adding park')
+      await window.db
+        .collection('parks')
+        .doc()
+        .set({
+          active: false,
+          created: window.firebase.firestore.FieldValue.serverTimestamp(),
+          updated: window.firebase.firestore.FieldValue.serverTimestamp(),
+          creationSource: 'POM',
+          addedBy: window.auth.currentUser.uid,
+          location: {
+            address: {
+              addr1: parkAddr1,
+              addr2: parkAddr2,
+              city: parkCity,
+              country: parkCountry,
+              postalCode: parkPostalCode,
+              postalState: parkState
+            },
+            coordinates: {
+              latitude: Number(parkLat),
+              longitude: Number(parkLon)
+            }
+          },
+          maps: false,
+          name: {
+            name: parkName
+          },
+          open: parkOpen,
+          closedMessage: parkClosedMessage,
+          queuetimes: false,
+          ridecount: true,
+          website: parkWebsite,
+          logo: parkLogo
+        })
+      console.log('Saved!')
+      window.alert(`Successfully added ${parkName}`)
+      window.router.navigate(window.router.generate('parks.list'))
+    }
+  })
 }
 
 async function parksLoad () {

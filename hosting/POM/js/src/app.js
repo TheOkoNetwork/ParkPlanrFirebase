@@ -8,6 +8,10 @@ import {
 import { cmsPagesLoad, cmsPageLoadEdit } from './cms.js'
 import { parksLoad, parksLoadEdit } from './parks.js'
 import {
+  parkAttractionsLoad,
+  parkAttractionsLoadEdit
+} from './parkAttractions.js'
+import {
   affiliateHome,
   affiliateAdmin,
   affiliateAdminEdit,
@@ -45,7 +49,7 @@ const init = async () => {
   $('body').trigger('authLoaded')
 
   $('#signoutButton').on('click', function () {
-    window.router.navigate('/signout');
+    window.router.navigate('/signout')
   })
 
   // when a user signs in, out or is first seen this session in either state
@@ -56,10 +60,9 @@ const init = async () => {
       userAuthenticated(user)
     } else {
       console.log('User is unauthenticated')
-      //window.location = '/signin'
+      // window.location = '/signin'
     }
   })
-
 
   router.on({
     'inbox/conversation/:id': function (params) {
@@ -96,7 +99,7 @@ const init = async () => {
       }
     },
     parks: {
-      as: 'park.list',
+      as: 'parks.list',
       uses: function (params) {
         console.log('I am on a parks list page')
         console.log(params)
@@ -117,6 +120,30 @@ const init = async () => {
         console.log('I am on a park edit page')
         console.log(params)
         loadPage('parks/edit', params)
+      }
+    },
+    'parks/:parkId/attractions': {
+      as: 'park.attractions.list',
+      uses: function (params) {
+        console.log('I am on a attractions list page')
+        console.log(params)
+        loadPage('parks/attractions', params)
+      }
+    },
+    'parks/:parkId/attractions/new': {
+      as: 'park.attractions.new',
+      uses: function (params) {
+        console.log('I am on an add attraction page page')
+        console.log(params)
+        loadPage('parks/attractions/edit', params)
+      }
+    },
+    'parks/:parkId/attractions/:rideId': {
+      as: 'park.attractions.edit',
+      uses: function (params) {
+        console.log('I am on a attractions edit page')
+        console.log(params)
+        loadPage('parks/attractions/edit', params)
       }
     },
     affiliate: {
@@ -155,79 +182,75 @@ const init = async () => {
       console.log('I am on the home page')
       loadPage('index')
     },
-    "/signout": async function () {
-      console.log("I am on the signout page");
-      console.log("Auth Loaded, sign in flow");
-      var signoutSplit = window.location.hash.split("signout=");
+    '/signout': async function () {
+      console.log('I am on the signout page')
+      console.log('Auth Loaded, sign in flow')
+      const signoutSplit = window.location.hash.split('signout=')
       if (signoutSplit.length > 1) {
-        console.log("Sign out flow complete");
-        window.auth.signOut();
-        window.router.navigate("/");
+        console.log('Sign out flow complete')
+        window.auth.signOut()
+        window.router.navigate('/')
       } else {
-        console.log("No post sign out flag, redirect to authcore");
-        var service = location.hostname;
-        let authCoreUrl;
-        console.log(redirectUrl);
-        if (location.hostname == "pom.dev.parkplanr.app") {
-          authCoreUrl = "auth.dev.parkplanr.app";
+        console.log('No post sign out flag, redirect to authcore')
+        const service = window.location.hostname
+        let authCoreUrl
+        if (service === 'pom.dev.parkplanr.app') {
+          authCoreUrl = 'auth.dev.parkplanr.app'
         } else {
-          authCoreUrl = "auth.parkplanr.app";
+          authCoreUrl = 'auth.parkplanr.app'
         }
-        console.log(`Detected auth core URL: ${authCoreUrl}`);
-        var redirectUrl = `https://${authCoreUrl}/signout#service=${service}`;
-        console.log(`Got redirect url: ${redirectUrl}`);
-        location.href = redirectUrl;
+        console.log(`Detected auth core URL: ${authCoreUrl}`)
+        const redirectUrl = `https://${authCoreUrl}/signout#service=${service}`
+        console.log(`Got redirect url: ${redirectUrl}`)
+        window.location.href = redirectUrl
       }
     },
     '/signin': function () {
-      console.log("I am on the signin page");
-      console.log("Auth Loaded, sign in flow");
-      var tokenSplit = window.location.hash.split("token=");
+      console.log('I am on the signin page')
+      console.log('Auth Loaded, sign in flow')
+      const tokenSplit = window.location.hash.split('token=')
       if (tokenSplit.length > 1) {
-        console.log("Got auth token, attempt sign in with custom token");
+        console.log('Got auth token, attempt sign in with custom token')
         try {
-          firebase.auth().signInWithCustomToken(tokenSplit[1]);
-          const postAuthUrl = localStorage.postAuthUrl || "/";
-          delete localStorage.postAuthUrl;
-          window.router.navigate(postAuthUrl);
+          firebase.auth().signInWithCustomToken(tokenSplit[1])
+          const postAuthUrl = window.localstorage.postAuthUrl || '/'
+          delete window.localstorage.postAuthUrl
+          window.router.navigate(postAuthUrl)
         } catch (err) {
-          console.log("Error signing in with custom token");
-          console.log(err);
-          window.location = "/signin";
+          console.log('Error signing in with custom token')
+          console.log(err)
+          window.location = '/signin'
         }
       } else {
-        console.log("No token, redirect to authcore");
-        var service = location.hostname;
-        let authCoreUrl;
-        console.log(redirectUrl);
-        if (location.hostname == "pom.dev.parkplanr.app") {
-          authCoreUrl = "auth.dev.parkplanr.app";
+        console.log('No token, redirect to authcore')
+        const service = window.location.hostname
+        let authCoreUrl
+        if (service === 'pom.dev.parkplanr.app') {
+          authCoreUrl = 'auth.dev.parkplanr.app'
         } else {
-          authCoreUrl = "auth.parkplanr.app";
+          authCoreUrl = 'auth.parkplanr.app'
         }
-        console.log(`Detected auth core URL: ${authCoreUrl}`);
-        var redirectUrl = `https://${authCoreUrl}/signin#service=${service}`;
-        console.log(`Got redirect url: ${redirectUrl}`);
-        location.href = redirectUrl;
+        console.log(`Detected auth core URL: ${authCoreUrl}`)
+        const redirectUrl = `https://${authCoreUrl}/signin#service=${service}`
+        console.log(`Got redirect url: ${redirectUrl}`)
+        window.location.href = redirectUrl
       }
     }
   })
-  
+
   router.notFound(function () {
     console.log('Route not found')
     load404()
   })
-  
+
   $(document).ready(function () {
     $('.defaultFragmentHolder').each(function () {
       const fragment = $(this).data('fragmentid')
       window.loadFragment(fragment)
     })
-  
+
     router.resolve()
   })
-
-
 }
 
 function userAuthenticated (user) {
@@ -238,7 +261,7 @@ function userAuthenticated (user) {
     .then((idTokenResult) => {
       // Confirm the user is an Admin or an affiliate
       if (idTokenResult.claims.admin || idTokenResult.claims.affiliate) {
-        console.log('I am an admin or an affiliate');
+        console.log('I am an admin or an affiliate')
         $('body').trigger('claimsPassed')
         inboxMessageCount()
       } else {
@@ -276,7 +299,7 @@ window.loadFragment = function (fragment) {
       const today = new Date()
       $('.currentYear').text(today.getFullYear())
       $('.currentVersion').text(config('version'))
-      
+
       switch (fragment) {
         case 'headerNav':
           inboxMessageHeader()
@@ -339,6 +362,12 @@ function loadPage (page, params) {
           break
         case 'parks/edit':
           parksLoadEdit(params)
+          break
+        case 'parks/attractions':
+          parkAttractionsLoad(params)
+          break
+        case 'parks/attractions/edit':
+          parkAttractionsLoadEdit(params)
           break
         case 'affiliate':
           affiliateHome(params)
