@@ -28,18 +28,7 @@ async function parkAttractionsLoadEdit(params) {
         console.log("It's a space");
         return;
       }
-
-      for (let i = 0; i < wordsSplit.length; i++) {
-        let firstLetter = wordsSplit[i][0];
-        if (firstLetter) {
-          console.log(firstLetter);
-          firstLetter = firstLetter.toUpperCase();
-          wordsSplit[i] = firstLetter + wordsSplit[i].substr(1);
-        } else {
-          wordsSplit[i] = firstLetter;
-        }
-      }
-
+      
       $("#rideEditFieldName").val(wordsSplit.join(" "));
     }
   });
