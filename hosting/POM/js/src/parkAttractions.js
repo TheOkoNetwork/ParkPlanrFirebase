@@ -19,20 +19,6 @@ async function parkAttractionsLoadEdit(params) {
     $("#rideEditFieldMiscLogoImg").attr("src", $(this).val());
   });
 
-  $("#rideEditFieldName").on("keyup", function () {
-    const currentText = $("#rideEditFieldName").val();
-    if (currentText) {
-      const wordsSplit = currentText.split(" ");
-      console.log(wordsSplit[wordsSplit.length - 1]);
-      if (wordsSplit[wordsSplit.length - 1] == " ") {
-        console.log("It's a space");
-        return;
-      }
-      
-      $("#rideEditFieldName").val(wordsSplit.join(" "));
-    }
-  });
-
   if (!parkDoc.exists) {
     console.log(`Park with ID: ${parkId} does not exist`);
     window.alert("Park does not exist");
