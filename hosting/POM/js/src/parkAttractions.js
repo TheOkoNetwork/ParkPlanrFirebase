@@ -172,11 +172,11 @@ async function parkAttractionsLoadEdit(params) {
     const rideId = params.rideId;
     if (confirm("Are you sure you wish to delete this ride?")) {
       await window.db.collection("parks").doc(parkId).collection("rides").doc(rideId).delete();
-    }
     console.log("Successfully deleted");
     window.router.navigate(
       window.router.generate("park.attractions.list", { parkId: parkId })
     );
+  };
   });
 }
 
