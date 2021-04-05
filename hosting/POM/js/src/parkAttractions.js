@@ -28,18 +28,7 @@ async function parkAttractionsLoadEdit(params) {
         console.log("It's a space");
         return;
       }
-
-      for (let i = 0; i < wordsSplit.length; i++) {
-        let firstLetter = wordsSplit[i][0];
-        if (firstLetter) {
-          console.log(firstLetter);
-          firstLetter = firstLetter.toUpperCase();
-          wordsSplit[i] = firstLetter + wordsSplit[i].substr(1);
-        } else {
-          wordsSplit[i] = firstLetter;
-        }
-      }
-
+      
       $("#rideEditFieldName").val(wordsSplit.join(" "));
     }
   });
@@ -138,7 +127,7 @@ async function parkAttractionsLoadEdit(params) {
           active: rideActive,
           ridecountcomAttractionId: ridecountcomAttractionId,
         });
-      window.alert(`Successfully saved ride: ${rideName}`);
+      // window.alert(`Successfully saved ride: ${rideName}`);
       window.router.navigate(
         window.router.generate("park.attractions.list", { parkId: parkId })
       );
@@ -167,7 +156,16 @@ async function parkAttractionsLoadEdit(params) {
   });
   $("#rideEditDeleteButton").on("click", async function () {
     console.log("Delete button clicked");
-    // todo actually delete ride (after confirmation prompt)
+    const params = window.router.lastRouteResolved().params;
+    const parkId = params.parkId;
+    const rideId = params.rideId;
+    if (confirm("Are you sure you wish to delete this ride?")) {
+      await window.db.collection("parks").doc(parkId).collection("rides").doc(rideId).delete();
+    console.log("Successfully deleted");
+    window.router.navigate(
+      window.router.generate("park.attractions.list", { parkId: parkId })
+    );
+  };
   });
 }
 
