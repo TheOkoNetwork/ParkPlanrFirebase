@@ -1,0 +1,4 @@
+{
+    "name": "Firebase project",
+    "postCreateCommand": "bash scripts/install-dev-tools.sh"
+}
