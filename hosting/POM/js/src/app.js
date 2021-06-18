@@ -235,7 +235,16 @@ const init = async () => {
         console.log(`Got redirect url: ${redirectUrl}`)
         window.location.href = redirectUrl
       }
-    }
+    },
+    tickets: {
+      as: 'tickets.list',
+      uses: function (params) {
+        console.log('I am on a tickets list page')
+        console.log(params)
+        loadPage('tickets', params)
+      }
+    },
+
   })
 
   router.notFound(function () {

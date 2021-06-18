@@ -19,20 +19,6 @@ async function parkAttractionsLoadEdit(params) {
     $("#rideEditFieldMiscLogoImg").attr("src", $(this).val());
   });
 
-  $("#rideEditFieldName").on("keyup", function () {
-    const currentText = $("#rideEditFieldName").val();
-    if (currentText) {
-      const wordsSplit = currentText.split(" ");
-      console.log(wordsSplit[wordsSplit.length - 1]);
-      if (wordsSplit[wordsSplit.length - 1] == " ") {
-        console.log("It's a space");
-        return;
-      }
-      
-      $("#rideEditFieldName").val(wordsSplit.join(" "));
-    }
-  });
-
   if (!parkDoc.exists) {
     console.log(`Park with ID: ${parkId} does not exist`);
     window.alert("Park does not exist");
@@ -160,12 +146,17 @@ async function parkAttractionsLoadEdit(params) {
     const parkId = params.parkId;
     const rideId = params.rideId;
     if (confirm("Are you sure you wish to delete this ride?")) {
-      await window.db.collection("parks").doc(parkId).collection("rides").doc(rideId).delete();
-    console.log("Successfully deleted");
-    window.router.navigate(
-      window.router.generate("park.attractions.list", { parkId: parkId })
-    );
-  };
+      await window.db
+        .collection("parks")
+        .doc(parkId)
+        .collection("rides")
+        .doc(rideId)
+        .delete();
+      console.log("Successfully deleted");
+      window.router.navigate(
+        window.router.generate("park.attractions.list", { parkId: parkId })
+      );
+    }
   });
 }
 
