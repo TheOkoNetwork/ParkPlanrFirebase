@@ -24,31 +24,9 @@ jobs:
           name: siteDist
           path: hosting/site/js/dist   
 
-  buildPOM:
-    name: Build POM
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-
-      - name: Install Dependencies
-        run: npm run installPOM
-
-      - name: Update version
-        run: ./scripts/updateVersion.sh
-
-      - name: Build POM js
-        run: npm run buildPOM
-
-      - name: Archive POM dist folder
-        uses: actions/upload-artifact@master
-        with:
-          name: POMDist
-          path: hosting/POM/js/dist
-
   deploy:
     name: Deploy everything except functions
-    needs: [buildSite,buildPOM]
+    needs: [buildSite]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -59,12 +37,6 @@ jobs:
         with:
           name: siteDist
           path: hosting/site/js/dist
-
-      - name: Retrieve POM dist folder
-        uses: actions/download-artifact@master
-        with:
-          name: POMDist
-          path: hosting/POM/js/dist
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
