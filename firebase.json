@@ -60,12 +60,11 @@
     ],
     "rewrites": [
       {
-        "source": "signin",
-        "destination": "/signin.html"
-      },
-      {
         "source": "**",
-        "destination": "/index.html"
+        "run": {
+          "serviceId": "pom",
+          "region": "europe-north1"
+        }
       }
     ]
   }
