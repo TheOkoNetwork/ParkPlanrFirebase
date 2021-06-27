@@ -42,7 +42,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "snyk": "^1.498.0",
-    "twilio": "^3.54.2",
+    "twilio": "^3.63.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
