@@ -30,7 +30,7 @@
     "express": "^4.17.1",
     "fb-messenger": "^2.3.1",
     "firebase-admin": "^9.4.2",
-    "firebase-functions": "^3.13.2",
+    "firebase-functions": "^3.14.1",
     "glob": "^7.1.6",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.12.4",
