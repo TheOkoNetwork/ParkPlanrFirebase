@@ -19,7 +19,7 @@
     "node": "10"
   },
   "dependencies": {
-    "@google-cloud/pubsub": "^2.10.0",
+    "@google-cloud/pubsub": "^2.12.0",
     "@sendgrid/mail": "^7.4.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
@@ -30,10 +30,10 @@
     "express": "^4.17.1",
     "fb-messenger": "^2.3.1",
     "firebase-admin": "^9.4.2",
-    "firebase-functions": "^3.13.2",
+    "firebase-functions": "^3.14.1",
     "glob": "^7.1.6",
     "graphql": "^15.4.0",
-    "graphql-tag": "^2.11.0",
+    "graphql-tag": "^2.12.4",
     "gravatar": "^1.8.0",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
@@ -42,7 +42,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "snyk": "^1.498.0",
-    "twilio": "^3.54.2",
+    "twilio": "^3.63.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
