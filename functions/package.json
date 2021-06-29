@@ -38,7 +38,7 @@
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
     "open-graph-scraper": "^4.8.2",
-    "querystring": "^0.2.0",
+    "querystring": "^0.2.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "snyk": "^1.518.0",
