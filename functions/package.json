@@ -37,7 +37,7 @@
     "gravatar": "^1.8.0",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1",
-    "open-graph-scraper": "^4.8.2",
+    "open-graph-scraper": "^4.9.0",
     "querystring": "^0.2.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
