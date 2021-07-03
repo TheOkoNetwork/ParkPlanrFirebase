@@ -14,7 +14,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "firebase": "^8.6.6",
+    "firebase": "^8.6.7",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "navigo": "^7.1.3",
