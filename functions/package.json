@@ -29,7 +29,7 @@
     "connect-slashes": "^1.4.0",
     "express": "^4.17.1",
     "fb-messenger": "^2.3.1",
-    "firebase-admin": "^9.10.0",
+    "firebase-admin": "^11.4.1",
     "firebase-functions": "^3.14.1",
     "glob": "^7.1.7",
     "graphql": "^15.5.1",
@@ -41,8 +41,8 @@
     "querystring": "^0.2.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "snyk": "^1.646.0",
-    "twilio": "^3.64.0",
+    "snyk": "^1.685.0",
+    "twilio": "^4.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
