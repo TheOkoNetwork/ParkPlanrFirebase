@@ -31,7 +31,7 @@
     "fb-messenger": "^2.3.1",
     "firebase-admin": "^9.10.0",
     "firebase-functions": "^3.14.1",
-    "glob": "^7.1.7",
+    "glob": "^9.0.0",
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.5",
     "gravatar": "^1.8.0",
@@ -41,7 +41,7 @@
     "querystring": "^0.2.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "snyk": "^1.646.0",
+    "snyk": "^1.685.0",
     "twilio": "^3.64.0",
     "uuid": "^8.3.2"
   },
