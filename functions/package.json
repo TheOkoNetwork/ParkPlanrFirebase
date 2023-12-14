@@ -41,8 +41,8 @@
     "querystring": "^0.2.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "snyk": "^1.646.0",
-    "twilio": "^3.64.0",
+    "snyk": "^1.675.0",
+    "twilio": "^4.6.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
