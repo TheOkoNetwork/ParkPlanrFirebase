@@ -25,7 +25,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "camelcase": "^5.3.1",
-    "cheerio": "^1.0.0-rc.5",
+    "cheerio": "^1.0.0",
     "connect-slashes": "^1.4.0",
     "express": "^4.17.1",
     "fb-messenger": "^2.3.1",
